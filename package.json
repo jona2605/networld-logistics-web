@@ -1,0 +1,19 @@
+{
+  "name": "networld-v3",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1"
+  },
+  "dependencies": {
+    "@react-three/postprocessing": "^3.0.4",
+    "gsap": "^3.15.0",
+    "postprocessing": "^6.39.1",
+    "three": "^0.184.0"
+  },
+  "devDependencies": {
+    "vite": "^8.1.3"
+  }
+}

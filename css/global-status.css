@@ -1,0 +1,128 @@
+.global-status{
+  width:min(1680px,98%);
+  min-height:40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+  margin:8px auto 0;
+  padding:0 16px;
+  border:1px solid rgba(159,238,255,.11);
+  border-radius:var(--radius-chip);
+  color:var(--text-card);
+  background:
+    radial-gradient(circle at var(--mx, 16%) var(--my, 50%), rgba(76,175,244,.12), transparent 34%),
+    rgba(2,13,26,.58);
+  box-shadow:0 14px 42px rgba(0,0,0,.2), 0 0 20px rgba(76,175,244,.045);
+  backdrop-filter:blur(14px);
+  position:relative;
+  z-index:9;
+  overflow:hidden;
+}
+
+.global-status::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg, transparent, rgba(159,238,255,.06), transparent);
+  opacity:.55;
+  pointer-events:none;
+}
+
+.global-status__track{
+  min-width:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  position:relative;
+  z-index:2;
+}
+
+.global-status__item{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  white-space:nowrap;
+  color:var(--text-soft);
+  font-size:12px;
+  font-weight:800;
+}
+
+.global-status__item strong{
+  color:var(--white);
+  font-weight:900;
+}
+
+.global-status__item.is-primary{
+  color:var(--cyan-soft);
+  font-weight:900;
+}
+
+.global-status__dot{
+  width:8px;
+  height:8px;
+  flex:0 0 auto;
+  border-radius:50%;
+  background:var(--accent);
+  box-shadow:var(--glow-dot);
+  animation:globalStatusPulse 2.8s ease-in-out infinite;
+}
+
+.global-status__divider{
+  width:1px;
+  height:18px;
+  flex:0 0 auto;
+  background:var(--border-cyan-soft);
+}
+
+.global-status__time{
+  color:var(--text-muted);
+}
+
+@keyframes globalStatusPulse{
+  0%,100%{transform:scale(1); opacity:.82;}
+  50%{transform:scale(1.34); opacity:1;}
+}
+
+@media (max-width:980px){
+  .global-status{
+    justify-content:flex-start;
+    width:min(100% - 24px, 960px);
+    padding:0 12px;
+  }
+
+  .global-status__track{
+    justify-content:flex-start;
+    overflow-x:auto;
+    overscroll-behavior-x:contain;
+    scrollbar-width:none;
+  }
+
+  .global-status__track::-webkit-scrollbar{
+    display:none;
+  }
+}
+
+@media (max-width:720px){
+  .global-status{
+    width:min(100% - 20px, 680px);
+    min-height:38px;
+    margin-top:8px;
+    border-radius:var(--radius-panel);
+  }
+
+  .global-status__item{
+    font-size:11px;
+  }
+
+  .global-status__item.optional-mobile{
+    display:none;
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .global-status__dot{
+    animation:none !important;
+  }
+}

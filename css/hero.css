@@ -1,0 +1,129 @@
+.hero-left{
+  position:absolute;
+  left:12px;
+  top:42px;
+  width:min(600px,38vw);
+  z-index:20;
+}
+
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:11px;
+  min-height:42px;
+  padding:0 19px;
+  border:1px solid rgba(159,238,255,.22);
+  border-radius:var(--radius-chip);
+  color:var(--cyan-soft);
+  background:rgba(2,17,32,.68);
+  box-shadow:inset 0 0 24px rgba(76,175,244,.05);
+  font-size:15px;
+  font-weight:700;
+  margin-bottom:48px;
+}
+
+.eyebrow::before{
+  content:"";
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 18px var(--accent);
+}
+
+.hero-left h1{
+  max-width:610px;
+  margin-bottom:26px;
+  color:#edf5ff;
+  font-size:clamp(58px,5.4vw,94px);
+  line-height:.96;
+  letter-spacing:0;
+  font-weight:900;
+}
+
+.headline-static,
+.headline-rotator,
+.headline-white,
+.headline-green{
+  display:block;
+}
+
+.headline-static,
+.headline-green{
+  color:#22C93C;
+  text-shadow:0 0 30px rgba(34,201,60,.2);
+}
+
+.headline-rotator{
+  transition:opacity .35s ease, transform .35s ease;
+}
+
+.headline-white{
+  color:#edf5ff;
+  text-shadow:0 0 28px rgba(255,255,255,.08);
+}
+
+.headline-rotator.changing{
+  opacity:.72;
+  transform:translateY(3px);
+}
+
+.hero-left p{
+  max-width:580px;
+  margin-bottom:42px;
+  color:#c6d5e4;
+  font-size:21px;
+  line-height:1.62;
+  font-weight:400;
+}
+
+.hero-actions{
+  display:flex;
+  align-items:center;
+  gap:20px;
+  margin-bottom:38px;
+}
+
+.trust-row{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+  width:min(610px,43vw);
+}
+
+.trust-row div{
+  min-height:80px;
+  display:flex;
+  align-items:center;
+  gap:13px;
+  padding:15px 16px;
+  border-radius:16px;
+  background:rgba(6,22,38,.75);
+  border:1px solid rgba(159,238,255,.12);
+  box-shadow:inset 0 0 28px rgba(255,255,255,.025);
+}
+
+.trust-row strong{
+  width:48px;
+  height:48px;
+  flex:0 0 48px;
+  border-radius:var(--radius-page);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.trust-row strong img{
+  width:23px;
+  height:23px;
+  opacity:.94;
+}
+
+.trust-row span{
+  color:#f3f7ff;
+  font-size:15px;
+  line-height:1.24;
+  font-weight:700;
+}

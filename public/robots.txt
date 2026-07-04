@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://networldslogistics.com/sitemap.xml

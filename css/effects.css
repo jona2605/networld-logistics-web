@@ -1,0 +1,308 @@
+/* ==========================
+   SHARED PREMIUM REFINEMENTS
+========================== */
+
+:where(
+  .services-section,
+  .workflow-section,
+  .global-network-section,
+  .control-center-section,
+  .why-section,
+  .industries-section,
+  .cases-section,
+  .premium-cta-section
+){
+  scroll-margin-top:112px;
+}
+
+:where(
+  .services-command,
+  .service-unit,
+  .workflow-console,
+  .workflow-step,
+  .network-command,
+  .control-center-console,
+  .why-block,
+  .industry-panel,
+  .case-card,
+  .premium-cta-card,
+  .availability-panel
+){
+  border-radius:var(--radius-card);
+}
+
+:where(
+  .service-unit,
+  .workflow-step,
+  .why-block,
+  .case-card
+)::after{
+  content:"";
+  position:absolute;
+  inset:1px;
+  border-radius:inherit;
+  background:
+    linear-gradient(135deg, rgba(159,238,255,.11), transparent 32%),
+    radial-gradient(circle at 78% 12%, rgba(34,201,60,.08), transparent 24%);
+  opacity:.42;
+  pointer-events:none;
+  transition:opacity .35s ease;
+}
+
+:where(
+  .service-unit,
+  .workflow-step,
+  .why-block,
+  .case-card
+):hover::after{
+  opacity:.72;
+}
+
+:where(
+  .service-icon,
+  .workflow-icon,
+  .case-icon,
+  .why-icon,
+  .industry-icon
+){
+  transform-origin:center;
+  transition:transform .42s ease, box-shadow .42s ease;
+}
+
+:where(
+  .service-unit,
+  .workflow-step,
+  .case-card,
+  .why-block,
+  .industry-panel
+):hover :where(
+  .service-icon,
+  .workflow-icon,
+  .case-icon,
+  .why-icon,
+  .industry-icon
+){
+  animation:premium-breathe 1.8s ease-in-out infinite;
+  will-change:transform, box-shadow;
+}
+
+:where(
+  .service-unit,
+  .workflow-step,
+  .why-block,
+  .industry-panel,
+  .case-card,
+  .availability-panel,
+  .premium-cta-card
+):hover{
+  box-shadow:var(--shadow-premium), var(--glow-blue);
+}
+
+:where(
+  .service-link,
+  .case-chips span,
+  .industry-chips span,
+  .premium-cta-primary,
+  .premium-cta-secondary
+){
+  will-change:transform;
+}
+
+/* Fallback: content remains readable if JS is unavailable. */
+:where(
+  .services-heading,
+  .services-command,
+  .services-intel,
+  .service-unit,
+  .workflow-header,
+  .workflow-console,
+  .workflow-step,
+  .global-network-header,
+  .network-command,
+  .control-center-header,
+  .control-center-console,
+  .why-header,
+  .why-grid,
+  .why-block,
+  .industries-header,
+  .industries-grid,
+  .industry-panel,
+  .cases-header,
+  .cases-grid,
+  .case-card,
+  .case-status,
+  .premium-cta-copy,
+  .availability-panel,
+  .premium-cta-trust span
+){
+  opacity:1;
+  filter:none;
+  transform:none;
+}
+
+html.js-enabled :where(
+  .services-heading,
+  .services-command,
+  .services-intel,
+  .service-unit,
+  .workflow-header,
+  .workflow-console,
+  .global-network-header,
+  .network-command,
+  .control-center-header,
+  .control-center-console,
+  .why-header,
+  .why-grid,
+  .why-block,
+  .industries-header,
+  .industries-grid,
+  .industry-panel,
+  .cases-header,
+  .cases-grid,
+  .case-card,
+  .premium-cta-copy,
+  .availability-panel,
+  .premium-cta-trust span
+):not(.is-visible){
+  opacity:0;
+  transform:translateY(24px);
+}
+
+html.js-enabled :where(.workflow-step):not(.is-active){
+  opacity:0;
+  filter:blur(8px);
+  transform:translateY(24px);
+}
+
+.case-checks{
+  margin-bottom:52px;
+}
+
+.case-progress{
+  bottom:82px;
+}
+
+.case-timeline{
+  bottom:34px;
+}
+
+.case-card{
+  min-height:548px;
+}
+
+.case-card h3{
+  min-height:76px;
+}
+
+.case-card .case-status{
+  opacity:1;
+  transform:none;
+}
+
+.case-progress span{
+  width:100%;
+}
+
+.case-timeline::before{
+  transform:scaleX(1);
+}
+
+html.js-enabled .case-card:not(.is-visible) .case-progress span{
+  width:0%;
+}
+
+html.js-enabled .case-card:not(.is-visible) .case-status{
+  opacity:0;
+  transform:translateY(8px);
+}
+
+html.js-enabled .case-card:not(.is-visible) .case-timeline::before{
+  transform:scaleX(0);
+}
+
+@keyframes premium-breathe{
+  0%,100%{
+    transform:translateY(0) scale(1);
+    box-shadow:inset 0 0 28px rgba(76,175,244,.08), 0 0 20px rgba(76,175,244,.08);
+  }
+  50%{
+    transform:translateY(-2px) scale(1.015);
+    box-shadow:inset 0 0 34px rgba(76,175,244,.11), 0 0 28px rgba(159,238,255,.14);
+  }
+}
+
+@media (max-width:720px){
+  :where(
+    .services-section,
+    .workflow-section,
+    .global-network-section,
+    .control-center-section,
+    .why-section,
+    .industries-section,
+    .cases-section,
+    .premium-cta-section
+  ){
+    scroll-margin-top:78px;
+  }
+
+  .case-card{
+    min-height:560px;
+  }
+
+  .case-progress,
+  .case-timeline{
+    position:relative;
+    left:auto;
+    right:auto;
+    bottom:auto;
+  }
+
+  .case-progress{
+    margin-top:28px;
+  }
+
+  .case-timeline{
+    margin-top:18px;
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,
+  *::before,
+  *::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    scroll-behavior:auto !important;
+    transition-duration:.01ms !important;
+  }
+
+  :where(
+    .services-heading,
+    .services-command,
+    .services-intel,
+    .service-unit,
+    .workflow-header,
+    .workflow-console,
+    .workflow-step,
+    .global-network-header,
+    .network-command,
+    .control-center-header,
+    .control-center-console,
+    .why-header,
+    .why-grid,
+    .why-block,
+    .industries-header,
+    .industries-grid,
+    .industry-panel,
+    .cases-header,
+    .cases-grid,
+    .case-card,
+    .premium-cta-copy,
+    .availability-panel,
+    .premium-cta-trust span
+  ){
+    opacity:1 !important;
+    filter:none !important;
+    transform:none !important;
+  }
+}

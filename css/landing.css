@@ -1,0 +1,19 @@
+@import url("hero.css");
+@import url("dashboard.css");
+@import url("scene.css");
+@import url("services.css");
+@import url("workflow.css");
+@import url("global-network.css");
+@import url("control-center.css");
+@import url("why.css");
+@import url("industries.css");
+@import url("cases.css");
+@import url("cta.css");
+@import url("effects.css");
+@import url("responsive.css");
+
+@media (max-width:720px){
+  .atlas-navbar.is-menu-open .nav-links{
+    display:flex;
+  }
+}
