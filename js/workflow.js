@@ -11,13 +11,13 @@ export function initWorkflow() {
   observeReveal(revealItems, { delay: 90, maxDelay: 220 });
   observeReveal(steps, {
     visibleClass: "is-active",
-    threshold: 0.14,
-    rootMargin: "0px 0px 12% 0px",
-    delay: 90,
-    maxDelay: 420,
+    threshold: 0.06,
+    rootMargin: "0px 0px 26% 0px",
+    delay: 70,
+    maxDelay: 280,
     onReveal: (_step, index) => {
       if (track && window.matchMedia("(min-width: 1181px)").matches) {
-        const progress = steps.length > 1 ? (index / (steps.length - 1)) * 84 : 0;
+        const progress = steps.length > 1 ? (index / (steps.length - 1)) * 100 : 0;
         track.style.setProperty("--workflow-progress", `${Math.max(0, progress)}%`);
       }
     }

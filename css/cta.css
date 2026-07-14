@@ -400,3 +400,217 @@
     grid-template-columns:1fr;
   }
 }
+
+/* Home recomposition: cleaner final commercial close, less card weight. */
+.premium-cta-section{
+  padding:88px 0 112px;
+}
+
+.premium-cta-layout{
+  grid-template-columns:minmax(0,1.55fr) minmax(320px,.78fr);
+  gap:20px;
+}
+
+.premium-cta-copy{
+  min-height:0;
+  padding:46px;
+}
+
+.premium-cta-copy h2{
+  max-width:780px;
+  font-size:clamp(38px,4.2vw,66px);
+}
+
+.premium-cta-copy p{
+  max-width:680px;
+  font-size:18px;
+  line-height:1.58;
+  margin-bottom:28px;
+}
+
+.premium-cta-actions{
+  margin-bottom:30px;
+}
+
+.premium-cta-primary,
+.premium-cta-secondary{
+  min-height:52px;
+  font-size:15px;
+}
+
+.premium-cta-primary{
+  min-width:240px;
+}
+
+.premium-cta-secondary{
+  min-width:250px;
+}
+
+.premium-cta-trust{
+  grid-template-columns:repeat(2,minmax(0,300px));
+}
+
+.availability-panel{
+  padding:22px;
+}
+
+.availability-response strong{
+  font-size:30px;
+}
+
+.availability-list div{
+  min-height:52px;
+}
+
+@media (max-width:1080px){
+  .premium-cta-layout{
+    grid-template-columns:1fr;
+  }
+}
+
+@media (max-width:720px){
+  .premium-cta-section{
+    padding:78px 0 90px;
+  }
+
+  .premium-cta-layout{
+    grid-template-columns:1fr;
+  }
+
+  .premium-cta-copy{
+    padding:26px 20px;
+  }
+
+  .premium-cta-copy h2{
+    font-size:36px;
+  }
+
+  .premium-cta-trust{
+    grid-template-columns:1fr;
+  }
+
+  .premium-cta-trust span{
+    overflow-wrap:anywhere;
+  }
+}
+
+/* Final compact pass: strong close, less vertical drag before the footer. */
+.premium-cta-section{
+  padding:68px 0 84px;
+}
+
+.premium-cta-layout{
+  gap:16px;
+}
+
+.premium-cta-copy{
+  padding:38px;
+}
+
+.premium-cta-copy p{
+  margin-bottom:22px;
+}
+
+.premium-cta-actions{
+  margin-bottom:24px;
+}
+
+.premium-cta-trust{
+  gap:10px;
+}
+
+.availability-panel{
+  padding:20px;
+}
+
+.availability-list{
+  gap:8px;
+  margin-bottom:14px;
+}
+
+.availability-list div{
+  min-height:48px;
+  padding:12px 14px;
+}
+
+.availability-coverage{
+  padding:14px;
+}
+
+@media (max-width:720px){
+  .premium-cta-section{
+    padding:58px 0 72px;
+  }
+
+  .premium-cta-copy{
+    padding:22px 18px;
+  }
+
+  .premium-cta-actions{
+    margin-bottom:20px;
+  }
+}
+
+/* Final rhythm pass: compact closing block without weakening the CTA. */
+.premium-cta-section{
+  margin-top:-8px;
+  padding:56px 0 68px;
+}
+
+.premium-cta-layout{
+  gap:14px;
+}
+
+.premium-cta-copy{
+  padding:32px;
+}
+
+.premium-cta-copy p{
+  margin-bottom:18px;
+}
+
+.premium-cta-actions{
+  margin-bottom:20px;
+}
+
+.premium-cta-primary,
+.premium-cta-secondary{
+  min-height:48px;
+}
+
+.availability-panel{
+  padding:18px;
+}
+
+.availability-response strong{
+  font-size:28px;
+}
+
+.availability-list{
+  gap:7px;
+  margin-bottom:12px;
+}
+
+.availability-list div{
+  min-height:44px;
+  padding:10px 12px;
+}
+
+.availability-coverage{
+  padding:12px;
+}
+
+@media (max-width:720px){
+  .premium-cta-section{
+    margin-top:-6px;
+    padding:50px 0 62px;
+  }
+
+  .premium-cta-copy{
+    padding:20px 16px;
+  }
+
+  .premium-cta-actions{
+    margin-bottom:18px;
+  }
+}

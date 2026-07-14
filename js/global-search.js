@@ -183,7 +183,13 @@ function injectTrigger(openPalette) {
     button.className = "global-search-trigger";
     button.type = "button";
     button.dataset.globalSearchTrigger = "true";
-    button.innerHTML = `<span>Buscar</span><kbd>Ctrl + K</kbd>`;
+    button.innerHTML = `
+      <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
+        <circle cx="11" cy="11" r="6"></circle>
+        <path d="m16 16 4 4"></path>
+      </svg>
+      <kbd>Ctrl K</kbd>
+    `;
     button.setAttribute("aria-label", "Abrir búsqueda global");
     button.setAttribute("aria-expanded", "false");
     button.setAttribute("aria-controls", "command-palette");

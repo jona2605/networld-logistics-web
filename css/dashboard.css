@@ -1,24 +1,40 @@
 .hero-dashboard{
   position:absolute;
-  right:6px;
-  top:46px;
-  width:424px;
-  max-height:620px;
-  padding:22px;
+  right:34px;
+  top:40px;
+  width:320px;
+  max-height:570px;
+  padding:18px;
+  box-sizing:border-box;
   border-radius:24px;
-  background:rgba(3,17,31,.78);
+  background:
+    linear-gradient(145deg, rgba(7,29,48,.86), rgba(2,14,27,.82) 52%, rgba(1,10,21,.9));
   border:1px solid rgba(159,238,255,.18);
-  box-shadow:0 30px 90px rgba(0,0,0,.38);
-  backdrop-filter:blur(18px);
+  box-shadow:
+    0 26px 74px rgba(0,0,0,.38),
+    inset 0 1px 0 rgba(255,255,255,.035),
+    inset 0 0 48px rgba(76,175,244,.025);
+  backdrop-filter:blur(20px) saturate(118%);
   z-index:30;
   pointer-events:auto;
+}
+
+.hero-dashboard::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:
+    linear-gradient(90deg, transparent, rgba(159,238,255,.22), transparent) top/72% 1px no-repeat,
+    radial-gradient(circle at 82% 8%, rgba(76,175,244,.09), transparent 25%);
+  pointer-events:none;
 }
 
 .dashboard-header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-bottom:20px;
+  margin-bottom:16px;
 }
 
 .dashboard-header div{
@@ -32,43 +48,43 @@
   height:12px;
   border-radius:50%;
   background:var(--accent);
-  box-shadow:0 0 18px var(--accent);
+  box-shadow:0 0 12px rgba(34,201,60,.82);
 }
 
 .dashboard-header strong{
   color:white;
-  font-size:21px;
+  font-size:19px;
   font-weight:800;
 }
 
 .dashboard-header small{
   color:var(--text-line);
-  font-size:15px;
+  font-size:14px;
 }
 
 .dashboard-metrics{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-bottom:22px;
+  gap:9px;
+  margin-bottom:16px;
 }
 
 .dashboard-metrics div{
-  min-height:162px;
+  min-height:96px;
   position:relative;
-  padding:18px 16px 54px;
+  padding:12px 12px 30px;
   border-radius:15px;
   overflow:hidden;
   background:linear-gradient(145deg, rgba(8,25,43,.92), rgba(3,16,29,.76));
-  border:1px solid rgba(159,238,255,.12);
+  border:1px solid rgba(159,238,255,.095);
 }
 
 .dashboard-metrics strong{
   display:block;
   color:var(--accent);
-  font-size:35px;
+  font-size:27px;
   line-height:1;
-  margin-bottom:12px;
+  margin-bottom:8px;
   font-weight:900;
 }
 
@@ -76,22 +92,22 @@
   display:block;
   max-width:130px;
   color:#d3dfeb;
-  font-size:15px;
+  font-size:12px;
   line-height:1.38;
 }
 
 .dashboard-metrics i{
   position:absolute;
-  left:18px;
-  right:18px;
-  bottom:17px;
-  height:40px;
+  left:12px;
+  right:12px;
+  bottom:10px;
+  height:25px;
   background:
     linear-gradient(180deg, rgba(34,201,60,.16), transparent 70%),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 40' preserveAspectRatio='none'%3E%3Cpolyline points='0,31 12,25 24,28 36,21 48,23 60,17 72,20 84,10 96,15 108,8 120,4' fill='none' stroke='%2322C93C' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-size:100% 100%;
   background-repeat:no-repeat;
-  opacity:.82;
+  opacity:.68;
 }
 
 .dashboard-metrics i::after{
@@ -103,30 +119,30 @@
 }
 
 .recent-ops h3{
-  margin-bottom:12px;
+  margin-bottom:10px;
   color:#dce9f6;
-  font-size:16px;
+  font-size:14px;
   text-transform:uppercase;
   letter-spacing:1px;
   font-weight:900;
 }
 
 .op-item{
-  min-height:62px;
+  min-height:41px;
   display:grid;
-  grid-template-columns:36px 1fr auto;
+  grid-template-columns:32px 1fr;
   align-items:center;
-  gap:12px;
-  padding:10px 12px;
+  gap:10px;
+  padding:6px 9px;
   border-radius:15px;
-  background:rgba(6,22,38,.76);
-  border:1px solid var(--border-cyan);
-  margin-bottom:10px;
+  background:rgba(6,22,38,.68);
+  border:1px solid rgba(159,238,255,.12);
+  margin-bottom:6px;
 }
 
 .op-item > span{
-  width:36px;
-  height:36px;
+  width:32px;
+  height:32px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -139,7 +155,7 @@
 
 .op-item p{
   color:#f8fbff;
-  font-size:14px;
+  font-size:12px;
   line-height:1.22;
   font-weight:800;
 }
@@ -147,17 +163,17 @@
 .op-item small{
   display:block;
   color:#c4d4e4;
-  font-size:12px;
+  font-size:10px;
   font-weight:500;
   margin-top:3px;
 }
 
 .op-item em{
-  display:flex;
+  display:none;
   align-items:center;
   gap:6px;
   color:var(--accent);
-  font-size:11px;
+  font-size:10px;
   font-style:normal;
   font-weight:800;
   white-space:nowrap;
@@ -177,5 +193,5 @@
   height:7px;
   border-radius:50%;
   background:currentColor;
-  box-shadow:0 0 12px currentColor;
+  box-shadow:0 0 8px currentColor;
 }

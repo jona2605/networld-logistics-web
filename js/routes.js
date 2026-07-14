@@ -1,791 +1,536 @@
 import * as THREE from "three";
 import { latLngToVector } from "./earth.js";
-import { createCargoPlane } from "./airplane.js";
-import { createContainerShip } from "./ship.js";
 
-const ROUTE_RADIUS = 1.535;
+const EARTH_RADIUS = 1.535;
+const TRAIL_POINTS = 52;
+const ROUTE_COLORS = {
+  primaryBlue: 0x9feeff,
+  primaryGreen: 0x22c93c,
+  secondaryBlue: 0x4caff4,
+  secondaryGreen: 0x43d6a1
+};
 const HUB_COLORS = {
   port: 0x22c93c,
   airport: 0x4caff4,
   center: 0xffffff
 };
-const ROUTE_LAYERS = {
-  near: { radius: 1.555, height: 1.68, opacity: 0.48 },
-  mid: { radius: 1.69, height: 1.98, opacity: 0.36 },
-  far: { radius: 1.82, height: 2.28, opacity: 0.14 }
-};
-const ROUTE_WEIGHTS = {
-  primary: { thickness: 0.0028, opacity: 1 },
-  secondary: { thickness: 0.00155, opacity: 0.58 },
-  background: { thickness: 0.0009, opacity: 0.26 }
-};
 
-function hub(lat, lon, radius = ROUTE_RADIUS) {
+function point(lat, lon, radius = EARTH_RADIUS) {
   return latLngToVector(lat, lon, radius);
 }
 
-function liftPoints(points, radius) {
-  return points.map(point => point.clone().normalize().multiplyScalar(radius));
-}
-
-function createDataPulse(color = 0x4caff4, radius = 0.009) {
-  const group = new THREE.Group();
-  const core = new THREE.Mesh(
-    new THREE.SphereGeometry(radius, 12, 12),
-    new THREE.MeshBasicMaterial({
-      color,
-      transparent: true,
-      opacity: 0.96,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false
-    })
-  );
-  const halo = new THREE.Mesh(
-    new THREE.SphereGeometry(radius * 3.3, 12, 12),
-    new THREE.MeshBasicMaterial({
-      color,
-      transparent: true,
-      opacity: 0.09,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false
-    })
-  );
-
-  group.add(core, halo);
-  group.userData = { core, halo };
-  return group;
-}
-
-function createHubMarker(color, profile) {
-  const group = new THREE.Group();
-  const core = new THREE.Mesh(
-    new THREE.SphereGeometry(profile.radius, 12, 12),
-    new THREE.MeshBasicMaterial({
-      color,
-      transparent: true,
-      opacity: profile.coreOpacity,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false
-    })
-  );
-  const halo = new THREE.Mesh(
-    new THREE.SphereGeometry(profile.radius * profile.haloScale, 14, 14),
-    new THREE.MeshBasicMaterial({
-      color,
-      transparent: true,
-      opacity: profile.haloOpacity,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false
-    })
-  );
-  const ring = new THREE.Mesh(
-    new THREE.RingGeometry(profile.radius * 1.9, profile.radius * 2.35, 22),
-    new THREE.MeshBasicMaterial({
-      color,
-      transparent: true,
-      opacity: profile.ringOpacity,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-      side: THREE.DoubleSide
-    })
-  );
-
-  ring.rotation.x = Math.PI / 2;
-  group.add(halo, ring, core);
-  group.userData = { core, halo, ring, profile };
-  return group;
-}
-
-function hubProfile(tier = "medium") {
-  const profiles = {
-    major: { radius: 0.0098, haloScale: 4.1, coreOpacity: 0.98, haloOpacity: 0.12, ringOpacity: 0.22, pulseDepth: 0.2, pulseSpeed: 1.55 },
-    medium: { radius: 0.0074, haloScale: 3.45, coreOpacity: 0.92, haloOpacity: 0.08, ringOpacity: 0.13, pulseDepth: 0.16, pulseSpeed: 1.75 },
-    small: { radius: 0.0056, haloScale: 3.1, coreOpacity: 0.82, haloOpacity: 0.055, ringOpacity: 0.08, pulseDepth: 0.12, pulseSpeed: 1.95 }
-  };
-
-  return profiles[tier] || profiles.medium;
-}
-
-function createRoutePath(points, height) {
+function createRouteCurve(routePoints, altitude) {
   const segments = [];
 
-  for (let index = 0; index < points.length - 1; index += 1) {
-    const start = points[index];
-    const end = points[index + 1];
-    const mid = new THREE.Vector3()
-      .addVectors(start, end)
-      .multiplyScalar(0.5)
+  for (let index = 0; index < routePoints.length - 1; index += 1) {
+    const start = routePoints[index].clone().normalize().multiplyScalar(EARTH_RADIUS + 0.014);
+    const end = routePoints[index + 1].clone().normalize().multiplyScalar(EARTH_RADIUS + 0.014);
+    const angularDistance = start.angleTo(end);
+    const segmentLift = Math.min(altitude, 0.045 + angularDistance * altitude * 0.52);
+    const midpoint = start.clone()
+      .add(end)
       .normalize()
-      .multiplyScalar(height);
+      .multiplyScalar(EARTH_RADIUS + segmentLift);
 
-    segments.push(new THREE.QuadraticBezierCurve3(start, mid, end));
+    segments.push(new THREE.QuadraticBezierCurve3(start, midpoint, end));
   }
 
   return segments;
 }
 
-function getRoutePoint(segments, t) {
-  const scaled = t * segments.length;
-  const index = Math.min(Math.floor(scaled), segments.length - 1);
-  const localT = scaled - index;
-  return segments[index].getPointAt(localT);
+function getCurvePoint(segments, progress) {
+  const normalized = THREE.MathUtils.clamp(progress, 0, 0.999999);
+  const scaled = normalized * segments.length;
+  const segmentIndex = Math.min(Math.floor(scaled), segments.length - 1);
+  return segments[segmentIndex].getPointAt(scaled - segmentIndex);
 }
 
-function createRouteTrace(segments, color, opacity, thickness) {
+function createTrailGeometry(color, strength = 1) {
+  const positions = new Float32Array(TRAIL_POINTS * 3);
+  const colors = new Float32Array(TRAIL_POINTS * 3);
+  const routeColor = new THREE.Color(color);
+
+  for (let index = 0; index < TRAIL_POINTS; index += 1) {
+    const fade = index / (TRAIL_POINTS - 1);
+    const intensity = (0.035 + Math.pow(fade, 1.28) * 0.965) * strength;
+    colors[index * 3] = routeColor.r * intensity;
+    colors[index * 3 + 1] = routeColor.g * intensity;
+    colors[index * 3 + 2] = routeColor.b * intensity;
+  }
+
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+  return geometry;
+}
+
+function createTrail(route) {
+  const visualScale = route.level === 1 ? 1.18 : route.level === 2 ? 0.88 : 0.64;
   const group = new THREE.Group();
-  const material = new THREE.MeshBasicMaterial({
+  const glowGeometry = createTrailGeometry(route.color, route.level === 1 ? 0.82 : 0.64);
+  const coreGeometry = createTrailGeometry(route.color, 1);
+  const particleGeometry = createTrailGeometry(route.color, 1);
+  const glowMaterial = new THREE.LineBasicMaterial({
+    vertexColors: true,
+    transparent: true,
+    opacity: 0,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    depthTest: true
+  });
+  const coreMaterial = new THREE.LineBasicMaterial({
+    vertexColors: true,
+    transparent: true,
+    opacity: 0,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    depthTest: true
+  });
+  const glow = new THREE.Line(glowGeometry, glowMaterial);
+  const core = new THREE.Line(coreGeometry, coreMaterial);
+  const particleMaterial = new THREE.PointsMaterial({
+    size: 0.018 + visualScale * 0.012,
+    sizeAttenuation: true,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    depthTest: true
+  });
+  const particles = new THREE.Points(particleGeometry, particleMaterial);
+  const headMaterial = new THREE.MeshBasicMaterial({
+    color: route.color,
+    transparent: true,
+    opacity: 0,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    depthTest: true
+  });
+  const head = new THREE.Mesh(new THREE.SphereGeometry(0.01 + visualScale * 0.008, 12, 12), headMaterial);
+  const haloMaterial = headMaterial.clone();
+  const halo = new THREE.Mesh(
+    new THREE.SphereGeometry(0.028 + visualScale * 0.024, 12, 12),
+    haloMaterial
+  );
+  const destinationMaterial = headMaterial.clone();
+  const destinationPulse = new THREE.Mesh(
+    new THREE.RingGeometry(0.012, 0.022, 24),
+    destinationMaterial
+  );
+
+  haloMaterial.opacity = 0;
+  destinationMaterial.opacity = 0;
+  glow.renderOrder = 4;
+  core.renderOrder = 5;
+  particles.renderOrder = 5;
+  halo.renderOrder = 5;
+  head.renderOrder = 6;
+  destinationPulse.renderOrder = 6;
+  group.add(glow, core, particles, halo, head, destinationPulse);
+
+  return {
+    group,
+    core,
+    glow,
+    particles,
+    head,
+    halo,
+    destinationPulse,
+    materials: {
+      core: coreMaterial,
+      glow: glowMaterial,
+      particles: particleMaterial,
+      head: headMaterial,
+      halo: haloMaterial,
+      destination: destinationMaterial
+    }
+  };
+}
+
+function createBaseTrace(route) {
+  const positions = [];
+  const samplesPerSegment = 20;
+
+  route.segments.forEach((segment, segmentIndex) => {
+    for (let index = 0; index <= samplesPerSegment; index += 1) {
+      if (segmentIndex > 0 && index === 0) continue;
+      const position = segment.getPointAt(index / samplesPerSegment);
+      positions.push(position.x, position.y, position.z);
+    }
+  });
+
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+  const material = new THREE.LineBasicMaterial({
+    color: route.color,
+    transparent: true,
+    opacity: route.level === 1 ? 0.26 : route.level === 2 ? 0.145 : 0.068,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    depthTest: true
+  });
+  const line = new THREE.Line(geometry, material);
+  line.renderOrder = 3;
+  line.userData.baseOpacity = material.opacity;
+  return line;
+}
+
+function updateTrail(route, visual = route.visual, progress = route.progress) {
+  const start = Math.max(0, progress - route.tailLength);
+  const span = Math.max(progress - start, 0.0001);
+  const destination = getCurvePoint(route.segments, 0.999);
+
+  [visual.core, visual.glow, visual.particles].forEach(line => {
+    const positions = line.geometry.attributes.position.array;
+    for (let index = 0; index < TRAIL_POINTS; index += 1) {
+      const local = index / (TRAIL_POINTS - 1);
+      const trailProgress = start + span * local;
+      const position = getCurvePoint(route.segments, trailProgress);
+      positions[index * 3] = position.x;
+      positions[index * 3 + 1] = position.y;
+      positions[index * 3 + 2] = position.z;
+    }
+    line.geometry.attributes.position.needsUpdate = true;
+  });
+
+  const headPosition = getCurvePoint(route.segments, progress);
+  visual.head.position.copy(headPosition);
+  visual.halo.position.copy(headPosition);
+  visual.destinationPulse.position.copy(destination);
+  visual.destinationPulse.lookAt(destination.clone().multiplyScalar(1.3));
+}
+
+function setRouteVisibility(route, visibility, visual = route.visual, progress = route.progress, strength = 1) {
+  const premiumSupport = route.premiumMode ? 1.18 : 1;
+  const level = route.level === 1 ? 1.16 : route.level === 2 ? 0.9 : 0.62;
+  const opacity = visibility * strength * premiumSupport;
+  visual.materials.core.opacity = opacity * level;
+  visual.materials.glow.opacity = 0.68 * opacity * level;
+  visual.materials.particles.opacity = opacity * level;
+  visual.materials.head.opacity = 0.95 * opacity;
+  visual.materials.halo.opacity = 0.22 * opacity * level;
+
+  const arrival = THREE.MathUtils.smoothstep(progress, 0.86, 1);
+  visual.materials.destination.opacity = arrival * (1 - arrival) * 0.55 * opacity;
+  visual.destinationPulse.scale.setScalar(0.72 + arrival * 1.45);
+}
+
+function createHubMarker(color, size, phase) {
+  const group = new THREE.Group();
+  const coreMaterial = new THREE.MeshBasicMaterial({
     color,
     transparent: true,
-    opacity,
+    opacity: 0.9,
     blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    depthTest: true
+  });
+  const haloMaterial = coreMaterial.clone();
+  haloMaterial.opacity = 0.09;
+  const ringMaterial = coreMaterial.clone();
+  ringMaterial.opacity = 0.24;
+  const core = new THREE.Mesh(new THREE.SphereGeometry(size, 10, 10), coreMaterial);
+  const halo = new THREE.Mesh(new THREE.SphereGeometry(size * 3.2, 10, 10), haloMaterial);
+  const ring = new THREE.Mesh(
+    new THREE.RingGeometry(size * 1.8, size * 2.45, 24),
+    ringMaterial
+  );
+  ring.renderOrder = 7;
+  group.add(halo, ring, core);
+  group.userData = { coreMaterial, haloMaterial, ringMaterial, ring, phase, size };
+  return group;
+}
+
+function createLabelStem(normal, color) {
+  const geometry = new THREE.BufferGeometry().setFromPoints([
+    normal.clone().multiplyScalar(EARTH_RADIUS + 0.02),
+    normal.clone().multiplyScalar(EARTH_RADIUS + 0.12)
+  ]);
+  const material = new THREE.LineBasicMaterial({
+    color,
+    transparent: true,
+    opacity: 0,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    depthTest: true
+  });
+  const stem = new THREE.Line(geometry, material);
+  stem.renderOrder = 8;
+  return stem;
+}
+
+function createHubLabel(title, subtitle, color) {
+  const canvas = document.createElement("canvas");
+  canvas.width = 512;
+  canvas.height = 112;
+  const context = canvas.getContext("2d");
+  const accent = `#${new THREE.Color(color).getHexString()}`;
+
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.shadowColor = "rgba(76, 175, 244, 0.38)";
+  context.shadowBlur = 18;
+  const glass = context.createLinearGradient(18, 8, 494, 100);
+  glass.addColorStop(0, "rgba(4, 31, 55, 0.96)");
+  glass.addColorStop(0.58, "rgba(2, 18, 35, 0.9)");
+  glass.addColorStop(1, "rgba(1, 9, 21, 0.84)");
+  context.fillStyle = glass;
+  context.strokeStyle = "rgba(159, 238, 255, 0.5)";
+  context.lineWidth = 2;
+  context.beginPath();
+  context.roundRect(18, 8, 476, 92, 18);
+  context.fill();
+  context.stroke();
+  context.shadowBlur = 0;
+  const accentLine = context.createLinearGradient(18, 20, 18, 90);
+  accentLine.addColorStop(0, accent);
+  accentLine.addColorStop(1, "rgba(76, 175, 244, 0.12)");
+  context.fillStyle = accentLine;
+  context.beginPath();
+  context.roundRect(18, 22, 4, 62, 2);
+  context.fill();
+  context.fillStyle = accent;
+  context.shadowColor = accent;
+  context.shadowBlur = 12;
+  context.beginPath();
+  context.arc(48, 54, 7, 0, Math.PI * 2);
+  context.fill();
+  context.shadowBlur = 0;
+  context.fillStyle = "#f4fbff";
+  context.font = "600 26px Poppins, Arial, sans-serif";
+  context.fillText(title, 70, 47);
+  context.fillStyle = "#9feeff";
+  context.font = "400 17px Poppins, Arial, sans-serif";
+  context.fillText(subtitle, 70, 75);
+  context.fillStyle = "rgba(34, 201, 60, 0.9)";
+  context.font = "600 13px Poppins, Arial, sans-serif";
+  context.fillText("LIVE", 430, 31);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.minFilter = THREE.LinearFilter;
+  const material = new THREE.SpriteMaterial({
+    map: texture,
+    transparent: true,
+    opacity: 0,
+    depthTest: true,
     depthWrite: false
   });
-
-  segments.forEach(segment => {
-    group.add(new THREE.Mesh(
-      new THREE.TubeGeometry(segment, 28, thickness, 5, false),
-      material
-    ));
-  });
-
-  group.userData = { material, baseOpacity: opacity };
-  return group;
+  const sprite = new THREE.Sprite(material);
+  sprite.scale.set(0.78, 0.1705, 1);
+  sprite.renderOrder = 9;
+  return sprite;
 }
 
-function intensitySettings(level = "secondary") {
-  const settings = {
-    primary: { trace: 0.95, pulse: 0.92, count: [0, 0.22, 0.47, 0.73] },
-    secondary: { trace: 0.52, pulse: 0.74, count: [0, 0.31, 0.66] },
-    background: { trace: 0.2, pulse: 0.54, count: [0, 0.46] }
+export function createRoutes(earthGroup, camera) {
+  const premiumMode = document.querySelector(".atlas-hero")?.classList.contains("hero-premium-2") || false;
+  const locations = {
+    shenzhen: point(22.5431, 114.0579),
+    shanghai: point(31.2304, 121.4737),
+    singapore: point(1.3521, 103.8198),
+    busan: point(35.1796, 129.0756),
+    miami: point(25.7617, -80.1918),
+    losAngeles: point(34.0522, -118.2437),
+    houston: point(29.7604, -95.3698),
+    newYork: point(40.7128, -74.006),
+    panama: point(8.9824, -79.5199),
+    hamburg: point(53.5511, 9.9937),
+    valencia: point(39.4699, -0.3763),
+    rotterdam: point(51.9244, 4.4777),
+    sanSalvador: point(13.6929, -89.2182),
+    acajutla: point(13.5928, -89.8398),
+    cartagena: point(10.391, -75.4794),
+    callao: point(-12.0464, -77.1428),
+    santos: point(-23.9608, -46.3336),
+    mexicoCity: point(19.4326, -99.1332),
+    dubai: point(25.2048, 55.2708),
+    lagos: point(6.5244, 3.3792),
+    dakar: point(14.7167, -17.4677),
+    mombasa: point(-4.0435, 39.6682),
+    durban: point(-29.8587, 31.0218),
+    northPacific: point(33, 168),
+    centralPacific: point(17, -145),
+    eastPacific: point(13, -111),
+    northAtlantic: point(43, -35),
+    midAtlantic: point(18, -40),
+    caribbean: point(16, -67),
+    southAtlantic: point(-10, -30),
+    indianOcean: point(-15, 75)
   };
 
-  return settings[level] || settings.secondary;
-}
+  // Three route levels keep the network global without flattening its hierarchy.
+  const routeDefinitions = [
+    { id: "sz-sv", points: ["shenzhen", "centralPacific", "sanSalvador"], type: "air", level: 1, primary: true, color: ROUTE_COLORS.primaryBlue },
+    { id: "sh-sv", points: ["shanghai", "northPacific", "losAngeles", "sanSalvador"], type: "air", level: 1, primary: true, color: ROUTE_COLORS.primaryBlue },
+    { id: "mia-sv", points: ["miami", "sanSalvador"], type: "air", level: 1, primary: true, color: ROUTE_COLORS.primaryGreen },
+    { id: "lax-aca", points: ["losAngeles", "acajutla"], type: "air", level: 1, primary: true, color: ROUTE_COLORS.primaryBlue },
+    { id: "hou-sv", points: ["houston", "sanSalvador"], type: "air", level: 1, primary: true, color: ROUTE_COLORS.primaryGreen },
+    { id: "pty-sv", points: ["panama", "sanSalvador"], type: "regional", level: 1, primary: true, color: ROUTE_COLORS.primaryGreen },
+    { id: "ctg-aca", points: ["cartagena", "panama", "acajutla"], type: "sea", level: 1, primary: true, color: ROUTE_COLORS.secondaryGreen },
+    { id: "vlc-aca", points: ["valencia", "midAtlantic", "caribbean", "acajutla"], type: "sea", level: 1, primary: true, color: ROUTE_COLORS.secondaryGreen },
+    { id: "ham-aca", points: ["hamburg", "northAtlantic", "caribbean", "acajutla"], type: "sea", level: 1, primary: true, color: ROUTE_COLORS.secondaryBlue },
+    { id: "rtm-aca", points: ["rotterdam", "northAtlantic", "caribbean", "acajutla"], type: "sea", level: 1, primary: true, color: ROUTE_COLORS.secondaryBlue },
+    { id: "mex-sv", points: ["mexicoCity", "sanSalvador"], type: "regional", level: 1, primary: true, color: ROUTE_COLORS.primaryGreen },
+    { id: "cll-aca", points: ["callao", "eastPacific", "acajutla"], type: "sea", level: 1, primary: true, color: ROUTE_COLORS.secondaryBlue },
 
-function routeHeightLimit(type) {
-  return type === "air" ? 2.22 : type === "sea" ? 1.86 : 1.92;
-}
+    { id: "sh-rtm", points: ["shanghai", "dubai", "valencia", "rotterdam"], type: "sea", level: 2, color: ROUTE_COLORS.secondaryBlue },
+    { id: "sz-lax", points: ["shenzhen", "northPacific", "losAngeles"], type: "air", level: 2, color: ROUTE_COLORS.secondaryBlue },
+    { id: "ham-mia", points: ["hamburg", "northAtlantic", "miami"], type: "air", level: 2, color: ROUTE_COLORS.secondaryBlue },
+    { id: "pty-ctg", points: ["panama", "cartagena"], type: "regional", level: 2, color: ROUTE_COLORS.secondaryGreen },
+    { id: "vlc-ham", points: ["valencia", "hamburg"], type: "regional", level: 2, color: ROUTE_COLORS.secondaryBlue },
+    { id: "hou-mex", points: ["houston", "mexicoCity"], type: "regional", level: 2, color: ROUTE_COLORS.secondaryGreen },
+    { id: "bus-lax", points: ["busan", "northPacific", "losAngeles"], type: "sea", level: 2, color: ROUTE_COLORS.secondaryBlue },
+    { id: "rtm-vlc", points: ["rotterdam", "valencia"], type: "regional", level: 2, color: ROUTE_COLORS.secondaryBlue },
+    { id: "mia-pty", points: ["miami", "panama"], type: "regional", level: 2, color: ROUTE_COLORS.secondaryGreen },
+    { id: "ctg-cll", points: ["cartagena", "panama", "callao"], type: "sea", level: 2, color: ROUTE_COLORS.secondaryGreen },
 
-function createOrbitalNode(color = 0x9feeff) {
-  const group = new THREE.Group();
-  const node = new THREE.Mesh(
-    new THREE.OctahedronGeometry(0.017, 0),
-    new THREE.MeshBasicMaterial({
-      color,
-      transparent: true,
-      opacity: 0.92,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false
-    })
-  );
-  const halo = new THREE.Mesh(
-    new THREE.SphereGeometry(0.052, 12, 12),
-    new THREE.MeshBasicMaterial({
-      color,
-      transparent: true,
-      opacity: 0.045,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false
-    })
-  );
-
-  group.add(halo, node);
-  return group;
-}
-
-function orientAlongRoute(object, segments, t) {
-  const pos = getRoutePoint(segments, t);
-  const next = getRoutePoint(segments, Math.min(t + 0.006, 0.999));
-  const prev = getRoutePoint(segments, Math.max(t - 0.006, 0.001));
-  const turn = next.clone().sub(pos).normalize().cross(pos.clone().sub(prev).normalize()).dot(pos.clone().normalize());
-  const isShip = object.userData.vehicleType === "ship";
-  const bank = isShip ? 0.08 : 1.8;
-  const maxBank = isShip ? 0.08 : 0.34;
-
-  object.up.copy(pos.clone().normalize());
-  object.position.copy(pos);
-  object.lookAt(next);
-  object.rotateZ(THREE.MathUtils.clamp(turn * bank, -maxBank, maxBank));
-}
-
-function addRoute(earthGroup, routes, config, routeIndex) {
-  const intensity = intensitySettings(config.intensity);
-  const visibilityBoost = config.intensity === "primary" ? 1.35 : config.intensity === "secondary" ? 1.65 : 1.45;
-  const layer = ROUTE_LAYERS[
-    config.layer || (config.intensity === "background" ? "far" : config.type === "air" ? "mid" : "near")
+    { id: "rtm-los", points: ["rotterdam", "lagos"], type: "air", level: 3, color: ROUTE_COLORS.secondaryBlue },
+    { id: "vlc-dkr", points: ["valencia", "dakar"], type: "sea", level: 3, color: ROUTE_COLORS.secondaryBlue }
   ];
-  const weight = ROUTE_WEIGHTS[config.intensity || "secondary"];
-  const routePoints = liftPoints(config.points, layer.radius);
-  const routeHeight = Math.min(config.height ?? layer.height, routeHeightLimit(config.type));
-  const segments = createRoutePath(routePoints, routeHeight);
-  const vehicleSegments = config.loopPoints
-    ? createRoutePath(liftPoints(config.loopPoints, layer.radius), routeHeight)
-    : segments;
-  const baseOpacity = config.traceOpacity * layer.opacity * weight.opacity * intensity.trace * visibilityBoost;
-  const trace = createRouteTrace(segments, config.color, baseOpacity, config.thickness || weight.thickness);
-  const offsets = config.particles || config.pulseOffsets ? (config.pulseOffsets || intensity.count) : [];
-  const pulses = offsets.map(offset => {
-    const pulse = createDataPulse(config.color, config.pulseRadius * intensity.pulse);
-    earthGroup.add(pulse);
-    return { mesh: pulse, offset };
+  const altitudeByType = { air: 0.34, sea: 0.14, regional: 0.095 };
+  const durationByType = { air: 13.5, sea: 17.5, regional: 11.5 };
+  const routes = routeDefinitions.map((definition, index) => {
+    const route = {
+      ...definition,
+      segments: createRouteCurve(
+        definition.points.map(key => locations[key]),
+        altitudeByType[definition.type] * (0.9 + (index % 3) * 0.09)
+      ),
+      duration: durationByType[definition.type] + (index % 4) * 0.85,
+      tailLength: definition.type === "sea" ? 0.19 : definition.type === "regional" ? 0.16 : 0.24,
+      progress: 0,
+      phase: (index * 0.137 + (index % 3) * 0.071) % 1,
+      visibility: 0,
+      lifecycleVisibility: 0,
+      premiumMode,
+      visual: null,
+      baseTrace: null
+    };
+    route.baseTrace = createBaseTrace(route);
+    earthGroup.add(route.baseTrace);
+    route.visual = createTrail(route);
+    route.visual.group.visible = true;
+    earthGroup.add(route.visual.group);
+    return route;
   });
-  const vehicle = config.vehicleFactory?.();
 
-  earthGroup.add(trace);
-  if (vehicle) earthGroup.add(vehicle);
-
-  routes.push({
-    ...config,
-    segments,
-    vehicleSegments,
-    pulses,
-    vehicle,
-    t: config.start ?? routeIndex * 0.13,
-    lastT: config.start ?? routeIndex * 0.13,
-    dashboard: config.dashboard,
-    trace,
-    baseOpacity,
-    fadeSpeed: config.fadeSpeed ?? (config.type === "air" ? 0.34 : 0.22),
-    fadePhase: config.fadePhase ?? routeIndex * 0.73,
-    minVisibility: config.minVisibility ?? (config.intensity === "primary" ? 0.34 : config.intensity === "secondary" ? 0.16 : 0.04)
-  });
-}
-
-
-export function createRoutes(earthGroup) {
-  const routes = [];
-  const cityMarkers = [];
-  const orbitalNodes = [];
-
-  const points = {
-    shenzhen: hub(22.5431, 114.0579),
-    shanghai: hub(31.2304, 121.4737),
-    ningbo: hub(29.8683, 121.544),
-    singapore: hub(1.3521, 103.8198),
-    busan: hub(35.1796, 129.0756),
-    hongKong: hub(22.3193, 114.1694),
-    tokyo: hub(35.6762, 139.6503),
-    dubai: hub(25.2048, 55.2708),
-    doha: hub(25.2854, 51.531),
-    miami: hub(25.7617, -80.1918),
-    houston: hub(29.7604, -95.3698),
-    newYork: hub(40.7128, -74.006),
-    chicago: hub(41.8781, -87.6298),
-    losAngeles: hub(34.0522, -118.2437),
-    longBeach: hub(33.7701, -118.1937),
-    seattle: hub(47.6061, -122.3328),
-    panama: hub(8.9824, -79.5199),
-    hamburg: hub(53.5511, 9.9937),
-    valencia: hub(39.4699, -0.3763),
-    rotterdam: hub(51.9244, 4.4777),
-    antwerp: hub(51.2194, 4.4025),
-    london: hub(51.5072, -0.1276),
-    paris: hub(48.8566, 2.3522),
-    sanSalvador: hub(13.6929, -89.2182),
-    acajutla: hub(13.5928, -89.8398),
-    manzanillo: hub(19.1138, -104.3385),
-    callao: hub(-12.0464, -77.1428),
-    santos: hub(-23.9608, -46.3336),
-    buenaventura: hub(3.8801, -77.0312),
-    buenosAires: hub(-34.6037, -58.3816),
-    cartagena: hub(10.391, -75.4794),
-    bogota: hub(4.711, -74.0721),
-    sydney: hub(-33.8688, 151.2093),
-    melbourne: hub(-37.8136, 144.9631),
-    auckland: hub(-36.8485, 174.7633),
-    northPacific: hub(29, 168, 1.57),
-    centralPacific: hub(16, -145, 1.565),
-    eastPacific: hub(12, -108, 1.56),
-    westPacific: hub(8, 142, 1.56),
-    northAtlantic: hub(42, -32, 1.56),
-    midAtlantic: hub(12, -36, 1.555),
-    caribbean: hub(16, -67, 1.555),
-    canalAtlantic: hub(10, -79, 1.55),
-    southAtlantic: hub(-18, -28, 1.555),
-    westSouthAmerica: hub(-10, -86, 1.555)
-  };
-
-  const hubSpecs = [
-    ["shenzhen", "port", "major"],
-    ["shanghai", "port", "major"],
-    ["miami", "airport", "major"],
-    ["losAngeles", "airport", "major"],
-    ["panama", "port", "major"],
-    ["acajutla", "port", "medium"],
-    ["sanSalvador", "center", "small"],
-    ["hamburg", "port", "major"],
-    ["valencia", "port", "medium"],
-    ["rotterdam", "port", "major"]
+  const hubDefinitions = [
+    ["shenzhen", "airport", 0.011, "Shenzhen", "China"],
+    ["shanghai", "airport", 0.011],
+    ["miami", "airport", 0.0115, "Miami", "EE.UU."],
+    ["losAngeles", "airport", 0.0105],
+    ["houston", "airport", 0.009],
+    ["panama", "port", 0.0115],
+    ["acajutla", "port", 0.0105, "Acajutla", "El Salvador"],
+    ["sanSalvador", "center", 0.011, "El Salvador", "Centro operativo"],
+    ["hamburg", "port", 0.0105, "Hamburgo", "Alemania"],
+    ["valencia", "port", 0.0095],
+    ["rotterdam", "port", 0.011],
+    ["cartagena", "port", 0.009],
+    ["callao", "port", 0.009],
+    ["mexicoCity", "center", 0.009],
+    ["lagos", "port", 0.008],
+    ["dakar", "port", 0.0075],
+    ["mombasa", "port", 0.008],
+    ["durban", "port", 0.008]
   ];
-  const routeSpecs = [
-    {
-      type: "air",
-      points: [points.shenzhen, points.centralPacific, points.sanSalvador],
-      height: 2.72,
-      speed: 0.00275,
-      color: 0x9feeff,
-      traceOpacity: 0.052,
-      pulseRadius: 0.0088,
-      vehicleFactory: createCargoPlane,
-      loopPoints: [points.shenzhen, points.centralPacific, points.sanSalvador, points.miami, points.northPacific, points.shenzhen],
-      intensity: "primary",
-      dashboard: { origin: "Shenzhen", destination: "San Salvador", mode: "Carga aerea" },
-      particles: true,
-      pulseOffsets: [0, 0.34, 0.68],
-      start: 0.12
-    },
-    {
-      type: "air",
-      points: [points.shenzhen, points.northPacific, points.miami],
-      height: 2.82,
-      speed: 0.00255,
-      color: 0x9feeff,
-      traceOpacity: 0.058,
-      pulseRadius: 0.008,
-      vehicleFactory: createCargoPlane,
-      loopPoints: [points.shenzhen, points.northPacific, points.miami, points.losAngeles, points.centralPacific, points.shenzhen],
-      intensity: "primary",
-      dashboard: { origin: "Shenzhen", destination: "Miami", mode: "Carga consolidada" },
-      start: 0.58
-    },
-    {
-      type: "sea",
-      points: [points.shenzhen, points.singapore, points.westPacific, points.centralPacific, points.panama],
-      height: 1.82,
-      speed: 0.00105,
-      color: 0x4caff4,
-      traceOpacity: 0.055,
-      pulseRadius: 0.0076,
-      vehicleFactory: createContainerShip,
-      loopPoints: [points.shenzhen, points.singapore, points.westPacific, points.centralPacific, points.panama, points.centralPacific, points.westPacific, points.singapore, points.shenzhen],
-      intensity: "primary",
-      dashboard: { origin: "Shenzhen", destination: "Panama", mode: "Ruta maritima" },
-      particles: true,
-      start: 0.48,
-      pulseOffsets: [0, 0.25, 0.5, 0.75]
-    },
-    {
-      type: "air",
-      points: [points.shanghai, points.northPacific, points.losAngeles],
-      height: 2.58,
-      speed: 0.00265,
-      color: 0x9feeff,
-      traceOpacity: 0.058,
-      pulseRadius: 0.0084,
-      intensity: "secondary",
-      start: 0.76
-    },
-    {
-      type: "air",
-      points: [points.tokyo, points.northPacific, points.seattle, points.chicago],
-      height: 2.52,
-      speed: 0.00238,
-      color: 0x9feeff,
-      traceOpacity: 0.048,
-      pulseRadius: 0.0076,
-      pulseOffsets: [0, 0.24, 0.48, 0.72, 0.9],
-      intensity: "secondary",
-      start: 0.44
-    },
-    {
-      type: "air",
-      points: [points.dubai, points.london, points.miami],
-      height: 2.62,
-      speed: 0.0021,
-      color: 0x9feeff,
-      traceOpacity: 0.046,
-      pulseRadius: 0.0076,
-      intensity: "background",
-      start: 0.67
-    },
-    {
-      type: "air",
-      points: [points.shanghai, points.northPacific, points.losAngeles, points.sanSalvador],
-      height: 2.38,
-      speed: 0.00225,
-      color: 0x9feeff,
-      traceOpacity: 0.052,
-      pulseRadius: 0.0078,
-      pulseOffsets: [0, 0.22, 0.44, 0.66, 0.88],
-      intensity: "secondary",
-      start: 0.32
-    },
-    {
-      type: "sea",
-      points: [points.busan, points.northPacific, points.longBeach],
-      height: 1.74,
-      speed: 0.00112,
-      color: 0x4caff4,
-      traceOpacity: 0.048,
-      pulseRadius: 0.007,
-      vehicleFactory: createContainerShip,
-      loopPoints: [points.busan, points.northPacific, points.longBeach, points.northPacific, points.busan],
-      intensity: "primary",
-      dashboard: { origin: "Busan", destination: "Long Beach", mode: "Ocean freight" },
-      particles: true,
-      start: 0.7,
-      pulseOffsets: [0, 0.34, 0.68]
-    },
-    {
-      type: "sea",
-      points: [points.singapore, points.dubai, points.valencia, points.rotterdam],
-      height: 1.78,
-      speed: 0.00084,
-      color: 0x4caff4,
-      traceOpacity: 0.04,
-      pulseRadius: 0.0068,
-      intensity: "secondary",
-      start: 0.58,
-      pulseOffsets: [0, 0.27, 0.54, 0.81]
-    },
-    {
-      type: "sea",
-      points: [points.hamburg, points.rotterdam, points.northAtlantic, points.canalAtlantic, points.acajutla],
-      height: 1.86,
-      speed: 0.00086,
-      color: 0x4caff4,
-      traceOpacity: 0.052,
-      pulseRadius: 0.0072,
-      vehicleFactory: createContainerShip,
-      loopPoints: [points.hamburg, points.rotterdam, points.northAtlantic, points.canalAtlantic, points.acajutla, points.canalAtlantic, points.northAtlantic, points.rotterdam, points.hamburg],
-      intensity: "primary",
-      dashboard: { origin: "Hamburgo", destination: "Acajutla", mode: "Ocean freight" },
-      particles: true,
-      start: 0.18,
-      pulseOffsets: [0, 0.28, 0.56, 0.84]
-    },
-    {
-      type: "sea",
-      points: [points.valencia, points.northAtlantic, points.canalAtlantic, points.acajutla],
-      height: 1.82,
-      speed: 0.00096,
-      color: 0x4caff4,
-      traceOpacity: 0.048,
-      pulseRadius: 0.007,
-      intensity: "secondary",
-      start: 0.38,
-      pulseOffsets: [0, 0.3, 0.6]
-    },
-    {
-      type: "sea",
-      points: [points.rotterdam, points.northAtlantic, points.caribbean, points.panama],
-      height: 1.8,
-      speed: 0.001,
-      color: 0x4caff4,
-      traceOpacity: 0.046,
-      pulseRadius: 0.007,
-      intensity: "background",
-      start: 0.66,
-      pulseOffsets: [0, 0.32, 0.64]
-    },
-    {
-      type: "sea",
-      points: [points.antwerp, points.northAtlantic, points.newYork, points.houston],
-      height: 1.76,
-      speed: 0.00095,
-      color: 0x4caff4,
-      traceOpacity: 0.036,
-      pulseRadius: 0.0067,
-      intensity: "background",
-      start: 0.14,
-      pulseOffsets: [0, 0.31, 0.62, 0.9]
-    },
-    {
-      type: "sea",
-      points: [points.santos, points.southAtlantic, points.cartagena, points.panama],
-      height: 1.7,
-      speed: 0.00092,
-      color: 0x4caff4,
-      traceOpacity: 0.04,
-      pulseRadius: 0.0068,
-      intensity: "secondary",
-      start: 0.24,
-      pulseOffsets: [0, 0.34, 0.68]
-    },
-    {
-      type: "sea",
-      points: [points.callao, points.westSouthAmerica, points.panama, points.acajutla],
-      height: 1.68,
-      speed: 0.001,
-      color: 0x4caff4,
-      traceOpacity: 0.04,
-      pulseRadius: 0.0068,
-      intensity: "secondary",
-      start: 0.84,
-      pulseOffsets: [0, 0.33, 0.66]
-    },
-    {
-      type: "sea",
-      points: [points.sydney, points.auckland, points.centralPacific, points.longBeach],
-      height: 1.84,
-      speed: 0.00088,
-      color: 0x4caff4,
-      traceOpacity: 0.035,
-      pulseRadius: 0.0067,
-      intensity: "background",
-      start: 0.52,
-      pulseOffsets: [0, 0.35, 0.7]
-    },
-    {
-      type: "sea",
-      points: [points.melbourne, points.centralPacific, points.callao],
-      height: 1.78,
-      speed: 0.00082,
-      color: 0x4caff4,
-      traceOpacity: 0.033,
-      pulseRadius: 0.0066,
-      intensity: "background",
-      start: 0.78,
-      pulseOffsets: [0, 0.38, 0.76]
-    },
-    {
-      type: "air",
-      points: [points.miami, points.sanSalvador],
-      height: 2.12,
-      speed: 0.00255,
-      color: 0x9feeff,
-      traceOpacity: 0.056,
-      pulseRadius: 0.0078,
-      intensity: "secondary"
-    },
-    {
-      type: "regional",
-      points: [points.panama, points.sanSalvador],
-      height: 1.75,
-      speed: 0.00205,
-      color: 0x22c93c,
-      traceOpacity: 0.05,
-      pulseRadius: 0.007,
-      intensity: "secondary",
-      particles: true,
-      pulseOffsets: [0, 0.34, 0.68]
-    },
-    {
-      type: "regional",
-      points: [points.houston, points.miami, points.panama],
-      height: 1.92,
-      speed: 0.00185,
-      color: 0x22c93c,
-      traceOpacity: 0.038,
-      pulseRadius: 0.0068,
-      intensity: "background",
-      pulseOffsets: [0, 0.28, 0.56, 0.84]
-    },
-    {
-      type: "regional",
-      points: [points.manzanillo, points.acajutla, points.sanSalvador],
-      height: 1.62,
-      speed: 0.0019,
-      color: 0x22c93c,
-      traceOpacity: 0.038,
-      pulseRadius: 0.0064,
-      intensity: "secondary",
-      pulseOffsets: [0, 0.34, 0.68]
-    },
-    {
-      type: "regional",
-      points: [points.cartagena, points.bogota, points.panama],
-      height: 1.58,
-      speed: 0.00175,
-      color: 0x22c93c,
-      traceOpacity: 0.036,
-      pulseRadius: 0.0063,
-      intensity: "background",
-      pulseOffsets: [0, 0.36, 0.72]
-    },
-    {
-      type: "air",
-      points: [points.losAngeles, points.sanSalvador],
-      height: 2.26,
-      speed: 0.00245,
-      color: 0x9feeff,
-      traceOpacity: 0.054,
-      pulseRadius: 0.0078,
-      intensity: "secondary"
-    },
-    {
-      type: "sea",
-      points: [points.ningbo, points.shanghai, points.busan, points.northPacific, points.longBeach],
-      height: 1.78,
-      speed: 0.00094,
-      color: 0x4caff4,
-      traceOpacity: 0.046,
-      pulseRadius: 0.0069,
-      intensity: "primary",
-      particles: true,
-      pulseOffsets: [0, 0.32, 0.64],
-      fadePhase: 1.1
-    },
-    {
-      type: "sea",
-      points: [points.hongKong, points.singapore, points.dubai, points.valencia, points.antwerp],
-      height: 1.84,
-      speed: 0.00078,
-      color: 0x4caff4,
-      traceOpacity: 0.04,
-      pulseRadius: 0.0066,
-      intensity: "secondary",
-      pulseOffsets: [0, 0.36, 0.72],
-      fadePhase: 2.6
-    },
-    {
-      type: "sea",
-      points: [points.rotterdam, points.hamburg, points.northAtlantic, points.newYork],
-      height: 1.72,
-      speed: 0.00098,
-      color: 0x4caff4,
-      traceOpacity: 0.038,
-      pulseRadius: 0.0065,
-      intensity: "secondary",
-      pulseOffsets: [0, 0.42, 0.84],
-      fadePhase: 3.4
-    },
-    {
-      type: "sea",
-      points: [points.buenaventura, points.panama, points.cartagena, points.miami],
-      height: 1.64,
-      speed: 0.00112,
-      color: 0x22c93c,
-      traceOpacity: 0.042,
-      pulseRadius: 0.0064,
-      intensity: "secondary",
-      pulseOffsets: [0, 0.38, 0.76],
-      fadePhase: 4.2
-    },
-    {
-      type: "sea",
-      points: [points.callao, points.buenaventura, points.panama, points.longBeach],
-      height: 1.72,
-      speed: 0.00092,
-      color: 0x22c93c,
-      traceOpacity: 0.036,
-      pulseRadius: 0.0062,
-      intensity: "background",
-      pulseOffsets: [0, 0.5],
-      fadePhase: 5.1
-    },
-    {
-      type: "air",
-      points: [points.hongKong, points.northPacific, points.losAngeles, points.miami],
-      height: 2.2,
-      speed: 0.00245,
-      color: 0x9feeff,
-      traceOpacity: 0.052,
-      pulseRadius: 0.0076,
-      intensity: "primary",
-      particles: true,
-      pulseOffsets: [0, 0.28, 0.56, 0.84],
-      fadeSpeed: 0.38,
-      fadePhase: 0.4
-    },
-    {
-      type: "air",
-      points: [points.shanghai, points.northPacific, points.newYork],
-      height: 2.18,
-      speed: 0.00228,
-      color: 0x9feeff,
-      traceOpacity: 0.044,
-      pulseRadius: 0.0072,
-      intensity: "secondary",
-      pulseOffsets: [0, 0.36, 0.72],
-      fadeSpeed: 0.32,
-      fadePhase: 2.1
-    },
-    {
-      type: "air",
-      points: [points.miami, points.panama, points.cartagena],
-      height: 1.92,
-      speed: 0.0021,
-      color: 0x4caff4,
-      traceOpacity: 0.04,
-      pulseRadius: 0.0065,
-      intensity: "secondary",
-      pulseOffsets: [0, 0.4, 0.8],
-      fadeSpeed: 0.42,
-      fadePhase: 3.7
-    },
-    {
-      type: "regional",
-      points: [points.houston, points.miami, points.newYork],
-      height: 1.9,
-      speed: 0.0019,
-      color: 0x22c93c,
-      traceOpacity: 0.032,
-      pulseRadius: 0.006,
-      intensity: "background",
-      pulseOffsets: [0, 0.5],
-      fadePhase: 4.9
-    }
-  ];
-
-  routeSpecs.slice(0, 12).forEach((route, index) => addRoute(earthGroup, routes, route, index));
-
-  hubSpecs.forEach(([key, type, tier], index) => {
-    const profile = hubProfile(tier);
-    const marker = createHubMarker(HUB_COLORS[type], profile);
-    const pos = points[key];
-    marker.position.copy(pos);
+  const hubs = hubDefinitions.map(([key, type, size, title, subtitle], index) => {
+    const marker = createHubMarker(HUB_COLORS[type], size, index * 0.63);
+    const normal = locations[key].clone().normalize();
+    marker.position.copy(normal.clone().multiplyScalar(EARTH_RADIUS + 0.012));
+    marker.lookAt(normal.clone().multiplyScalar(EARTH_RADIUS + 1));
     earthGroup.add(marker);
-    cityMarkers.push({ marker, profile, phase: index * 0.58 });
+    const label = title ? createHubLabel(title, subtitle, HUB_COLORS[type]) : null;
+    const stem = title ? createLabelStem(normal, HUB_COLORS[type]) : null;
+    if (label) {
+      label.position.copy(normal.clone().multiplyScalar(EARTH_RADIUS + 0.17));
+      label.visible = false;
+      stem.visible = false;
+      earthGroup.add(label, stem);
+    }
+    return { marker, label, stem, normal, title };
   });
 
-  [
-    { color: 0x9feeff, radius: 1.88, tilt: 0.28, speed: 0.18, phase: 0 },
-    { color: 0x4caff4, radius: 1.98, tilt: -0.42, speed: -0.13, phase: 1.5 },
-    { color: 0x22c93c, radius: 1.82, tilt: 0.74, speed: 0.16, phase: 2.7 },
-    { color: 0x9feeff, radius: 2.08, tilt: -0.78, speed: -0.1, phase: 4.1 }
-  ].forEach(config => {
-    const orbit = new THREE.Group();
-    const node = createOrbitalNode(config.color);
-    node.position.set(config.radius, 0, 0);
-    orbit.rotation.z = config.tilt;
-    orbit.rotation.y = config.phase;
-    orbit.add(node);
-    earthGroup.add(orbit);
-    orbitalNodes.push({ orbit, node, speed: config.speed, phase: config.phase });
-  });
-
-  return function animateRoutes(delta = 0.016) {
-    const frame = performance.now() * 0.001;
-    cityMarkers.forEach(({ marker, profile, phase }) => {
-      const pulse = 1 - profile.pulseDepth + Math.sin(frame * profile.pulseSpeed + phase) * profile.pulseDepth;
-      marker.scale.setScalar(pulse);
-      marker.userData.core.material.opacity = profile.coreOpacity * (0.82 + pulse * 0.18);
-      marker.userData.halo.material.opacity = profile.haloOpacity * (0.72 + pulse * 0.4);
-      marker.userData.ring.material.opacity = profile.ringOpacity * (0.55 + pulse * 0.35);
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const mobile = window.matchMedia("(max-width: 720px)").matches;
+  const maxActive = reducedMotion ? (mobile ? 4 : 8) : mobile ? 6 : 12;
+  const maxLabels = mobile ? 2 : 5;
+  return function animateRoutes(delta = 0.016, elapsed = performance.now() * 0.001) {
+    hubs.forEach(({ marker }) => {
+      const { coreMaterial, haloMaterial, ringMaterial, ring, phase } = marker.userData;
+      const pulse = 0.86 + Math.sin(elapsed * 1.65 + phase) * 0.14;
+      marker.scale.setScalar(reducedMotion ? 0.94 : pulse);
+      coreMaterial.opacity = 0.78 + pulse * 0.16;
+      haloMaterial.opacity = 0.065 + pulse * 0.035;
+      ringMaterial.opacity = 0.14 + pulse * 0.12;
+      ring.scale.setScalar(0.86 + pulse * 0.3);
     });
 
-    orbitalNodes.forEach(({ orbit, node, speed, phase }) => {
-      orbit.rotation.y += delta * speed;
-      const pulse = 0.84 + Math.sin(frame * 1.8 + phase) * 0.16;
-      node.scale.setScalar(pulse);
+    routes.forEach((route, index) => {
+      route.progress = reducedMotion
+        ? 0.12 + (index % 7) * 0.115
+        : (elapsed / route.duration + route.phase) % 1;
+      const fadeIn = THREE.MathUtils.smoothstep(route.progress, 0.015, 0.1);
+      const fadeOut = 1 - THREE.MathUtils.smoothstep(route.progress, 0.88, 0.985);
+      route.lifecycleVisibility = fadeIn * fadeOut;
+      updateTrail(route);
+      const traceBreath = reducedMotion ? 0.82 : 0.78 + Math.sin(elapsed * 0.48 + index * 0.71) * 0.18;
+      route.baseTrace.material.opacity = route.baseTrace.userData.baseOpacity * traceBreath * (premiumMode ? 0.72 : 1);
     });
+
+    earthGroup.updateMatrixWorld(true);
+    const cameraDirection = camera.position.clone().normalize();
+    const routeCandidates = routes
+      .map(route => {
+        const worldPosition = route.visual.head.getWorldPosition(new THREE.Vector3());
+        return {
+          route,
+          score: worldPosition.normalize().dot(cameraDirection) + (route.level === 1 ? 0.1 : route.level === 2 ? 0.035 : 0)
+        };
+      })
+      .filter(item => item.score > -0.66)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, maxActive);
+    const visibleRouteSet = new Set(routeCandidates.map(item => item.route));
 
     routes.forEach(route => {
-      route.lastT = route.t;
-      route.t += route.speed * delta * 60;
-      if (route.t > 1) {
-        route.t -= 1;
-      }
+      const target = visibleRouteSet.has(route) ? 1 : 0;
+      const response = reducedMotion ? 1 : Math.min(1, delta * (target ? 2.6 : 1.9));
+      route.visibility = THREE.MathUtils.lerp(route.visibility, target, response);
+      setRouteVisibility(route, route.visibility * route.lifecycleVisibility);
+    });
 
-      const wave = (Math.sin(frame * route.fadeSpeed + route.fadePhase) + 1) * 0.5;
-      const easedVisibility = wave * wave * (3 - 2 * wave);
-      const visibility = route.minVisibility + (1 - route.minVisibility) * easedVisibility;
-      route.trace.userData.material.opacity = route.baseOpacity * visibility;
+    const labelCandidates = hubs
+      .filter(hub => hub.label)
+      .map(hub => {
+        const worldPosition = hub.marker.getWorldPosition(new THREE.Vector3());
+        const projected = worldPosition.clone().project(camera);
+        return {
+          hub,
+          score: worldPosition.normalize().dot(cameraDirection),
+          screen: new THREE.Vector2(projected.x, projected.y)
+        };
+      })
+      .filter(item => item.score > 0.3 && (mobile || item.screen.x > -0.04))
+      .sort((a, b) => b.score - a.score);
+    const visibleLabels = [];
+    labelCandidates.forEach(candidate => {
+      const hasCollision = visibleLabels.some(selected =>
+        selected.screen.distanceTo(candidate.screen) < (mobile ? 0.34 : 0.2)
+      );
+      if (!hasCollision && visibleLabels.length < maxLabels) visibleLabels.push(candidate);
+    });
+    const visibleLabelSet = new Set(visibleLabels.map(item => item.hub));
 
-      route.pulses.forEach(({ mesh, offset }, index) => {
-        const t = (route.t + offset) % 1;
-        const pulse = 0.76 + Math.sin(frame * (route.type === "sea" ? 2 : 3.4) + index) * 0.18;
-        mesh.position.copy(getRoutePoint(route.segments, t));
-        mesh.scale.setScalar(pulse);
-        mesh.userData.core.material.opacity = (route.type === "air" ? 0.72 + pulse * 0.13 : 0.62 + pulse * 0.12) * visibility;
-        mesh.userData.halo.material.opacity = (route.type === "air" ? 0.052 : 0.04) * visibility;
-      });
-
-      if (route.vehicle) {
-        orientAlongRoute(route.vehicle, route.vehicleSegments, route.t);
-      }
+    hubs.forEach(hub => {
+      if (!hub.label) return;
+      const shouldShow = visibleLabelSet.has(hub);
+      hub.label.visible = shouldShow;
+      hub.stem.visible = shouldShow;
+      hub.label.material.opacity = shouldShow
+        ? THREE.MathUtils.lerp(hub.label.material.opacity, 0.86, reducedMotion ? 1 : 0.08)
+        : 0;
+      hub.stem.material.opacity = shouldShow ? 0.34 : 0;
     });
   };
 }
-

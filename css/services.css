@@ -1,8 +1,8 @@
 .services-section{
   position:relative;
-  z-index:3;
-  margin-top:-36px;
-  padding:156px 0 132px;
+  z-index:1;
+  margin-top:0;
+  padding:120px 0 132px;
   overflow:hidden;
 }
 
@@ -11,10 +11,11 @@
   position:absolute;
   inset:0;
   background:
-    radial-gradient(circle at 22% 4%, rgba(76,175,244,.16), transparent 32%),
+    radial-gradient(circle at 22% 4%, rgba(76,175,244,.12), transparent 34%),
     radial-gradient(circle at 78% 42%, rgba(34,201,60,.09), transparent 26%),
     radial-gradient(circle at 42% 92%, rgba(76,175,244,.09), transparent 28%),
-    linear-gradient(180deg, rgba(1,5,11,0), rgba(1,5,11,.74) 24%, rgba(1,5,11,.96));
+    linear-gradient(180deg, transparent 0%, rgba(1,5,11,.74) 24%, rgba(1,5,11,.96));
+  mask-image:linear-gradient(to bottom, transparent 0%, black 14%, black 100%);
   pointer-events:none;
 }
 
@@ -25,9 +26,9 @@
   right:8%;
   top:0;
   height:160px;
-  background:linear-gradient(180deg, rgba(76,175,244,.1), transparent);
+  background:linear-gradient(180deg, transparent, rgba(76,175,244,.075) 48%, transparent);
   mask-image:linear-gradient(90deg, transparent, black 18%, black 82%, transparent);
-  opacity:.52;
+  opacity:.3;
   pointer-events:none;
 }
 
@@ -578,5 +579,231 @@
   .service-unit{
     grid-template-columns:1fr;
     padding:22px;
+  }
+}
+
+/* Home recomposition: compact commercial services matrix after the frozen Hero. */
+.services-section{
+  padding:96px 0 104px;
+}
+
+.services-section::before{
+  background:
+    radial-gradient(circle at 18% 8%, rgba(76,175,244,.13), transparent 30%),
+    radial-gradient(circle at 88% 56%, rgba(34,201,60,.075), transparent 28%),
+    linear-gradient(180deg, rgba(1,5,11,.72), rgba(1,5,11,.96) 42%, rgba(0,0,0,.98));
+}
+
+.services-heading{
+  max-width:920px;
+  margin-bottom:24px;
+}
+
+.services-heading h2{
+  max-width:900px;
+  font-size:clamp(38px,4vw,62px);
+  line-height:1.04;
+}
+
+.services-heading p{
+  max-width:760px;
+  font-size:18px;
+  line-height:1.58;
+}
+
+.services-intel{
+  width:100%;
+  max-width:none;
+  margin-bottom:28px;
+}
+
+.services-intel div{
+  min-height:68px;
+}
+
+.services-command{
+  display:block;
+}
+
+.services-command::before,
+.services-rail,
+.services-list::before{
+  display:none;
+}
+
+.services-list{
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+
+.service-unit,
+.service-unit-large,
+.service-unit-wide{
+  min-height:250px;
+  grid-column:auto;
+  grid-row:auto;
+  grid-template-columns:54px 1fr;
+  gap:18px;
+  padding:22px;
+}
+
+.service-icon{
+  width:50px;
+  height:50px;
+  border-radius:14px;
+}
+
+.service-unit h3{
+  font-size:21px;
+}
+
+.service-unit p{
+  font-size:14px;
+  line-height:1.54;
+  margin-bottom:12px;
+}
+
+.service-benefit{
+  display:block;
+  color:var(--text-bright);
+  font-size:13px;
+  line-height:1.42;
+  font-weight:800;
+}
+
+.service-link{
+  margin-top:14px;
+}
+
+@media (max-width:1080px){
+  .services-list{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media (max-width:720px){
+  .services-section{
+    margin-top:-18px;
+    padding:84px 0 74px;
+  }
+
+  .services-heading{
+    margin-bottom:24px;
+  }
+
+  .services-heading h2{
+    font-size:36px;
+  }
+
+  .services-intel{
+    margin-bottom:22px;
+  }
+
+  .services-list{
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+
+  .service-unit{
+    min-height:0;
+    grid-template-columns:48px 1fr;
+    padding:18px;
+  }
+}
+
+/* Final compact pass: tighter post-Hero rhythm without losing premium spacing. */
+.services-section{
+  padding:76px 0 82px;
+}
+
+.services-heading{
+  margin-bottom:18px;
+}
+
+.services-heading .section-eyebrow{
+  margin-bottom:10px;
+}
+
+.services-heading p{
+  margin-top:14px;
+}
+
+.services-intel{
+  margin-bottom:20px;
+}
+
+.services-intel div{
+  min-height:60px;
+  padding:14px 16px;
+}
+
+.services-list{
+  gap:12px;
+}
+
+.service-unit,
+.service-unit-large,
+.service-unit-wide{
+  min-height:224px;
+  padding:20px;
+}
+
+@media (max-width:720px){
+  .services-section{
+    padding:66px 0 60px;
+  }
+
+  .services-heading{
+    margin-bottom:18px;
+  }
+
+  .service-unit{
+    padding:16px;
+  }
+}
+
+/* Final rhythm pass: tighter narrative handoff after the Hero. */
+.services-section{
+  padding:66px 0 70px;
+}
+
+.services-heading{
+  margin-bottom:16px;
+}
+
+.services-heading p{
+  margin-top:10px;
+}
+
+.services-intel{
+  margin-bottom:16px;
+}
+
+.service-unit,
+.service-unit-large,
+.service-unit-wide{
+  min-height:208px;
+  padding:18px;
+}
+
+.service-unit p{
+  margin-bottom:10px;
+}
+
+.service-link{
+  margin-top:10px;
+}
+
+@media (max-width:720px){
+  .services-section{
+    padding:56px 0 52px;
+  }
+
+  .services-list{
+    gap:10px;
+  }
+
+  .service-unit{
+    padding:15px;
   }
 }

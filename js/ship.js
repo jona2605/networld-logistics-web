@@ -33,32 +33,39 @@ export function createContainerShip() {
   const hullMaterial = new THREE.MeshStandardMaterial({
     color: 0x061f36,
     metalness: 0.16,
-    roughness: 0.34
+    roughness: 0.3,
+    emissive: 0x013693,
+    emissiveIntensity: 0.035
   });
   const deckMaterial = new THREE.MeshStandardMaterial({
-    color: 0x123657,
+    color: 0x174e78,
     metalness: 0.12,
-    roughness: 0.32
+    roughness: 0.28
   });
-  const bridgeMaterial = new THREE.MeshStandardMaterial({ color: 0xeaf8ff, metalness: 0.08, roughness: 0.24 });
+  const bridgeMaterial = new THREE.MeshStandardMaterial({ color: 0xf6fdff, metalness: 0.08, roughness: 0.2 });
   const containerMaterials = [
-    new THREE.MeshStandardMaterial({ color: 0x013693, roughness: 0.3 }),
-    new THREE.MeshStandardMaterial({ color: 0x4caff4, roughness: 0.28 }),
-    new THREE.MeshStandardMaterial({ color: 0x22c93c, roughness: 0.3 }),
-    new THREE.MeshStandardMaterial({ color: 0xb8c7d6, roughness: 0.34 })
+    new THREE.MeshStandardMaterial({ color: 0x013693, roughness: 0.26, emissive: 0x013693, emissiveIntensity: 0.03 }),
+    new THREE.MeshStandardMaterial({ color: 0x4caff4, roughness: 0.24, emissive: 0x4caff4, emissiveIntensity: 0.025 }),
+    new THREE.MeshStandardMaterial({ color: 0x22c93c, roughness: 0.26, emissive: 0x22c93c, emissiveIntensity: 0.022 }),
+    new THREE.MeshStandardMaterial({ color: 0xd8e4ee, roughness: 0.28 })
   ];
 
   const group = new THREE.Group();
   const hull = new THREE.Mesh(createShipHullGeometry(), hullMaterial);
-  const deck = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.009, 0.19), deckMaterial);
-  const bridge = new THREE.Mesh(new THREE.BoxGeometry(0.034, 0.031, 0.032), bridgeMaterial);
+  const deck = new THREE.Mesh(new THREE.BoxGeometry(0.064, 0.009, 0.202), deckMaterial);
+  const bridge = new THREE.Mesh(new THREE.BoxGeometry(0.036, 0.032, 0.034), bridgeMaterial);
   const bridgeTop = new THREE.Mesh(new THREE.BoxGeometry(0.026, 0.012, 0.024), bridgeMaterial);
+  const bridgeGlass = new THREE.Mesh(
+    new THREE.BoxGeometry(0.03, 0.005, 0.003),
+    new THREE.MeshBasicMaterial({ color: 0x9feeff, transparent: true, opacity: 0.78 })
+  );
 
   deck.position.y = 0.024;
   bridge.position.set(0, 0.057, 0.086);
   bridgeTop.position.set(0, 0.079, 0.087);
+  bridgeGlass.position.set(0, 0.064, 0.068);
 
-  group.add(hull, deck, bridge, bridgeTop);
+  group.add(hull, deck, bridge, bridgeTop, bridgeGlass);
 
   [-0.068, -0.032, 0.004, 0.04].forEach((z, index) => {
     const container = new THREE.Mesh(
@@ -70,6 +77,6 @@ export function createContainerShip() {
   });
 
   group.userData.vehicleType = "ship";
-  group.scale.setScalar(0.135);
+  group.scale.setScalar(0.18);
   return group;
 }

@@ -1,4 +1,5 @@
 import { initScene } from "./scene.js";
+import { initHeroPremium } from "./hero-premium.js";
 import { initSiteShell } from "./site-shell.js";
 import { initServices } from "./services.js";
 import { initWorkflow } from "./workflow.js";
@@ -16,6 +17,12 @@ import { initHeroDashboard } from "./dashboard.js";
 initSiteShell();
 initGlobalSearch();
 initGlobalStatus();
+
+try {
+  initHeroPremium();
+} catch (error) {
+  console.error("Hero Premium 2.0 could not initialize. Base hero remains active.", error);
+}
 
 try {
   initScene();

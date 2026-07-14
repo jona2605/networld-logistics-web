@@ -23,12 +23,14 @@ export function initScene() {
     powerPreference: "high-performance"
   });
   const getPixelRatio = () => {
-    const cap = window.innerWidth <= 720 ? 1.35 : 1.75;
+    const cap = window.innerWidth <= 720 ? 1.35 : 1.9;
     return Math.min(window.devicePixelRatio || 1, cap);
   };
   renderer.setSize(container.clientWidth, container.clientHeight);
   renderer.setPixelRatio(getPixelRatio());
   renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.13;
 
   container.innerHTML = "";
   container.appendChild(renderer.domElement);
@@ -36,12 +38,12 @@ export function initScene() {
   createLights(scene);
 
   const earthGroup = createEarth();
-  earthGroup.scale.set(0.74, 0.74, 0.74);
+  earthGroup.scale.set(0.84, 0.84, 0.84);
   earthGroup.position.set(0, -0.03, 0);
   earthGroup.rotation.set(0.03, -1.12, -0.08);
   scene.add(earthGroup);
 
-  const animateRoutes = createRoutes(earthGroup);
+  const animateRoutes = createRoutes(earthGroup, camera);
   let lastFrameTime = performance.now();
   let elapsedTime = 0;
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -76,7 +78,7 @@ export function initScene() {
     if (earthGroup.userData.cloudLayer) {
       earthGroup.userData.cloudLayer.rotation.y += delta * (prefersReducedMotion ? 0.025 : 0.085);
     }
-    animateRoutes(delta);
+    animateRoutes(delta, elapsedTime);
     earthGroup.userData.animateSurfaceLights?.(elapsedTime);
     earthGroup.userData.animateAtmosphere?.(elapsedTime);
 

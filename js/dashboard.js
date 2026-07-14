@@ -1,60 +1,66 @@
-const OPERATIONS = [
-  {
-    code: "CN",
-    route: "Shenzhen → San Salvador",
-    detail: "Carga aérea · En tránsito",
-    status: "En curso"
-  },
-  {
-    code: "US",
-    route: "Miami → San Salvador",
-    detail: "Aduana liberada · Entrega final",
-    status: "En tránsito"
-  },
-  {
-    code: "DE",
-    route: "Hamburgo → Acajutla",
-    detail: "Ocean freight · Documentación",
-    status: "En preparación"
-  },
-  {
-    code: "ES",
-    route: "Valencia → Acajutla",
-    detail: "LCL consolidado · En proceso",
-    status: "En proceso"
-  },
-  {
-    code: "PA",
-    route: "Panamá → San Salvador",
-    detail: "Regional · Última milla",
-    status: "En curso"
-  }
-];
+import { getCurrentOperationsSnapshot } from "./operations-data.js";
 
-function updateMetric(metric, value) {
-  if (!metric) return;
-  metric.style.opacity = "0.72";
-  window.setTimeout(() => {
-    metric.textContent = value;
-    metric.style.opacity = "1";
-  }, 180);
+function getVisibleCount() {
+  if (window.innerWidth <= 720) return 3;
+  if (window.innerHeight >= 860 && window.innerWidth >= 1400) return 4;
+  return 3;
 }
 
-function renderOperations(items, offset) {
-  const operationNodes = document.querySelectorAll(".recent-ops .op-item");
-  operationNodes.forEach((node, index) => {
-    const operation = items[(offset + index) % items.length];
-    const code = node.querySelector(":scope > span");
-    const title = node.querySelector("p");
-    const status = node.querySelector("em");
+function ensureOperationRows(container, count) {
+  const rows = [...container.querySelectorAll(".op-item")];
+  const template = rows[0];
+  if (!template) return rows;
 
-    node.style.opacity = "0.72";
-    window.setTimeout(() => {
-      if (code) code.textContent = operation.code;
-      if (title) title.innerHTML = `${operation.route} <small>${operation.detail}</small>`;
+  while (rows.length < count) {
+    const clone = template.cloneNode(true);
+    container.appendChild(clone);
+    rows.push(clone);
+  }
+
+  rows.forEach((row, index) => {
+    row.hidden = index >= count;
+  });
+
+  return rows.slice(0, count);
+}
+
+function renderOperations(rows, operations, offset, animate) {
+  rows.forEach((row, index) => {
+    const operation = operations[(offset + index) % operations.length];
+    const apply = () => {
+      const code = row.querySelector(":scope > span");
+      const title = row.querySelector("p");
+      const status = row.querySelector("em");
+
+      if (code) code.textContent = operation.countryCode;
+      if (title) {
+        title.innerHTML = `${operation.origin} &rarr; ${operation.destination}<small>${operation.mode} &middot; ${operation.detail}</small>`;
+      }
       if (status) status.textContent = operation.status;
-      node.style.opacity = "1";
-    }, 180 + index * 50);
+      row.style.opacity = "1";
+    };
+
+    if (!animate) {
+      apply();
+      return;
+    }
+
+    row.style.opacity = "0.32";
+    window.setTimeout(apply, 160 + index * 48);
+  });
+}
+
+function renderMetrics(dashboard, snapshot) {
+  const metrics = dashboard.querySelectorAll(".dashboard-metrics strong");
+  const metricValues = [
+    String(snapshot.activeOperations),
+    String(snapshot.connectedCountries),
+    snapshot.averageEta,
+    snapshot.onTimeRate
+  ];
+
+  metrics.forEach((metric, index) => {
+    metric.textContent = metricValues[index];
   });
 }
 
@@ -62,30 +68,22 @@ export function initHeroDashboard() {
   const dashboard = document.querySelector(".hero-dashboard");
   if (!dashboard) return;
 
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const metricValues = [
-    ["18", "19", "18"],
-    ["4", "4", "5"],
-    ["2.4 días", "2.3 días", "2.5 días"],
-    ["98.7%", "98.8%", "98.6%"]
-  ];
-  const metrics = dashboard.querySelectorAll(".dashboard-metrics strong");
-  let tick = 0;
+  const snapshot = getCurrentOperationsSnapshot();
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const visibleCount = getVisibleCount();
+  const rows = ensureOperationRows(dashboard.querySelector(".recent-ops"), visibleCount);
 
+  renderMetrics(dashboard, snapshot);
   dashboard.querySelectorAll(".dashboard-metrics strong, .op-item").forEach(element => {
-    element.style.transition = "opacity .28s ease";
+    element.style.transition = "opacity .38s ease";
   });
 
-  if (prefersReducedMotion) return;
+  renderOperations(rows, snapshot.recentOperations, 0, false);
+  if (reducedMotion) return;
 
+  let offset = 0;
   window.setInterval(() => {
-    tick += 1;
-    metrics.forEach((metric, index) => {
-      updateMetric(metric, metricValues[index][tick % metricValues[index].length]);
-    });
-  }, 6500);
-
-  window.setInterval(() => {
-    renderOperations(OPERATIONS, tick % OPERATIONS.length);
-  }, 7600);
+    offset = (offset + 1) % snapshot.recentOperations.length;
+    renderOperations(rows, snapshot.recentOperations, offset, true);
+  }, 30000);
 }

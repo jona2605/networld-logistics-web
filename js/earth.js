@@ -79,6 +79,40 @@ function createAtmosphereMaterial(color, opacity, power) {
   });
 }
 
+function createDaylightWashMaterial() {
+  return new THREE.ShaderMaterial({
+    uniforms: {
+      tint: { value: new THREE.Color(0xbfeaff) },
+      opacity: { value: 0.072 }
+    },
+    vertexShader: `
+      varying vec3 vNormal;
+      varying vec3 vViewPosition;
+
+      void main() {
+        vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+        vNormal = normalize(normalMatrix * normal);
+        vViewPosition = normalize(-mvPosition.xyz);
+        gl_Position = projectionMatrix * mvPosition;
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 tint;
+      uniform float opacity;
+      varying vec3 vNormal;
+      varying vec3 vViewPosition;
+
+      void main() {
+        float facing = pow(max(dot(vNormal, vViewPosition), 0.0), 1.85);
+        gl_FragColor = vec4(tint, facing * opacity);
+      }
+    `,
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false
+  });
+}
+
 function createEarthTexture() {
   const canvas = document.createElement("canvas");
   canvas.width = 1024;
@@ -316,18 +350,23 @@ export function createEarth() {
     new THREE.MeshStandardMaterial({
       map: texture,
       color: 0xffffff,
-      roughness: 0.72,
+      roughness: 0.58,
       metalness: 0.02,
-      emissive: 0x031a31,
-      emissiveIntensity: 0.035
+      emissive: 0x07131c,
+      emissiveIntensity: 0.105
     })
+  );
+
+  const daylightWash = new THREE.Mesh(
+    new THREE.SphereGeometry(1.452, 128, 128),
+    createDaylightWashMaterial()
   );
 
   new THREE.TextureLoader().load(
     "./assets/textures/earth-blue-marble.jpg",
     loadedTexture => {
       loadedTexture.colorSpace = THREE.SRGBColorSpace;
-      loadedTexture.anisotropy = 4;
+      loadedTexture.anisotropy = 8;
       earth.material.map = loadedTexture;
       earth.material.needsUpdate = true;
     },
@@ -339,12 +378,12 @@ export function createEarth() {
 
   const atmosphere = new THREE.Mesh(
     new THREE.SphereGeometry(1.525, 128, 128),
-    createAtmosphereMaterial(0x4caff4, 0.16, 4.15)
+    createAtmosphereMaterial(0x4caff4, 0.185, 3.65)
   );
 
   const deepAtmosphere = new THREE.Mesh(
     new THREE.SphereGeometry(1.565, 96, 96),
-    createAtmosphereMaterial(0x9feeff, 0.026, 5.35)
+    createAtmosphereMaterial(0x9feeff, 0.036, 4.8)
   );
 
   const clouds = new THREE.Mesh(
@@ -353,15 +392,15 @@ export function createEarth() {
       map: createCloudTexture(),
       color: 0xffffff,
       transparent: true,
-      opacity: 0.16,
+      opacity: 0.12,
       depthWrite: false
     })
   );
 
   earthGroup.userData.cloudLayer = clouds;
   earthGroup.userData.atmosphereLayers = [
-    { mesh: atmosphere, baseOpacity: 0.16, baseScale: 1 },
-    { mesh: deepAtmosphere, baseOpacity: 0.026, baseScale: 1 }
+    { mesh: atmosphere, baseOpacity: 0.185, baseScale: 1 },
+    { mesh: deepAtmosphere, baseOpacity: 0.036, baseScale: 1 }
   ];
   earthGroup.userData.animateAtmosphere = elapsed => {
     earthGroup.userData.atmosphereLayers.forEach((layer, index) => {
@@ -371,7 +410,7 @@ export function createEarth() {
     });
   };
 
-  earthGroup.add(earth, clouds, atmosphere, deepAtmosphere);
+  earthGroup.add(earth, daylightWash, clouds, atmosphere, deepAtmosphere);
   addSurfaceLights(earthGroup);
 
   return earthGroup;

@@ -479,3 +479,479 @@
     margin-top:18px;
   }
 }
+
+/* Home recomposition: mission-log cases instead of generic commercial cards. */
+.cases-section{
+  padding:86px 0 96px;
+}
+
+.cases-header{
+  max-width:880px;
+  margin-bottom:32px;
+}
+
+.cases-header h2{
+  max-width:820px;
+  font-size:clamp(36px,3.8vw,58px);
+}
+
+.cases-header p{
+  max-width:780px;
+  font-size:18px;
+  line-height:1.58;
+}
+
+.cases-grid{
+  gap:12px;
+}
+
+.case-card{
+  min-height:0;
+  padding:22px;
+}
+
+.case-top{
+  margin-bottom:22px;
+}
+
+.case-icon{
+  width:52px;
+  height:52px;
+  border-radius:15px;
+}
+
+.case-card h3{
+  min-height:64px;
+  font-size:24px;
+}
+
+.case-route{
+  grid-template-columns:1fr;
+  gap:8px;
+  margin-bottom:16px;
+}
+
+.case-route div{
+  min-height:58px;
+  padding:12px;
+}
+
+.case-route i{
+  display:none;
+}
+
+.case-chips{
+  margin-bottom:16px;
+}
+
+.case-context{
+  position:relative;
+  z-index:2;
+  color:var(--text-line);
+  font-size:13px;
+  line-height:1.45;
+  margin-bottom:8px;
+}
+
+.case-context b{
+  color:var(--cyan-soft);
+  font-weight:900;
+  margin-right:6px;
+}
+
+.case-checks{
+  margin-top:16px;
+  margin-bottom:52px;
+}
+
+.case-checks p{
+  font-size:13px;
+}
+
+.case-progress{
+  bottom:52px;
+}
+
+.case-timeline{
+  bottom:18px;
+}
+
+@media (max-width:1080px){
+  .cases-grid{
+    grid-template-columns:1fr;
+  }
+
+  .case-card{
+    display:grid;
+    grid-template-columns:180px 1fr;
+    gap:18px;
+  }
+
+  .case-top{
+    grid-row:span 4;
+    flex-direction:column;
+  }
+
+  .case-card h3{
+    min-height:0;
+  }
+
+  .case-progress,
+  .case-timeline{
+    grid-column:1 / -1;
+    position:relative;
+    left:auto;
+    right:auto;
+    bottom:auto;
+  }
+}
+
+@media (max-width:720px){
+  .cases-section{
+    padding:74px 0 82px;
+  }
+
+  .cases-header h2{
+    font-size:35px;
+  }
+
+  .case-card{
+    display:block;
+    padding:18px;
+  }
+
+  .case-route{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .case-checks{
+    grid-template-columns:1fr;
+    gap:6px;
+    margin:14px 0 18px;
+  }
+
+  .case-chips span,
+  .case-checks p,
+  .case-context{
+    font-size:12px;
+  }
+}
+
+/* Final Home polish: lighter mission-log rhythm with the same approved content. */
+.cases-grid{
+  gap:14px;
+}
+
+.case-card{
+  padding:20px;
+  border-color:rgba(159,238,255,.12);
+  box-shadow:inset 0 0 24px rgba(159,238,255,.025), 0 18px 48px rgba(0,0,0,.2);
+}
+
+.case-top{
+  margin-bottom:18px;
+}
+
+.case-icon{
+  width:48px;
+  height:48px;
+  border-radius:14px;
+}
+
+.case-card h3{
+  min-height:54px;
+  margin-bottom:16px;
+  font-size:22px;
+  line-height:1.14;
+}
+
+.case-route{
+  gap:7px;
+  margin-bottom:14px;
+}
+
+.case-route div{
+  min-height:52px;
+  padding:11px 12px;
+  background:rgba(3,13,24,.36);
+}
+
+.case-route small,
+.case-chips span,
+.case-checks p,
+.case-context{
+  font-size:12px;
+}
+
+.case-route strong{
+  font-size:13px;
+}
+
+.case-chips{
+  gap:7px;
+  margin-bottom:13px;
+}
+
+.case-chips span{
+  min-height:28px;
+  padding:0 9px;
+}
+
+.case-context{
+  margin-bottom:6px;
+  line-height:1.42;
+}
+
+.case-checks{
+  gap:7px;
+  margin-top:12px;
+  margin-bottom:42px;
+}
+
+.case-checks p{
+  min-height:30px;
+  padding:7px 9px;
+}
+
+.case-progress{
+  bottom:42px;
+}
+
+.case-timeline{
+  bottom:14px;
+  gap:7px;
+}
+
+@media (max-width:1080px){
+  .case-card{
+    grid-template-columns:160px 1fr;
+    gap:16px;
+  }
+}
+
+@media (max-width:720px){
+  .cases-grid{
+    gap:12px;
+  }
+
+  .case-card{
+    padding:18px;
+  }
+
+  .case-card h3{
+    min-height:0;
+    font-size:21px;
+  }
+
+  .case-route{
+    grid-template-columns:1fr;
+  }
+
+  .case-checks{
+    margin-bottom:18px;
+  }
+}
+
+/* Final compact pass: shorter mission logs with the same operational detail. */
+.cases-section{
+  padding:66px 0 74px;
+}
+
+.cases-header{
+  margin-bottom:24px;
+}
+
+.cases-header .section-eyebrow{
+  margin-bottom:10px;
+}
+
+.cases-header p{
+  margin-top:14px;
+}
+
+.case-card{
+  padding:18px;
+}
+
+.case-top{
+  margin-bottom:14px;
+}
+
+.case-icon{
+  width:44px;
+  height:44px;
+}
+
+.case-card h3{
+  min-height:46px;
+  margin-bottom:12px;
+  font-size:20px;
+}
+
+.case-route{
+  margin-bottom:10px;
+}
+
+.case-route div{
+  min-height:46px;
+  padding:9px 10px;
+}
+
+.case-chips{
+  margin-bottom:10px;
+}
+
+.case-checks{
+  margin-top:10px;
+  margin-bottom:34px;
+}
+
+.case-checks p{
+  min-height:28px;
+  padding:6px 8px;
+}
+
+.case-progress{
+  bottom:34px;
+}
+
+.case-timeline{
+  bottom:12px;
+}
+
+@media (max-width:1080px){
+  .case-card{
+    grid-template-columns:140px 1fr;
+  }
+}
+
+@media (max-width:720px){
+  .cases-section{
+    padding:58px 0 62px;
+  }
+
+  .cases-header{
+    margin-bottom:20px;
+  }
+
+  .case-card{
+    padding:16px;
+  }
+
+  .case-checks{
+    margin:12px 0 16px;
+  }
+}
+
+/* Final rhythm pass: keep cases as mission logs, not tall feature cards. */
+.cases-section{
+  margin-top:-8px;
+  padding:56px 0 62px;
+}
+
+.cases-header{
+  margin-bottom:18px;
+}
+
+.cases-header p{
+  margin-top:10px;
+}
+
+.cases-grid{
+  gap:11px;
+}
+
+.case-card{
+  padding:16px;
+}
+
+.case-top{
+  margin-bottom:10px;
+}
+
+.case-icon{
+  width:40px;
+  height:40px;
+}
+
+.case-card h3{
+  min-height:40px;
+  margin-bottom:10px;
+  font-size:19px;
+}
+
+.case-route div{
+  min-height:42px;
+  padding:8px 9px;
+}
+
+.case-chips{
+  margin-bottom:8px;
+}
+
+.case-checks{
+  margin-top:8px;
+  margin-bottom:30px;
+}
+
+.case-progress{
+  bottom:30px;
+}
+
+.case-timeline{
+  bottom:10px;
+}
+
+@media (max-width:720px){
+  .cases-section{
+    margin-top:-6px;
+    padding:50px 0 54px;
+  }
+
+  .cases-header{
+    margin-bottom:16px;
+  }
+
+  .cases-grid{
+    gap:10px;
+  }
+
+  .case-card{
+    padding:15px;
+  }
+}
+
+/* Home close: keep decorative progress lines below content, never through checks. */
+.case-checks{
+  margin-bottom:48px;
+}
+
+.case-progress{
+  bottom:36px;
+}
+
+.case-timeline{
+  bottom:12px;
+}
+
+@media (max-width:720px){
+  .case-checks{
+    margin-bottom:18px;
+  }
+
+  .case-progress,
+  .case-timeline{
+    position:relative;
+    left:auto;
+    right:auto;
+    bottom:auto;
+  }
+
+  .case-progress{
+    margin-top:20px;
+  }
+
+  .case-timeline{
+    margin-top:14px;
+  }
+}

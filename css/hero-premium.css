@@ -1,0 +1,467 @@
+.atlas-hero.hero-premium-2{
+  isolation:isolate;
+  overflow:visible;
+  --hero-scroll-progress:0;
+}
+
+.atlas-hero.hero-premium-2 .hero-scene{
+  overflow:visible;
+}
+
+.atlas-hero.hero-premium-2 .hero-center{
+  z-index:1;
+}
+
+.atlas-hero.hero-premium-2 .hero-left{
+  top:56px;
+}
+
+.atlas-hero.hero-premium-2::after{
+  content:"";
+  position:absolute;
+  z-index:4;
+  left:50%;
+  right:auto;
+  bottom:-1px;
+  width:100vw;
+  height:235px;
+  transform:translateX(-50%) translateY(calc(var(--hero-scroll-progress) * 18px));
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse at 52% 18%, rgba(76,175,244,.18), transparent 44%),
+    radial-gradient(ellipse at 48% 98%, rgba(34,201,60,.1), transparent 42%),
+    linear-gradient(104deg, transparent 0 18%, rgba(76,175,244,.13) 18.1%, transparent 18.25% 47%, rgba(159,238,255,.1) 47.1%, transparent 47.25% 100%),
+    linear-gradient(to bottom, transparent 0%, rgba(1,12,24,.46) 44%, rgba(1,9,18,.84) 78%, rgba(1,5,11,.34) 100%);
+  background-size:100% 100%, 100% 100%, 100% 100%;
+  mask-image:linear-gradient(to bottom, transparent 0%, black 20%, black 78%, transparent 100%);
+  opacity:calc(.86 + (var(--hero-scroll-progress) * .14));
+}
+
+.atlas-page.has-hero-premium-2 .services-section{
+  margin-top:-78px;
+  padding-top:190px;
+}
+
+.atlas-page.has-hero-premium-2 .services-section::before{
+  background:
+    radial-gradient(circle at 22% 0%, rgba(76,175,244,.15), transparent 34%),
+    radial-gradient(circle at 62% 0%, rgba(34,201,60,.09), transparent 30%),
+    radial-gradient(circle at 42% 92%, rgba(76,175,244,.09), transparent 28%),
+    linear-gradient(180deg, rgba(1,5,11,.28) 0%, rgba(1,5,11,.78) 24%, rgba(1,5,11,.96));
+  mask-image:linear-gradient(to bottom, transparent 0%, black 7%, black 100%);
+}
+
+.atlas-hero.hero-premium-2 .hero-center::before{
+  content:"";
+  position:absolute;
+  left:52%;
+  top:43%;
+  width:min(720px,50vw);
+  height:min(720px,50vw);
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 44% 38%, rgba(255,255,255,.13), transparent 16%),
+    radial-gradient(circle at 54% 48%, rgba(159,238,255,.22), transparent 39%),
+    radial-gradient(circle at 50% 50%, transparent 42%, rgba(76,175,244,.22) 43%, transparent 48%),
+    radial-gradient(circle at 50% 50%, rgba(34,201,60,.1), transparent 67%);
+  filter:blur(4px);
+  opacity:calc(.94 - (var(--hero-scroll-progress) * .12));
+  mix-blend-mode:screen;
+}
+
+.atlas-hero.hero-premium-2 .hero-center::after{
+  content:"";
+  position:absolute;
+  left:52%;
+  top:43%;
+  width:min(820px,58vw);
+  height:min(820px,58vw);
+  transform:translate(-50%,-50%);
+  pointer-events:none;
+  background:
+    repeating-conic-gradient(from 8deg at 50% 50%, rgba(159,238,255,.045) 0 1deg, transparent 1.4deg 12deg),
+    radial-gradient(circle at 50% 50%, transparent 0 48%, rgba(159,238,255,.14) 49%, transparent 50.5%),
+    radial-gradient(circle at 50% 50%, transparent 0 58%, rgba(34,201,60,.08) 59%, transparent 60.5%);
+  border-radius:50%;
+  opacity:calc(.58 + (var(--hero-scroll-progress) * .12));
+  mask-image:linear-gradient(90deg, transparent, black 16%, black 84%, transparent);
+}
+
+.hero-premium-network{
+  position:absolute;
+  left:52%;
+  top:43%;
+  width:min(800px,56vw);
+  height:min(800px,56vw);
+  transform:translate(-50%,calc(-50% + (var(--hero-scroll-progress) * 14px)));
+  z-index:3;
+  pointer-events:none;
+  filter:
+    drop-shadow(0 0 18px rgba(76,175,244,.18))
+    drop-shadow(0 0 34px rgba(34,201,60,.08));
+}
+
+.hero-premium-network svg{
+  width:100%;
+  height:100%;
+  display:block;
+  overflow:visible;
+}
+
+.premium-globe-grid{
+  opacity:.16;
+}
+
+.premium-globe-grid path,
+.premium-globe-grid ellipse{
+  fill:none;
+  stroke:rgba(159,238,255,.18);
+  stroke-width:.7;
+  vector-effect:non-scaling-stroke;
+}
+
+.premium-geo-haze{
+  opacity:.24;
+  mix-blend-mode:screen;
+}
+
+.premium-geo-haze path{
+  fill:rgba(76,175,244,.04);
+  stroke:rgba(159,238,255,.09);
+  stroke-width:.7;
+}
+
+.premium-route{
+  opacity:0;
+  transition:opacity 1.4s ease;
+}
+
+.premium-route.is-active{
+  opacity:1;
+}
+
+.premium-route-base{
+  fill:none;
+  stroke:rgba(159,238,255,.16);
+  stroke-width:1;
+  vector-effect:non-scaling-stroke;
+}
+
+.premium-route-main .premium-route-base{
+  stroke:rgba(159,238,255,.32);
+}
+
+.premium-route-global .premium-route-base{
+  stroke:rgba(76,175,244,.16);
+}
+
+.premium-route-ambient .premium-route-base{
+  stroke:rgba(159,238,255,.08);
+}
+
+.premium-route-trail{
+  fill:none;
+  stroke-linecap:round;
+  vector-effect:non-scaling-stroke;
+  stroke-dasharray:64 520;
+  stroke-dashoffset:0;
+  animation:premiumRouteFlow var(--route-speed, 8s) linear infinite;
+  filter:url(#premiumRouteGlow);
+}
+
+.premium-route-main .premium-route-trail{
+  stroke:url(#premiumMainRoute);
+  stroke-width:2.15;
+}
+
+.premium-route-global .premium-route-trail{
+  stroke:url(#premiumGlobalRoute);
+  stroke-width:1.35;
+  opacity:.72;
+}
+
+.premium-route-ambient .premium-route-trail{
+  stroke:url(#premiumAmbientRoute);
+  stroke-width:.92;
+  opacity:.42;
+}
+
+.premium-route-head{
+  opacity:0;
+  fill:#9feeff;
+  filter:url(#premiumNodeGlow);
+}
+
+.premium-route.is-active .premium-route-head{
+  opacity:.95;
+}
+
+.premium-route-hub{
+  opacity:.86;
+}
+
+.premium-route-hub circle:first-child{
+  fill:rgba(76,175,244,.1);
+}
+
+.premium-route-hub circle:last-child{
+  fill:#9feeff;
+}
+
+.premium-route-hub.is-destination circle:last-child{
+  fill:#22c93c;
+}
+
+.premium-label{
+  position:absolute;
+  min-width:128px;
+  padding:8px 10px;
+  border-radius:13px;
+  color:#eff8ff;
+  background:linear-gradient(145deg, rgba(4,24,42,.78), rgba(2,11,24,.58));
+  border:1px solid rgba(159,238,255,.28);
+  box-shadow:
+    0 14px 40px rgba(0,0,0,.28),
+    inset 0 1px 0 rgba(255,255,255,.06);
+  backdrop-filter:blur(13px);
+  opacity:.88;
+}
+
+.premium-label::before{
+  content:"";
+  width:6px;
+  height:6px;
+  display:inline-block;
+  margin-right:7px;
+  border-radius:50%;
+  background:#22c93c;
+  box-shadow:0 0 12px rgba(34,201,60,.9);
+}
+
+.premium-label strong{
+  display:inline;
+  font-size:11px;
+  line-height:1;
+}
+
+.premium-label span{
+  display:block;
+  margin-top:2px;
+  padding-left:15px;
+  color:#9feeff;
+  font-size:9px;
+  font-weight:600;
+}
+
+.premium-label-sv{
+  left:42%;
+  top:51%;
+}
+
+.premium-label-mia{
+  left:33%;
+  top:35%;
+}
+
+.premium-label-ham{
+  left:67%;
+  top:18%;
+}
+
+.premium-label-sz{
+  left:70%;
+  top:33%;
+}
+
+.premium-label-aca{
+  left:40%;
+  top:58%;
+}
+
+.atlas-hero.hero-premium-2 .hero-dashboard{
+  width:306px;
+  right:40px;
+  top:34px;
+  max-height:548px;
+  overflow:hidden;
+  box-shadow:
+    0 24px 62px rgba(0,0,0,.34),
+    inset 0 1px 0 rgba(255,255,255,.03),
+    inset 0 0 38px rgba(76,175,244,.018);
+}
+
+.atlas-hero.hero-premium-2 .dashboard-header{
+  margin-bottom:13px;
+}
+
+.atlas-hero.hero-premium-2 .dashboard-metrics{
+  gap:8px;
+  margin-bottom:13px;
+}
+
+.atlas-hero.hero-premium-2 .dashboard-metrics div{
+  min-height:88px;
+  padding:11px 11px 27px;
+}
+
+.atlas-hero.hero-premium-2 .dashboard-metrics strong{
+  font-size:25px;
+}
+
+.atlas-hero.hero-premium-2 .op-item{
+  min-height:38px;
+  padding:5px 8px;
+  margin-bottom:5px;
+}
+
+.atlas-hero.hero-premium-2 .recent-ops{
+  position:relative;
+  overflow:hidden;
+  max-height:164px;
+  padding-bottom:10px;
+}
+
+.atlas-hero.hero-premium-2 .recent-ops::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:34px;
+  pointer-events:none;
+  background:linear-gradient(to bottom, transparent, rgba(3,16,29,.96));
+}
+
+.atlas-hero.hero-premium-2 .recent-ops .op-item:nth-of-type(n+4){
+  display:none;
+}
+
+@media (min-width:1401px) and (min-height:860px){
+  .atlas-hero.hero-premium-2 .recent-ops{
+    max-height:206px;
+  }
+
+  .atlas-hero.hero-premium-2 .recent-ops .op-item:nth-of-type(n+4){
+    display:grid;
+  }
+
+  .atlas-hero.hero-premium-2 .recent-ops .op-item:nth-of-type(n+5){
+    display:none;
+  }
+}
+
+@keyframes premiumRouteFlow{
+  to{stroke-dashoffset:-584;}
+}
+
+@media (max-width:1400px){
+  .atlas-hero.hero-premium-2 .hero-left{
+    top:34px;
+  }
+
+  .hero-premium-network{
+    left:52%;
+    top:42%;
+    width:min(725px,53vw);
+    height:min(725px,53vw);
+  }
+
+  .atlas-hero.hero-premium-2 .hero-dashboard{
+    right:34px;
+    width:294px;
+    max-height:528px;
+  }
+}
+
+@media (max-width:1080px){
+  .atlas-hero.hero-premium-2 .hero-left{
+    top:auto;
+  }
+
+  .hero-premium-network,
+  .atlas-hero.hero-premium-2 .hero-center::before,
+  .atlas-hero.hero-premium-2 .hero-center::after{
+    left:50%;
+    top:28%;
+    width:min(680px,92vw);
+    height:min(680px,92vw);
+  }
+
+  .atlas-hero.hero-premium-2 .hero-dashboard{
+    width:100%;
+    max-width:430px;
+    margin:390px auto 0;
+    right:auto;
+    top:auto;
+  }
+}
+
+@media (max-width:720px){
+  .hero-premium-network{
+    top:-27%;
+    width:100vw;
+    height:100vw;
+  }
+
+  .premium-label{
+    display:none;
+  }
+
+  .premium-route-main .premium-route-trail{
+    stroke-width:1.75;
+  }
+
+  .premium-route-global .premium-route-trail{
+    stroke-width:1.05;
+  }
+
+  .premium-route-ambient{
+    display:none;
+  }
+
+  .atlas-hero.hero-premium-2 .hero-dashboard{
+    margin-top:632px;
+    max-height:540px;
+  }
+
+  .atlas-hero.hero-premium-2 .dashboard-metrics{
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin-bottom:12px;
+  }
+
+  .atlas-hero.hero-premium-2 .dashboard-metrics div{
+    min-height:78px;
+    padding:10px 10px 24px;
+  }
+
+  .atlas-hero.hero-premium-2 .dashboard-metrics strong{
+    font-size:22px;
+  }
+
+  .atlas-hero.hero-premium-2 .dashboard-metrics span{
+    font-size:11px;
+  }
+
+  .atlas-hero.hero-premium-2 .dashboard-metrics i{
+    height:18px;
+    bottom:7px;
+  }
+
+  .atlas-hero.hero-premium-2 .recent-ops{
+    max-height:160px;
+  }
+
+  .atlas-page.has-hero-premium-2 .services-section{
+    margin-top:-34px;
+    padding-top:132px;
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .premium-route-trail{
+    animation:none;
+  }
+}

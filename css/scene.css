@@ -8,17 +8,18 @@
 /* Blue globe glow plus a restrained green logistics halo. */
 .hero-glow{
   position:absolute;
-  width:760px;
-  height:760px;
-  left:57%;
-  top:50%;
+  width:690px;
+  height:690px;
+  left:52%;
+  top:44%;
   transform:translate(-50%,-50%);
   background:
-    radial-gradient(circle at 54% 47%, rgba(159,238,255,.22), transparent 36%),
-    radial-gradient(circle at 50% 55%, rgba(76,175,244,.22), transparent 58%),
-    radial-gradient(circle at 53% 78%, rgba(34,201,60,.13), transparent 34%);
-  filter:blur(24px);
-  opacity:.88;
+    radial-gradient(circle at 50% 48%, rgba(1,54,147,.3), transparent 40%),
+    radial-gradient(circle at 54% 46%, rgba(159,238,255,.29), transparent 35%),
+    radial-gradient(circle at 50% 55%, rgba(76,175,244,.31), transparent 63%),
+    radial-gradient(circle at 51% 78%, rgba(34,201,60,.16), transparent 36%);
+  filter:blur(26px);
+  opacity:.9;
   z-index:1;
   animation:heroGlowBreath 7.5s ease-in-out infinite;
 }
@@ -26,10 +27,10 @@
 /* Holographic orbit base under the 3D earth. */
 .hero-grid{
   position:absolute;
-  width:520px;
+  width:450px;
   height:130px;
-  left:57%;
-  bottom:9%;
+  left:52%;
+  bottom:14%;
   transform:translateX(-50%) perspective(760px) rotateX(64deg);
   border-radius:50%;
   background:
@@ -42,18 +43,19 @@
 
 .hero-map{
   position:absolute;
-  left:57%;
-  top:46%;
-  width:min(760px,50vw);
-  height:min(760px,50vw);
-  min-width:620px;
-  min-height:620px;
+  left:52%;
+  top:41%;
+  width:min(620px,42.5vw);
+  height:min(620px,42.5vw);
+  min-width:535px;
+  min-height:535px;
   transform:translate(-50%,-50%);
   z-index:2;
   pointer-events:none;
   filter:
-    drop-shadow(0 0 42px rgba(76,175,244,.48))
-    drop-shadow(0 0 122px rgba(13,229,200,.18));
+    drop-shadow(0 0 24px rgba(159,238,255,.46))
+    drop-shadow(0 0 58px rgba(76,175,244,.34))
+    drop-shadow(0 0 118px rgba(13,229,200,.16));
 }
 
 .hero-map canvas{

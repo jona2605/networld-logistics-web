@@ -46,16 +46,16 @@
 .workflow-console[data-workflow-reveal],
 .workflow-step{
   opacity:0;
-  filter:blur(8px);
-  transform:translateY(28px);
-  transition:opacity var(--transition-reveal), transform var(--transition-reveal), filter .84s ease;
+  filter:none;
+  transform:translateY(18px);
+  transition:opacity var(--transition-reveal), transform var(--transition-reveal);
 }
 
 .workflow-header.is-visible,
 .workflow-console.is-visible,
 .workflow-step.is-active{
   opacity:1;
-  filter:blur(0);
+  filter:none;
   transform:translateY(0);
 }
 
@@ -551,5 +551,391 @@
 
   .workflow-copy{
     padding:20px 18px 26px;
+  }
+}
+
+/* Home recomposition: lighter operational pipeline, less dashboard weight. */
+.workflow-section{
+  padding:90px 0 104px;
+}
+
+.workflow-header{
+  max-width:900px;
+  margin-bottom:36px;
+}
+
+.workflow-header h2{
+  max-width:880px;
+  font-size:clamp(36px,3.7vw,58px);
+}
+
+.workflow-header p{
+  max-width:760px;
+  font-size:18px;
+  line-height:1.58;
+}
+
+.workflow-console{
+  border-radius:18px;
+  background:
+    linear-gradient(145deg, rgba(5,20,36,.72), rgba(2,10,20,.54)),
+    radial-gradient(circle at 70% 0%, rgba(76,175,244,.1), transparent 30%);
+  box-shadow:inset 0 0 34px rgba(255,255,255,.018), 0 26px 90px rgba(0,0,0,.3);
+}
+
+.workflow-statusbar{
+  min-height:58px;
+}
+
+.workflow-track{
+  padding:30px 18px 24px;
+}
+
+.workflow-track::before,
+.workflow-track::after{
+  top:75px;
+}
+
+.workflow-step{
+  min-height:250px;
+  padding:0 9px;
+}
+
+.workflow-step::before{
+  left:8px;
+  right:8px;
+  top:38px;
+  background:linear-gradient(180deg, rgba(7,24,42,.36), rgba(3,13,24,.18));
+}
+
+.workflow-icon{
+  width:56px;
+  height:56px;
+  border-radius:16px;
+}
+
+.workflow-copy{
+  padding:0 10px 18px;
+}
+
+.workflow-copy h3{
+  font-size:18px;
+}
+
+.workflow-copy p{
+  font-size:13px;
+  line-height:1.5;
+}
+
+@media (max-width:720px){
+  .workflow-section{
+    padding:78px 0 84px;
+  }
+
+  .workflow-header h2{
+    font-size:36px;
+  }
+
+  .workflow-track{
+    padding:24px 16px 12px;
+  }
+
+  .workflow-step{
+    grid-template-columns:64px 1fr;
+    padding-bottom:16px;
+  }
+
+  .workflow-step::before{
+    left:58px;
+  }
+
+  .workflow-copy{
+    padding:18px 16px 20px;
+  }
+}
+
+/* Final Home polish: clearer control-tower flow without changing the section model. */
+.workflow-console{
+  overflow:hidden;
+  border-color:rgba(159,238,255,.13);
+}
+
+.workflow-track{
+  gap:12px;
+  padding:28px 18px 26px;
+}
+
+.workflow-track::before{
+  left:42px;
+  right:42px;
+  opacity:.58;
+}
+
+.workflow-track::after{
+  left:42px;
+  max-width:calc(100% - 84px);
+  opacity:.72;
+}
+
+.workflow-step{
+  min-height:236px;
+  padding:0 6px;
+}
+
+.workflow-step::before{
+  border-color:rgba(159,238,255,.095);
+  box-shadow:inset 0 0 22px rgba(76,175,244,.025);
+}
+
+.workflow-step.is-active::before,
+.workflow-step:hover::before{
+  border-color:rgba(159,238,255,.2);
+  background:linear-gradient(180deg, rgba(8,31,54,.52), rgba(3,13,24,.22));
+}
+
+.workflow-node{
+  margin-bottom:16px;
+}
+
+.workflow-step small{
+  width:25px;
+  height:25px;
+  font-size:10px;
+}
+
+.workflow-icon{
+  width:52px;
+  height:52px;
+  border-radius:15px;
+  box-shadow:inset 0 0 20px rgba(159,238,255,.08), 0 12px 28px rgba(0,0,0,.22);
+}
+
+.workflow-copy{
+  padding:0 8px 16px;
+}
+
+.workflow-copy h3{
+  margin-bottom:8px;
+  font-size:17px;
+}
+
+.workflow-copy p{
+  color:rgba(215,229,246,.72);
+}
+
+@media (max-width:1180px){
+  .workflow-track{
+    gap:14px;
+  }
+
+  .workflow-step{
+    min-height:244px;
+  }
+}
+
+@media (max-width:720px){
+  .workflow-track{
+    padding:22px 14px 10px;
+  }
+
+  .workflow-track::before{
+    left:39px;
+    top:36px;
+    bottom:34px;
+    opacity:.55;
+  }
+
+  .workflow-step{
+    grid-template-columns:52px 1fr;
+    gap:10px;
+    padding-bottom:14px;
+  }
+
+  .workflow-step::before{
+    left:48px;
+    right:2px;
+    bottom:14px;
+  }
+
+  .workflow-node{
+    gap:8px;
+  }
+
+  .workflow-icon{
+    width:48px;
+    height:48px;
+    border-radius:14px;
+  }
+
+  .workflow-copy{
+    padding:16px 14px 18px;
+  }
+
+  .workflow-copy h3{
+    font-size:16px;
+  }
+}
+
+/* Final compact pass: reduce section height while preserving pipeline clarity. */
+.workflow-section{
+  padding:70px 0 78px;
+}
+
+.workflow-header{
+  margin-bottom:24px;
+}
+
+.workflow-header .section-eyebrow{
+  margin-bottom:10px;
+}
+
+.workflow-header p{
+  margin-top:14px;
+}
+
+.workflow-statusbar{
+  min-height:50px;
+  padding:14px 18px;
+}
+
+.workflow-track{
+  padding:22px 16px 20px;
+}
+
+.workflow-track::before,
+.workflow-track::after{
+  top:65px;
+}
+
+.workflow-step{
+  min-height:208px;
+  opacity:1;
+  filter:none;
+}
+
+html.js-enabled .workflow-section .workflow-step:not(.is-active){
+  opacity:.88;
+  filter:none;
+}
+
+.workflow-node{
+  margin-bottom:12px;
+}
+
+.workflow-icon{
+  width:48px;
+  height:48px;
+  border-radius:14px;
+}
+
+.workflow-copy h3{
+  font-size:16px;
+}
+
+.workflow-copy p{
+  font-size:12px;
+  line-height:1.46;
+}
+
+@media (max-width:1180px){
+  .workflow-step{
+    min-height:218px;
+  }
+}
+
+@media (max-width:720px){
+  .workflow-section{
+    padding:62px 0 64px;
+  }
+
+  .workflow-header{
+    margin-bottom:22px;
+  }
+
+  .workflow-track{
+    padding:18px 12px 8px;
+  }
+
+  .workflow-step{
+    padding-bottom:10px;
+  }
+
+  .workflow-copy{
+    padding:14px 14px 16px;
+  }
+}
+
+/* Final rhythm pass: shorter control-tower section, same six-step clarity. */
+.workflow-section{
+  margin-top:-8px;
+  padding:58px 0 64px;
+}
+
+.workflow-header{
+  margin-bottom:18px;
+}
+
+.workflow-header p{
+  margin-top:10px;
+}
+
+.workflow-statusbar{
+  min-height:46px;
+  padding:12px 16px;
+}
+
+.workflow-track{
+  padding:18px 14px 16px;
+}
+
+.workflow-track::before,
+.workflow-track::after{
+  top:59px;
+}
+
+.workflow-step{
+  min-height:190px;
+}
+
+.workflow-node{
+  margin-bottom:10px;
+}
+
+.workflow-icon{
+  width:44px;
+  height:44px;
+}
+
+.workflow-copy{
+  padding:0 7px 14px;
+}
+
+@media (max-width:1180px){
+  .workflow-step{
+    min-height:202px;
+  }
+}
+
+@media (max-width:720px){
+  .workflow-section{
+    margin-top:-6px;
+    padding:52px 0 54px;
+  }
+
+  .workflow-header{
+    margin-bottom:18px;
+  }
+
+  .workflow-track{
+    padding:16px 12px 6px;
+  }
+
+  .workflow-step{
+    gap:8px;
+    padding-bottom:8px;
+  }
+
+  .workflow-copy{
+    padding:13px 13px 14px;
   }
 }

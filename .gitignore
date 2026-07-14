@@ -4,3 +4,10 @@ dist/
 .env.*
 *.log
 .DS_Store
+# Codex / audit captures
+.codex/
+visual-captures/
+*hero*.png
+*audit*.png
+*ops-sync*.png
+*top-audit*.png

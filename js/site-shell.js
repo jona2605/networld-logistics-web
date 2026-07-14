@@ -96,17 +96,67 @@ function normalizeNavbarLinks() {
   });
 
   document.querySelectorAll(".nav-links").forEach(nav => {
-    const links = Array.from(nav.querySelectorAll("a"));
-    links.forEach(link => {
-      const label = link.textContent.trim().toLowerCase();
-      if (label === "recursos") link.href = new URL(route("recursos/index.html"), window.location.href).href;
-      if (label === "contacto") link.href = new URL(route("contacto/index.html"), window.location.href).href;
-      if (label === "portal logictrack") {
-        link.href = NETWORLD.logicTrackUrl;
-        link.target = "_blank";
-        link.rel = "noopener noreferrer";
-        link.removeAttribute("aria-current");
-      }
+    const current = Array.from(nav.querySelectorAll("a")).find(link => link.getAttribute("aria-current") === "page")?.textContent.trim().toLowerCase();
+    const prefix = pathPrefix();
+    const pageLink = (href, label, key) => `<a href="${href}"${current === key ? ' aria-current="page"' : ""}>${label}</a>`;
+
+    nav.innerHTML = `
+      ${pageLink(`${prefix}servicios/index.html`, "Servicios", "servicios")}
+      ${pageLink(`${prefix}nosotros/index.html`, "Nosotros", "nosotros")}
+      <div class="nav-dropdown" data-nav-dropdown>
+        <button class="nav-dropdown__trigger" type="button" aria-expanded="false" aria-haspopup="true">
+          Recursos
+          <span aria-hidden="true"></span>
+        </button>
+        <div class="nav-dropdown__menu" role="menu">
+          ${pageLink(`${prefix}recursos/index.html`, "Recursos", "recursos")}
+          ${pageLink(`${prefix}academia/index.html`, "Academia", "academia")}
+          ${pageLink(`${prefix}herramientas/index.html`, "Herramientas", "herramientas")}
+          ${pageLink(`${prefix}casos/index.html`, "Casos", "casos")}
+        </div>
+      </div>
+      ${pageLink(`${prefix}contacto/index.html`, "Contacto", "contacto")}
+      <a class="nav-mobile-only" href="${NETWORLD.logicTrackUrl}" target="_blank" rel="noopener noreferrer">Portal LogicTrack</a>
+    `;
+  });
+
+  document.querySelectorAll(".atlas-navbar").forEach(navbar => {
+    if (navbar.querySelector(".nav-portal")) return;
+    const portal = document.createElement("a");
+    portal.className = "nav-portal";
+    portal.href = NETWORLD.logicTrackUrl;
+    portal.target = "_blank";
+    portal.rel = "noopener noreferrer";
+    portal.textContent = "Portal LogicTrack";
+    navbar.querySelector(".nav-links")?.insertAdjacentElement("afterend", portal);
+  });
+}
+
+function initResourceDropdowns() {
+  document.querySelectorAll("[data-nav-dropdown]").forEach(dropdown => {
+    const trigger = dropdown.querySelector(".nav-dropdown__trigger");
+    if (!trigger || dropdown.dataset.bound === "true") return;
+    dropdown.dataset.bound = "true";
+
+    const close = () => {
+      dropdown.classList.remove("is-open");
+      trigger.setAttribute("aria-expanded", "false");
+    };
+
+    trigger.addEventListener("click", event => {
+      event.stopPropagation();
+      const isOpen = dropdown.classList.toggle("is-open");
+      trigger.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    dropdown.addEventListener("keydown", event => {
+      if (event.key !== "Escape") return;
+      close();
+      trigger.focus({ preventScroll: true });
+    });
+
+    document.addEventListener("click", event => {
+      if (!dropdown.contains(event.target)) close();
     });
   });
 }
@@ -221,6 +271,7 @@ export function initSiteShell() {
 
   ensureSkipLink();
   normalizeNavbarLinks();
+  initResourceDropdowns();
   initMobileNav();
   setLogicTrackLinks();
   normalizeFooter();

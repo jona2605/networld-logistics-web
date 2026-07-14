@@ -376,3 +376,441 @@
     min-height:0;
   }
 }
+
+/* Home recomposition: make LogicTrack the SaaS proof point without touching Hero dashboard. */
+.control-center-section{
+  padding:96px 0 110px;
+}
+
+.control-center-header{
+  max-width:920px;
+  margin-bottom:34px;
+}
+
+.control-center-header h2{
+  max-width:880px;
+  font-size:clamp(38px,4vw,64px);
+}
+
+.control-center-header p{
+  max-width:780px;
+  font-size:18px;
+  line-height:1.58;
+}
+
+.control-center-console{
+  border-radius:20px;
+  background:
+    linear-gradient(145deg, rgba(5,20,36,.92), rgba(2,10,20,.72)),
+    radial-gradient(circle at 80% 0%, rgba(34,201,60,.1), transparent 34%),
+    radial-gradient(circle at 12% 30%, rgba(76,175,244,.12), transparent 30%);
+}
+
+.control-topbar{
+  min-height:60px;
+}
+
+.control-grid{
+  grid-template-columns:1.15fr .58fr .58fr .78fr;
+  padding:20px;
+}
+
+.control-primary-panel{
+  grid-row:span 2;
+  min-height:360px;
+}
+
+.control-metric{
+  min-height:172px;
+}
+
+.control-activity{
+  grid-column:span 2;
+  min-height:172px;
+}
+
+.control-docs{
+  grid-column:span 2;
+  min-height:172px;
+}
+
+.control-docs .control-panel-head{
+  margin-bottom:14px;
+}
+
+.control-portal-note{
+  color:var(--text-line);
+  font-size:14px;
+  line-height:1.55;
+  margin-bottom:16px;
+}
+
+.control-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+.control-actions a{
+  min-height:38px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 14px;
+  border:1px solid rgba(159,238,255,.18);
+  border-radius:var(--radius-chip);
+  color:var(--text-bright);
+  background:rgba(159,238,255,.055);
+  font-size:12px;
+  font-weight:900;
+  transition:transform .24s ease, border-color .24s ease, background .24s ease;
+}
+
+.control-actions a:first-child{
+  color:var(--white);
+  border-color:rgba(34,201,60,.32);
+  background:rgba(34,201,60,.12);
+}
+
+.control-actions a:hover{
+  transform:translateY(-2px);
+  border-color:rgba(159,238,255,.36);
+  background:rgba(159,238,255,.09);
+}
+
+@media (max-width:1080px){
+  .control-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .control-primary-panel,
+  .control-activity,
+  .control-docs{
+    grid-column:span 2;
+  }
+}
+
+@media (max-width:720px){
+  .control-center-section{
+    padding:82px 0 88px;
+  }
+
+  .control-center-header h2{
+    font-size:36px;
+  }
+
+  .control-grid{
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+
+  .control-primary-panel,
+  .control-activity,
+  .control-docs{
+    grid-column:auto;
+  }
+}
+
+/* Final Home polish: make LogicTrack feel like one integrated SaaS console. */
+.control-center-console{
+  border-color:rgba(159,238,255,.13);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04), 0 30px 100px rgba(0,0,0,.32);
+}
+
+.control-grid{
+  grid-template-columns:1.05fr .62fr .62fr .86fr;
+  gap:12px;
+  padding:18px;
+}
+
+.control-primary-panel,
+.control-metric,
+.control-activity,
+.control-docs{
+  border-color:rgba(159,238,255,.12);
+  box-shadow:inset 0 0 26px rgba(159,238,255,.025), 0 16px 38px rgba(0,0,0,.18);
+}
+
+.control-primary-panel{
+  min-height:332px;
+  padding:20px;
+}
+
+.control-flow{
+  gap:10px;
+}
+
+.control-flow div{
+  min-height:60px;
+  padding:12px 13px;
+}
+
+.control-flow span{
+  width:30px;
+  height:30px;
+  font-size:11px;
+}
+
+.control-metric{
+  min-height:154px;
+  padding:18px;
+}
+
+.control-metric strong{
+  margin:10px 0 5px;
+  font-size:clamp(28px,2.6vw,36px);
+}
+
+.control-metric p,
+.control-portal-note{
+  font-size:13px;
+  line-height:1.48;
+}
+
+.control-panel-head{
+  gap:12px;
+}
+
+.control-panel-head strong{
+  font-size:clamp(26px,2.5vw,34px);
+}
+
+.control-activity,
+.control-docs{
+  min-height:158px;
+  padding:18px;
+}
+
+.control-activity .control-panel-head strong,
+.control-docs .control-panel-head strong{
+  min-height:24px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 9px;
+  border:1px solid rgba(34,201,60,.25);
+  border-radius:999px;
+  color:var(--accent);
+  background:rgba(34,201,60,.07);
+  box-shadow:0 0 14px rgba(34,201,60,.12);
+  font-size:11px;
+  letter-spacing:.02em;
+  line-height:1;
+}
+
+.control-feed{
+  gap:8px;
+}
+
+.control-feed p{
+  grid-template-columns:30px 1fr auto;
+  gap:8px;
+  font-size:12px;
+}
+
+.control-feed b{
+  width:30px;
+  height:30px;
+  border-radius:7px;
+}
+
+.control-doc-list{
+  gap:8px;
+}
+
+.control-doc-list span{
+  min-height:30px;
+  padding:0 10px;
+  font-size:11px;
+}
+
+@media (max-width:1080px){
+  .control-grid{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media (max-width:720px){
+  .control-grid{
+    grid-template-columns:1fr;
+    padding:14px;
+  }
+
+  .control-primary-panel,
+  .control-metric,
+  .control-activity,
+  .control-docs{
+    padding:16px;
+  }
+
+  .control-primary-panel{
+    min-height:0;
+  }
+
+  .control-flow div{
+    min-height:56px;
+  }
+}
+
+/* Final compact pass: keep LogicTrack substantial, not oversized. */
+.control-center-section{
+  padding:72px 0 82px;
+}
+
+.control-center-header{
+  margin-bottom:24px;
+}
+
+.control-center-header .section-eyebrow{
+  margin-bottom:10px;
+}
+
+.control-center-header p{
+  margin-top:14px;
+}
+
+.control-topbar{
+  min-height:52px;
+  padding:14px 18px;
+}
+
+.control-grid{
+  gap:10px;
+  padding:16px;
+}
+
+.control-primary-panel{
+  min-height:300px;
+  padding:18px;
+}
+
+.control-flow{
+  gap:8px;
+}
+
+.control-flow div{
+  min-height:54px;
+}
+
+.control-metric{
+  min-height:138px;
+  padding:16px;
+}
+
+.control-activity,
+.control-docs{
+  min-height:144px;
+  padding:16px;
+}
+
+.control-feed{
+  gap:7px;
+}
+
+.control-docs .control-panel-head{
+  margin-bottom:10px;
+}
+
+.control-portal-note{
+  margin-bottom:12px;
+}
+
+@media (max-width:720px){
+  .control-center-section{
+    padding:62px 0 66px;
+  }
+
+  .control-center-header{
+    margin-bottom:22px;
+  }
+
+  .control-grid{
+    padding:12px;
+  }
+
+  .control-flow div{
+    min-height:52px;
+  }
+}
+
+/* Final rhythm pass: reduce LogicTrack vertical bulk while keeping console weight. */
+.control-center-section{
+  margin-top:-8px;
+  padding:60px 0 68px;
+}
+
+.control-center-header{
+  margin-bottom:18px;
+}
+
+.control-center-header p{
+  margin-top:10px;
+}
+
+.control-topbar{
+  min-height:48px;
+  padding:12px 16px;
+}
+
+.control-grid{
+  gap:9px;
+  padding:14px;
+}
+
+.control-primary-panel{
+  min-height:282px;
+  padding:16px;
+}
+
+.control-metric{
+  min-height:128px;
+  padding:14px;
+}
+
+.control-activity,
+.control-docs{
+  min-height:132px;
+  padding:14px;
+}
+
+.control-flow div{
+  min-height:50px;
+}
+
+.control-metric strong{
+  margin:8px 0 4px;
+}
+
+@media (max-width:720px){
+  .control-center-section{
+    margin-top:-6px;
+    padding:52px 0 56px;
+  }
+
+  .control-center-header{
+    margin-bottom:18px;
+  }
+
+  .control-grid{
+    gap:9px;
+    padding:10px;
+  }
+
+  .control-primary-panel,
+  .control-metric,
+  .control-activity,
+  .control-docs{
+    padding:14px;
+  }
+}
+
+/* Quality close: operational states instead of unverifiable dashboard percentages. */
+.control-primary-panel .control-panel-head strong,
+.control-metric strong{
+  font-size:clamp(24px,2.2vw,30px);
+  letter-spacing:.01em;
+}
+
+.control-metric strong{
+  line-height:1.08;
+}

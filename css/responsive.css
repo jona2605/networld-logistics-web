@@ -1,25 +1,6 @@
 @media (max-width:1400px){
-  .nav-links{
-    gap:24px;
-  }
-
-  .atlas-navbar{
-    height:86px;
-    margin-top:10px;
-  }
-
-  .brand img{
-    width:112px;
-  }
-
-  .nav-cta{
-    min-width:168px;
-    min-height:52px;
-    font-size:16px;
-  }
-
   .hero-left{
-    top:28px;
+    top:18px;
     width:42vw;
   }
 
@@ -28,51 +9,90 @@
   }
 
   .hero-left h1{
-    margin-bottom:20px;
-    font-size:clamp(50px,5vw,68px);
+    margin-bottom:16px;
+    font-size:clamp(48px,4.75vw,64px);
   }
 
   .hero-left p{
-    margin-bottom:26px;
+    margin-bottom:20px;
     font-size:17px;
     line-height:1.55;
   }
 
   .hero-actions{
-    margin-bottom:24px;
+    margin-bottom:18px;
   }
 
   .hero-map{
-    left:58%;
-    top:47%;
-    width:min(650px,49vw);
-    height:min(650px,49vw);
-    min-width:540px;
-    min-height:540px;
+    left:52%;
+    top:41%;
+    width:min(565px,41.5vw);
+    height:min(565px,41.5vw);
+    min-width:510px;
+    min-height:510px;
   }
 
   .hero-dashboard{
-    top:36px;
-    width:350px;
-    padding:18px;
+    top:32px;
+    right:30px;
+    width:300px;
+    max-height:540px;
+    padding:15px;
   }
 
   .dashboard-metrics div{
-    min-height:126px;
-    padding:16px 14px 42px;
+    min-height:94px;
+    padding:11px 11px 29px;
   }
 
   .dashboard-metrics strong{
-    font-size:30px;
+    font-size:28px;
   }
 
   .dashboard-metrics span{
-    font-size:13px;
+    font-size:12px;
   }
 
   .op-item{
-    min-height:55px;
-    padding:8px 10px;
+    min-height:40px;
+    padding:5px 8px;
+  }
+
+  .dashboard-header{
+    margin-bottom:16px;
+  }
+
+  .dashboard-header strong{
+    font-size:19px;
+  }
+
+  .dashboard-header small{
+    font-size:14px;
+  }
+
+  .dashboard-metrics{
+    gap:10px;
+    margin-bottom:16px;
+  }
+
+  .dashboard-metrics i{
+    left:12px;
+    right:12px;
+    bottom:11px;
+    height:24px;
+  }
+
+  .recent-ops h3{
+    margin-bottom:10px;
+    font-size:14px;
+  }
+
+  .op-item p{
+    font-size:11px;
+  }
+
+  .op-item small{
+    font-size:9px;
   }
 
   .op-item em{
@@ -84,8 +104,8 @@
   }
 
   .trust-row div{
-    min-height:68px;
-    padding:12px;
+    min-height:60px;
+    padding:10px;
   }
 
   .trust-row strong{
@@ -100,53 +120,6 @@
 }
 
 @media (max-width:1080px){
-  .atlas-navbar{
-    height:auto;
-    min-height:78px;
-    gap:14px;
-    flex-wrap:wrap;
-    padding:14px 18px;
-  }
-
-  .nav-menu-toggle{
-    display:grid;
-    gap:4px;
-    order:2;
-  }
-
-  .nav-links{
-    display:none;
-    order:5;
-    width:100%;
-    flex-direction:column;
-    align-items:stretch;
-    gap:8px;
-    padding-top:8px;
-  }
-
-  .atlas-navbar.is-menu-open .nav-links{
-    display:flex;
-  }
-
-  .nav-links a{
-    min-height:42px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border:1px solid rgba(159,238,255,.1);
-    border-radius:var(--radius-card);
-    background:rgba(159,238,255,.045);
-  }
-
-  .global-search-trigger{
-    order:3;
-  }
-
-  .nav-cta{
-    order:4;
-    min-height:50px;
-  }
-
   .atlas-hero{
     height:auto;
     min-height:0;
@@ -180,14 +153,14 @@
   }
 
   .hero-scene{
-    min-height:780px;
+    min-height:720px;
   }
 
   .hero-map{
     left:50%;
-    top:34%;
-    width:min(680px,92vw);
-    height:min(680px,92vw);
+    top:28%;
+    width:min(600px,86vw);
+    height:min(600px,86vw);
     min-width:0;
     min-height:0;
   }
@@ -199,31 +172,11 @@
 
   .hero-dashboard{
     max-width:430px;
-    margin:470px auto 0;
+    margin:390px auto 0;
   }
 }
 
 @media (max-width:720px){
-  .atlas-navbar{
-    width:94%;
-    border-radius:18px;
-  }
-
-  .brand img{
-    width:106px;
-  }
-
-  .nav-links{
-    gap:7px;
-  }
-
-  .nav-cta{
-    min-width:150px;
-    min-height:48px;
-    font-size:15px;
-    padding:0 20px;
-  }
-
   .hero-left{
     padding:0 4px;
   }
@@ -257,18 +210,18 @@
   }
 
   .hero-scene{
-    min-height:720px;
+    min-height:650px;
   }
 
   .hero-map{
-    top:25%;
-    width:108vw;
-    height:108vw;
+    top:-27%;
+    width:94vw;
+    height:94vw;
   }
 
   .hero-dashboard{
     width:100%;
-    margin-top:360px;
+    margin-top:632px;
     padding:16px;
   }
 

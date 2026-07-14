@@ -1,15 +1,6 @@
-const STATUS_STATE = {
-  operations: 18,
-  regions: 4,
-  onTime: "98.7%",
-  updatedAgo: 14
-};
+import { getCurrentOperationsSnapshot, getUpdatedText } from "./operations-data.js";
 
-function formatUpdated(seconds) {
-  return `Actualizado hace ${seconds} segundo${seconds === 1 ? "" : "s"}`;
-}
-
-function createStatusBar() {
+function createStatusBar(snapshot) {
   const bar = document.createElement("div");
   bar.className = "global-status";
   bar.setAttribute("role", "region");
@@ -18,13 +9,11 @@ function createStatusBar() {
     <div class="global-status__track">
       <span class="global-status__item is-primary"><i class="global-status__dot" aria-hidden="true"></i>Centro operativo activo</span>
       <i class="global-status__divider" aria-hidden="true"></i>
-      <span class="global-status__item"><strong data-status-operations>${STATUS_STATE.operations}</strong> operaciones monitoreadas</span>
-      <i class="global-status__divider optional-mobile" aria-hidden="true"></i>
-      <span class="global-status__item optional-mobile"><strong data-status-regions>${STATUS_STATE.regions}</strong> regiones conectadas</span>
-      <i class="global-status__divider optional-mobile" aria-hidden="true"></i>
-      <span class="global-status__item optional-mobile"><strong data-status-ontime>${STATUS_STATE.onTime}</strong> entregas a tiempo</span>
+      <span class="global-status__item"><strong data-status-operations>${snapshot.activeOperations}</strong> operaciones</span>
       <i class="global-status__divider" aria-hidden="true"></i>
-      <span class="global-status__item global-status__time" data-status-updated>${formatUpdated(STATUS_STATE.updatedAgo)}</span>
+      <span class="global-status__item"><strong data-status-countries>${snapshot.connectedCountries}</strong> paises</span>
+      <i class="global-status__divider" aria-hidden="true"></i>
+      <span class="global-status__item global-status__time" data-status-updated>${snapshot.lastUpdatedText}</span>
     </div>
   `;
   return bar;
@@ -40,12 +29,14 @@ function bindGlow(bar) {
   });
 }
 
-function updateStatus(bar) {
+function updateStatusTime(bar, snapshot) {
   const updated = bar.querySelector("[data-status-updated]");
+  if (!updated) return;
 
+  let seconds = snapshot.updatedAgo;
   window.setInterval(() => {
-    STATUS_STATE.updatedAgo = STATUS_STATE.updatedAgo >= 28 ? 3 : STATUS_STATE.updatedAgo + 7;
-    if (updated) updated.textContent = formatUpdated(STATUS_STATE.updatedAgo);
+    seconds = seconds >= 35 ? 7 : seconds + 7;
+    updated.textContent = getUpdatedText(seconds);
   }, 7000);
 }
 
@@ -53,13 +44,14 @@ export function initGlobalStatus() {
   if (window.__networldGlobalStatusReady) return;
   window.__networldGlobalStatusReady = true;
 
+  const snapshot = getCurrentOperationsSnapshot();
   document.querySelectorAll(".atlas-navbar").forEach(navbar => {
     if (navbar.nextElementSibling?.classList.contains("global-status")) return;
 
-    const bar = createStatusBar();
+    const bar = createStatusBar(snapshot);
     navbar.insertAdjacentElement("afterend", bar);
     bindGlow(bar);
-    updateStatus(bar);
+    updateStatusTime(bar, snapshot);
   });
 }
 
