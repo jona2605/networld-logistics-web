@@ -195,3 +195,75 @@
   background:currentColor;
   box-shadow:0 0 8px currentColor;
 }
+
+/* Live Operations: compact layout with two complete recent operations. */
+.hero-dashboard{
+  max-height:455px;
+  padding:16px;
+  overflow:hidden;
+}
+
+.hero-dashboard .dashboard-header{
+  margin-bottom:12px;
+}
+
+.hero-dashboard .dashboard-metrics{
+  gap:8px;
+  margin-bottom:12px;
+}
+
+.hero-dashboard .dashboard-metrics div{
+  min-height:84px;
+  padding:10px 10px 26px;
+}
+
+.hero-dashboard .dashboard-metrics strong{
+  font-size:25px;
+  margin-bottom:6px;
+}
+
+.hero-dashboard .dashboard-metrics span{
+  font-size:11.5px;
+  line-height:1.25;
+}
+
+.hero-dashboard .recent-ops h3{
+  margin-bottom:8px;
+  font-size:13px;
+}
+
+.hero-dashboard .recent-ops .op-item{
+  min-height:40px;
+  grid-template-columns:30px 1fr;
+  padding:6px 8px;
+  margin-bottom:6px;
+}
+
+.hero-dashboard .recent-ops .op-item:nth-of-type(n+3){
+  display:none;
+}
+
+.hero-dashboard .recent-ops .op-item > span{
+  width:30px;
+  height:30px;
+  font-size:12px;
+}
+
+.hero-dashboard .recent-ops .op-item p{
+  font-size:11.5px;
+  line-height:1.15;
+}
+
+.hero-dashboard .recent-ops .op-item small{
+  font-size:9.5px;
+  line-height:1.15;
+}
+
+.hero-dashboard .operations-queue{
+  margin:2px 0 0;
+  color:var(--text-line);
+  font-size:10px;
+  line-height:1.3;
+  letter-spacing:.02em;
+  text-align:center;
+}

@@ -318,37 +318,22 @@
 
 .atlas-hero.hero-premium-2 .recent-ops{
   position:relative;
-  overflow:hidden;
-  max-height:164px;
-  padding-bottom:10px;
+  overflow:visible;
+  max-height:none;
+  padding-bottom:0;
 }
 
 .atlas-hero.hero-premium-2 .recent-ops::after{
-  content:"";
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
-  height:34px;
-  pointer-events:none;
-  background:linear-gradient(to bottom, transparent, rgba(3,16,29,.96));
+  display:none;
 }
 
-.atlas-hero.hero-premium-2 .recent-ops .op-item:nth-of-type(n+4){
+.atlas-hero.hero-premium-2 .recent-ops .op-item:nth-of-type(n+3){
   display:none;
 }
 
 @media (min-width:1401px) and (min-height:860px){
   .atlas-hero.hero-premium-2 .recent-ops{
-    max-height:206px;
-  }
-
-  .atlas-hero.hero-premium-2 .recent-ops .op-item:nth-of-type(n+4){
-    display:grid;
-  }
-
-  .atlas-hero.hero-premium-2 .recent-ops .op-item:nth-of-type(n+5){
-    display:none;
+    max-height:none;
   }
 }
 
@@ -451,7 +436,7 @@
   }
 
   .atlas-hero.hero-premium-2 .recent-ops{
-    max-height:160px;
+    max-height:none;
   }
 
   .atlas-page.has-hero-premium-2 .services-section{
