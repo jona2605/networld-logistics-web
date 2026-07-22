@@ -362,19 +362,23 @@ export function createEarth() {
     createDaylightWashMaterial()
   );
 
-  new THREE.TextureLoader().load(
-    "./assets/textures/earth-blue-marble.jpg",
-    loadedTexture => {
-      loadedTexture.colorSpace = THREE.SRGBColorSpace;
-      loadedTexture.anisotropy = 8;
-      earth.material.map = loadedTexture;
-      earth.material.needsUpdate = true;
-    },
-    undefined,
-    error => {
-      console.warn("Earth texture could not be loaded. Canvas fallback remains active.", error);
-    }
-  );
+  earthGroup.userData.textureReady = new Promise(resolve => {
+    new THREE.TextureLoader().load(
+      "./assets/textures/earth-blue-marble.jpg",
+      loadedTexture => {
+        loadedTexture.colorSpace = THREE.SRGBColorSpace;
+        loadedTexture.anisotropy = 8;
+        earth.material.map = loadedTexture;
+        earth.material.needsUpdate = true;
+        resolve({ fallback: false });
+      },
+      undefined,
+      error => {
+        console.warn("Earth texture could not be loaded. Canvas fallback remains active.", error);
+        resolve({ fallback: true });
+      }
+    );
+  });
 
   const atmosphere = new THREE.Mesh(
     new THREE.SphereGeometry(1.525, 128, 128),

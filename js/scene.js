@@ -7,6 +7,10 @@ export function initScene() {
   const container = document.querySelector(".hero-map");
   if (!container) return;
 
+  const atmosphere = container.querySelector(".hero-map-atmosphere");
+  container.classList.remove("hero-map-ready", "hero-map-error", "hero-map-texture-fallback");
+
+  try {
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(
     42,
@@ -32,7 +36,6 @@ export function initScene() {
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.13;
 
-  container.innerHTML = "";
   container.appendChild(renderer.domElement);
 
   createLights(scene);
@@ -62,6 +65,8 @@ export function initScene() {
     });
   }
 
+  let firstFrameRendered = false;
+
   function animate() {
     requestAnimationFrame(animate);
     if (document.hidden) return;
@@ -83,9 +88,25 @@ export function initScene() {
     earthGroup.userData.animateAtmosphere?.(elapsedTime);
 
     renderer.render(scene, camera);
+    firstFrameRendered = true;
   }
 
   animate();
+
+  earthGroup.userData.textureReady.then(({ fallback: usesTextureFallback }) => {
+    const reveal = () => {
+      renderer.render(scene, camera);
+      container.classList.toggle("hero-map-texture-fallback", usesTextureFallback);
+      container.classList.add("hero-map-ready");
+      atmosphere?.setAttribute("aria-hidden", "true");
+    };
+
+    if (firstFrameRendered) {
+      window.requestAnimationFrame(reveal);
+    } else {
+      window.requestAnimationFrame(() => window.requestAnimationFrame(reveal));
+    }
+  });
 
   window.addEventListener("resize", () => {
     window.requestAnimationFrame(() => {
@@ -95,4 +116,9 @@ export function initScene() {
     renderer.setPixelRatio(getPixelRatio());
     });
   });
+  } catch (error) {
+    container.querySelector("canvas")?.remove();
+    container.classList.add("hero-map-error");
+    console.warn("WebGL scene could not initialize. Atmospheric fallback remains active.", error);
+  }
 }

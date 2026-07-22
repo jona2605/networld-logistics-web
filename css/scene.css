@@ -59,9 +59,58 @@
 }
 
 .hero-map canvas{
+  position:relative;
+  z-index:1;
   width:100% !important;
   height:100% !important;
   display:block;
+  opacity:0;
+  transition:opacity .72s cubic-bezier(.22,.75,.25,1);
+}
+
+.hero-map.hero-map-ready canvas{
+  opacity:1;
+}
+
+.hero-map-atmosphere{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  background:
+    radial-gradient(circle at 51% 47%, rgba(76,175,244,.09), transparent 34%),
+    radial-gradient(circle at 48% 58%, rgba(34,201,60,.035), transparent 30%);
+  opacity:1;
+  visibility:visible;
+  transition:opacity .5s ease, visibility .5s ease;
+}
+
+.hero-map-atmosphere i{
+  position:absolute;
+  width:3px;
+  height:3px;
+  border-radius:50%;
+  background:rgba(159,238,255,.6);
+  box-shadow:0 0 10px rgba(76,175,244,.55);
+  animation:heroMapAtmosphere 2.8s ease-in-out infinite;
+}
+
+.hero-map-atmosphere i:nth-child(1){left:36%; top:42%;}
+.hero-map-atmosphere i:nth-child(2){left:62%; top:35%; animation-delay:-.9s;}
+.hero-map-atmosphere i:nth-child(3){left:56%; top:66%; animation-delay:-1.8s;}
+
+.hero-map.hero-map-ready .hero-map-atmosphere{
+  opacity:0;
+  visibility:hidden;
+}
+
+.hero-map.hero-map-error .hero-map-atmosphere{
+  opacity:1;
+  visibility:visible;
+}
+
+@keyframes heroMapAtmosphere{
+  0%,100%{opacity:.18; transform:scale(.8);}
+  50%{opacity:.65; transform:scale(1.25);}
 }
 
 @keyframes heroGlowBreath{
@@ -71,6 +120,14 @@
 
 @media (prefers-reduced-motion:reduce){
   .hero-glow{
+    animation:none;
+  }
+
+  .hero-map canvas{
+    transition-duration:.01ms;
+  }
+
+  .hero-map-atmosphere i{
     animation:none;
   }
 }

@@ -1,0 +1,33 @@
+# Networld Logistics
+
+> Archivo experimental para facilitar el descubrimiento de informacion publica por asistentes de IA. No sustituye el contenido ni las politicas del sitio web.
+
+Networld Logistics es una empresa de logistica internacional con operaciones y atencion en El Salvador.
+
+## Servicios
+
+- Transporte maritimo internacional
+- Transporte aereo internacional
+- Transporte terrestre
+- Tramites aduanales
+- Seguimiento operativo de carga
+- Asesoria logistica
+- Portal privado LogicTrack para clientes activos
+
+## Contacto oficial
+
+- Correo: aduana@networldslogistics.com
+- WhatsApp: +503 7420-9546
+- Web: https://networld-logistics-web.vercel.app/
+- LogicTrack: https://logicstrack-app.web.app
+
+## Paginas principales
+
+- Inicio: https://networld-logistics-web.vercel.app/
+- Servicios: https://networld-logistics-web.vercel.app/servicios/
+- Nosotros: https://networld-logistics-web.vercel.app/nosotros/
+- Recursos: https://networld-logistics-web.vercel.app/recursos/
+- Academia: https://networld-logistics-web.vercel.app/academia/
+- Herramientas: https://networld-logistics-web.vercel.app/herramientas/
+- Casos: https://networld-logistics-web.vercel.app/casos/
+- Contacto: https://networld-logistics-web.vercel.app/contacto/
