@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://networld-logistics-web.vercel.app/sitemap.xml
+Sitemap: https://www.networldslogistics.com/sitemap.xml

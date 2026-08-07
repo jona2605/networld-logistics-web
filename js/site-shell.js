@@ -1,7 +1,7 @@
 import { bindPointerGlow, observeReveal } from "./reveal.js";
 
 export const NETWORLD = {
-  siteUrl: "https://networld-logistics-web.vercel.app",
+  siteUrl: "https://www.networldslogistics.com",
   logicTrackUrl: "https://logicstrack-app.web.app",
   email: "aduana@networldslogistics.com",
   phoneDisplay: "+503 7420 9546",
