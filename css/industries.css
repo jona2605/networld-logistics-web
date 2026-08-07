@@ -801,3 +801,171 @@
     bottom:12px;
   }
 }
+
+/* Consultative industry matrix: operational needs paired with Networld's control. */
+.industries-grid{
+  gap:12px;
+}
+
+.industry-panel{
+  min-height:276px;
+  padding:18px 20px 24px;
+  display:flex;
+  flex-direction:column;
+}
+
+.industry-panel::after{
+  left:20px;
+  right:20px;
+  bottom:0;
+  height:1px;
+  animation:none;
+  background:linear-gradient(90deg, var(--accent), rgba(76,175,244,.62), transparent);
+}
+
+.industry-top{
+  margin-bottom:7px;
+}
+
+.industry-top small{
+  color:rgba(159,238,255,.72);
+  font-size:11px;
+  letter-spacing:1.2px;
+}
+
+.industry-icon{
+  width:40px;
+  height:40px;
+  border-radius:var(--radius-card);
+  transform:scale(.82);
+  transform-origin:top right;
+}
+
+.industry-panel:hover .industry-icon{
+  transform:scale(.82) translateY(-2px);
+}
+
+.industry-copy{
+  max-width:none;
+  display:flex;
+  flex:1;
+  flex-direction:column;
+}
+
+.industry-copy h3{
+  margin:0 0 13px;
+  padding-bottom:11px;
+  border-bottom:1px solid rgba(159,238,255,.12);
+  font-size:22px;
+}
+
+.industry-brief{
+  margin:0 0 15px;
+  display:grid;
+  gap:10px;
+}
+
+.industry-brief div{
+  display:grid;
+  grid-template-columns:112px minmax(0,1fr);
+  gap:12px;
+  align-items:start;
+}
+
+.industry-brief dt{
+  color:var(--cyan-soft);
+  font-size:9px;
+  line-height:1.4;
+  font-weight:800;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+}
+
+.industry-brief dd{
+  margin:0;
+  color:var(--text-card);
+  font-size:12px;
+  line-height:1.5;
+  font-weight:500;
+}
+
+.industry-brief div:last-child dd{
+  color:var(--white);
+}
+
+.industry-chips{
+  gap:6px;
+  margin-top:auto;
+  padding:0 0 2px;
+}
+
+.industry-chips span{
+  min-height:24px;
+  padding:0 8px;
+  border-color:rgba(159,238,255,.14);
+  background:rgba(159,238,255,.035);
+  color:rgba(255,255,255,.72);
+  font-size:10px;
+  font-weight:600;
+}
+
+@media (max-width:1080px){
+  .industry-panel{
+    min-height:276px;
+  }
+}
+
+@media (max-width:720px){
+  .industries-section{
+    padding:52px 0 58px;
+  }
+
+  .industries-header h2{
+    font-size:34px;
+    line-height:1.08;
+  }
+
+  .industries-header p{
+    font-size:16px;
+    line-height:1.58;
+  }
+
+  .industries-grid{
+    gap:10px;
+  }
+
+  .industry-panel{
+    min-height:0;
+    padding:16px 17px 21px;
+  }
+
+  .industry-top{
+    margin-bottom:4px;
+  }
+
+  .industry-copy h3{
+    margin-bottom:11px;
+    padding-bottom:10px;
+  }
+
+  .industry-brief{
+    gap:10px;
+    margin-bottom:14px;
+  }
+
+  .industry-brief div{
+    grid-template-columns:1fr;
+    gap:4px;
+  }
+
+  .industry-brief dd{
+    font-size:13px;
+    line-height:1.45;
+  }
+
+  .industry-chips{
+    margin-top:0;
+    margin-bottom:10px;
+    padding-bottom:1px;
+  }
+}
