@@ -10,8 +10,6 @@ const cleanRouteEntries = [
   ["/recursos/", "/recursos/index.html"],
   ["/nosotros", "/nosotros/index.html"],
   ["/nosotros/", "/nosotros/index.html"],
-  ["/portal", "/portal/index.html"],
-  ["/portal/", "/portal/index.html"],
   ["/contacto", "/contacto/index.html"],
   ["/contacto/", "/contacto/index.html"],
   ["/academia", "/academia/index.html"],
@@ -24,6 +22,13 @@ const cleanRouteEntries = [
 
 function rewriteCleanRoutes(req, res, next) {
   const [pathname, query = ""] = req.url.split("?");
+
+  if (pathname === "/portal" || pathname === "/portal/") {
+    res.writeHead(302, { Location: "https://logicstrack-app.web.app" });
+    res.end();
+    return;
+  }
+
   const target = cleanRouteEntries.find(([route]) => route === pathname);
 
   if (target) {
@@ -46,7 +51,6 @@ export default {
         academia: resolve(projectRoot, "academia/index.html"),
         herramientas: resolve(projectRoot, "herramientas/index.html"),
         casos: resolve(projectRoot, "casos/index.html"),
-        portal: resolve(projectRoot, "portal/index.html"),
         contacto: resolve(projectRoot, "contacto/index.html"),
       },
     },
