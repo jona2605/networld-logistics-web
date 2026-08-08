@@ -12,6 +12,7 @@
 @import url("cta.css");
 @import url("effects.css");
 @import url("responsive.css");
+@import url("home-phase1.css");
 
 @media (max-width:720px){
   .atlas-navbar.is-menu-open .nav-links{

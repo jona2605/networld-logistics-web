@@ -104,7 +104,13 @@
 
 <body>
   <main class="atlas-page">
-    <nav class="atlas-navbar">
+    <div class="global-status" role="region" aria-label="Estado operativo">
+      <div class="global-status__inner">
+        <span class="global-status__item"><span class="global-status__dot" aria-hidden="true"></span>Coordinaci&oacute;n operativa activa &middot; El Salvador</span>
+        <span class="global-status__item">Atenci&oacute;n: lunes a viernes &middot; 08:00&ndash;17:30</span>
+      </div>
+    </div>
+    <nav class="atlas-navbar" aria-label="Navegaci&oacute;n principal">
       <a class="brand" href="index.html" aria-label="Networld Logistics">
         <img src="img/logotipo1.png" alt="Networld Logistics">
       </a>
@@ -119,38 +125,31 @@
       <a href="https://wa.me/50374209546?text=Hola%2C%20quiero%20cotizar%20una%20operaci%C3%B3n%20log%C3%ADstica" class="nav-cta" target="_blank" rel="noopener noreferrer">Cotizar ahora</a>
     </nav>
 
-    <section class="atlas-hero" aria-label="Centro de inteligencia logistica">
+    <section class="atlas-hero" aria-labelledby="hero-title">
+      <!-- Temporary existing production photography. License/provenance must be confirmed before final release. -->
+      <div class="hero-photography" role="img" aria-label="Terminal de contenedores en operaci&oacute;n" data-asset-status="placeholder-pending-license"></div>
       <div class="hero-left">
-        <span class="eyebrow">Centro de inteligencia log&iacute;stica</span>
+        <span class="eyebrow">Inteligencia log&iacute;stica internacional</span>
 
-        <h1>
-          <span class="headline-static">La log&iacute;stica</span>
-          <span class="headline-rotator" id="headlineRotator"><span class="headline-white">deja de ser un</span> <span class="headline-green">problema.</span></span>
+        <h1 id="hero-title">
+          <span>Su carga avanza.</span>
+          <span class="headline-blue">El control permanece.</span>
         </h1>
 
         <p>
-          Importamos desde China, Estados Unidos, Europa y Latinoam&eacute;rica con gesti&oacute;n aduanera, seguimiento en tiempo real y atenci&oacute;n personalizada de principio a fin.
+          Dise&ntilde;amos la ruta, revisamos la informaci&oacute;n disponible y coordinamos transporte, documentos y aduanas para decidir antes de que una desviaci&oacute;n se convierta en problema.
         </p>
 
         <div class="hero-actions">
           <a href="https://wa.me/50374209546?text=Hola%2C%20quiero%20planificar%20una%20importaci%C3%B3n" class="primary-action" target="_blank" rel="noopener noreferrer">Planificar mi operaci&oacute;n</a>
-          <a href="https://wa.me/50374209546?text=Hola%2C%20quiero%20hablar%20con%20un%20especialista" class="secondary-action" target="_blank" rel="noopener noreferrer">Hablar con un especialista</a>
+          <a href="https://wa.me/50374209546?text=Hola%2C%20quiero%20hablar%20con%20un%20especialista" class="secondary-action" target="_blank" rel="noopener noreferrer">Hablar con un especialista <span aria-hidden="true">&nearr;</span></a>
         </div>
 
-        <div class="trust-row" aria-label="Beneficios principales">
-          <div>
-            <strong><img src="svg/bolt.svg" alt=""></strong>
-            <span>Respuesta r&aacute;pida</span>
-          </div>
-          <div>
-            <strong><img src="svg/user.svg" alt=""></strong>
-            <span>Atenci&oacute;n personalizada</span>
-          </div>
-          <div>
-            <strong><img src="svg/shield.svg" alt=""></strong>
-            <span>Seguimiento total</span>
-          </div>
-        </div>
+        <ul class="hero-decision-points" aria-label="Decisiones que coordinamos">
+          <li><b>Ruta</b><span>Modo, conexi&oacute;n y ventana</span></li>
+          <li><b>Expediente</b><span>Documentos y requisitos</span></li>
+          <li><b>Ejecuci&oacute;n</b><span>Hitos, alertas y responsable</span></li>
+        </ul>
       </div>
 
       <div class="hero-scene">
@@ -162,31 +161,35 @@
           </div>
         </div>
 
-        <aside class="hero-dashboard">
+        <aside class="hero-dashboard" aria-label="Vista representativa de coordinaci&oacute;n operativa">
           <div class="dashboard-header">
             <div>
               <span></span>
-              <strong>Live Operations</strong>
+              <strong>Operaci&oacute;n coordinada</strong>
             </div>
-            <small>Tiempo real</small>
-          </div>
-          <p class="dashboard-context">Ejemplo ilustrativo del panel operativo</p>
-
-          <div class="dashboard-metrics">
-            <div><strong>18</strong><span>Operaciones activas</span><i></i></div>
-            <div><strong>4</strong><span>Pa&iacute;ses conectados</span><i></i></div>
-            <div><strong>2.4 d&iacute;as</strong><span>Tiempo promedio</span><i></i></div>
-            <div><strong>98.7%</strong><span>Entregas a tiempo</span><i></i></div>
+            <small>Vista representativa</small>
           </div>
 
           <div class="recent-ops">
-            <h3>Operaciones recientes</h3>
-            <div class="op-item"><span>CN</span><p>Shenzhen &rarr; San Salvador <small>Contenedor 40' HQ &bull; En tr&aacute;nsito</small></p><em>En curso</em></div>
-            <div class="op-item"><span>US</span><p>Miami &rarr; San Salvador <small>Aduana liberada &bull; En tr&aacute;nsito</small></p><em>En tr&aacute;nsito</em></div>
-            <div class="op-item"><span>DE</span><p>Hamburgo &rarr; San Salvador <small>Recolecci&oacute;n &bull; En preparaci&oacute;n</small></p><em>En preparaci&oacute;n</em></div>
-            <p class="operations-queue">+ 6 operaciones monitoreadas en cola</p>
+            <h3>Decisiones y estados visibles</h3>
+            <div class="op-item"><span>SAL</span><p>San Salvador <small>Documentaci&oacute;n de origen revisada</small></p><em>Revisado</em></div>
+            <div class="op-item"><span>PTY</span><p>Panam&aacute; <small>Conexi&oacute;n regional programada</small></p><em>Programado</em></div>
+            <div class="op-item"><span>MIA</span><p>Miami <small>Ventana de arribo confirmada</small></p><em>Confirmado</em></div>
+            <div class="op-item"><span>SHA</span><p>Shanghai <small>Reserva en coordinaci&oacute;n</small></p><em>En an&aacute;lisis</em></div>
           </div>
+          <p class="dashboard-disclaimer">Contenido representativo. No muestra datos de clientes ni m&eacute;tricas de servicio.</p>
         </aside>
+      </div>
+    </section>
+
+    <section class="hero-value-proof" aria-labelledby="value-proof-title">
+      <div class="hero-value-proof__inner">
+        <h2 id="value-proof-title">Una sola coordinaci&oacute;n de extremo a extremo.</h2>
+        <ul>
+          <li><strong>Ruta</strong><span>Alternativas seg&uacute;n carga, prioridad y destino.</span></li>
+          <li><strong>Aduanas</strong><span>Documentos y requisitos dentro del plan operativo.</span></li>
+          <li><strong>Visibilidad</strong><span>Hitos y comunicaci&oacute;n para actuar durante el tr&aacute;nsito.</span></li>
+        </ul>
       </div>
     </section>
 
@@ -948,7 +951,6 @@
     </footer>
   </main>
 
-  <script type="module" src="js/app.js"></script>
   <script type="module" src="js/main.js"></script>
 </body>
 </html>

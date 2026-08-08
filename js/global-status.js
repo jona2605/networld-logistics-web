@@ -1,19 +1,12 @@
-import { getCurrentOperationsSnapshot, getUpdatedText } from "./operations-data.js";
-
-function createStatusBar(snapshot) {
+function createStatusBar() {
   const bar = document.createElement("div");
   bar.className = "global-status";
   bar.setAttribute("role", "region");
   bar.setAttribute("aria-label", "Estado operativo global");
   bar.innerHTML = `
     <div class="global-status__track">
-      <span class="global-status__item is-primary"><i class="global-status__dot" aria-hidden="true"></i>Centro operativo activo</span>
-      <i class="global-status__divider" aria-hidden="true"></i>
-      <span class="global-status__item"><strong data-status-operations>${snapshot.activeOperations}</strong> operaciones</span>
-      <i class="global-status__divider" aria-hidden="true"></i>
-      <span class="global-status__item"><strong data-status-countries>${snapshot.connectedCountries}</strong> paises</span>
-      <i class="global-status__divider" aria-hidden="true"></i>
-      <span class="global-status__item global-status__time" data-status-updated>${snapshot.lastUpdatedText}</span>
+      <span class="global-status__item is-primary"><i class="global-status__dot" aria-hidden="true"></i>Coordinaci&oacute;n operativa activa &middot; El Salvador</span>
+      <span class="global-status__item global-status__time">Atenci&oacute;n: lunes a viernes &middot; 08:00&ndash;17:30</span>
     </div>
   `;
   return bar;
@@ -29,29 +22,16 @@ function bindGlow(bar) {
   });
 }
 
-function updateStatusTime(bar, snapshot) {
-  const updated = bar.querySelector("[data-status-updated]");
-  if (!updated) return;
-
-  let seconds = snapshot.updatedAgo;
-  window.setInterval(() => {
-    seconds = seconds >= 35 ? 7 : seconds + 7;
-    updated.textContent = getUpdatedText(seconds);
-  }, 7000);
-}
-
 export function initGlobalStatus() {
   if (window.__networldGlobalStatusReady) return;
   window.__networldGlobalStatusReady = true;
 
-  const snapshot = getCurrentOperationsSnapshot();
   document.querySelectorAll(".atlas-navbar").forEach(navbar => {
-    if (navbar.nextElementSibling?.classList.contains("global-status")) return;
+    if (navbar.previousElementSibling?.classList.contains("global-status")) return;
 
-    const bar = createStatusBar(snapshot);
-    navbar.insertAdjacentElement("afterend", bar);
+    const bar = createStatusBar();
+    navbar.insertAdjacentElement("beforebegin", bar);
     bindGlow(bar);
-    updateStatusTime(bar, snapshot);
   });
 }
 

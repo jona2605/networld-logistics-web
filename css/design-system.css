@@ -116,6 +116,20 @@
   --bp-mobile:720px;
   --bp-tablet:1080px;
   --bp-wide:1280px;
+
+  /* Frozen homepage implementation foundation */
+  --home-max:1312px;
+  --home-gutter:clamp(24px,4vw,64px);
+  --home-header-bg:rgba(2,10,19,.9);
+  --home-surface-dark:#02080f;
+  --home-surface-blue:#013693;
+  --home-surface-light:#F2F6F9;
+  --home-border:rgba(123,184,224,.24);
+  --home-copy:#C8D8E6;
+  --home-display:clamp(52px,5.35vw,86px);
+  --home-display-mobile:clamp(46px,13vw,62px);
+  --home-section-title:clamp(38px,4.2vw,64px);
+  --home-shadow:0 28px 80px rgba(0,0,0,.38);
 }
 
 /* Component primitives */
