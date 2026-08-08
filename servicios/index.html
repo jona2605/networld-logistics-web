@@ -38,10 +38,6 @@
       <div class="nav-links">
         <a href="../servicios/index.html" aria-current="page">Servicios</a>
         <a href="../nosotros/index.html">Nosotros</a>
-        <a href="../recursos/index.html">Recursos</a>
-        <a href="../academia/index.html">Academia</a>
-        <a href="../herramientas/index.html">Herramientas</a>
-        <a href="../casos/index.html">Casos</a>
         <a href="https://logicstrack-app.web.app" target="_blank" rel="noopener noreferrer">Portal LogicTrack</a>
         <a href="../contacto/index.html">Contacto</a>
       </div>
@@ -53,41 +49,45 @@
       <div class="services-page-shell services-page-hero-grid">
         <div class="services-page-hero-copy" data-service-page-reveal>
           <span class="services-page-eyebrow">Logistics Service OS</span>
-          <h1>Elige el servicio correcto para mover tu carga con visibilidad total.</h1>
-          <p>Networld Logistics integra transporte internacional, aduanas, seguimiento y asesor&iacute;a en una sola operaci&oacute;n coordinada desde origen hasta entrega final.</p>
+          <h1>Transporte, aduanas y seguimiento en una sola operaci&oacute;n.</h1>
+          <p>Coordinamos transporte internacional, gesti&oacute;n aduanera, seguimiento y asesor&iacute;a para mantener tu carga bajo control desde origen hasta la entrega final.</p>
           <div class="services-page-actions">
-            <a href="https://wa.me/50374209546?text=Hola%2C%20quiero%20planificar%20una%20operaci%C3%B3n%20log%C3%ADstica" class="primary-action" target="_blank" rel="noopener noreferrer">Planificar mi operaci&oacute;n</a>
-            <a href="#servicios-grid" class="secondary-action">Explorar servicios</a>
+            <a href="https://wa.me/50374209546?text=Hola%2C%20quiero%20cotizar%20un%20servicio%20log%C3%ADstico" class="primary-action" target="_blank" rel="noopener noreferrer">Cotizar un servicio</a>
+            <a href="https://wa.me/50374209546?text=Hola%2C%20quiero%20hablar%20con%20un%20especialista%20sobre%20mi%20operaci%C3%B3n" class="secondary-action" target="_blank" rel="noopener noreferrer">Hablar con un especialista</a>
           </div>
           <div class="hero-service-tags" aria-label="Servicios principales">
             <a href="#maritimo">Mar&iacute;timo</a>
             <a href="#aereo">A&eacute;reo</a>
+            <a href="#servicios-grid">Terrestre</a>
             <a href="#aduanas">Aduanas</a>
-            <a href="#tracking">Tracking</a>
+            <a href="#tracking">Seguimiento</a>
+            <a href="#servicios-grid">Asesor&iacute;a</a>
           </div>
         </div>
 
         <aside class="service-control-panel" data-service-page-reveal aria-label="Panel operativo de servicios">
           <div class="control-panel-head">
             <div><i></i><strong>Service Control</strong></div>
-            <span>Activo</span>
+            <span>Operaci&oacute;n integral</span>
           </div>
-          <div class="service-flow-visual" aria-hidden="true">
-            <span class="flow-hub hub-origin"></span>
-            <span class="flow-hub hub-port"></span>
-            <span class="flow-hub hub-customs"></span>
-            <span class="flow-hub hub-destination"></span>
-            <i class="flow-line line-a"></i>
-            <i class="flow-line line-b"></i>
-            <i class="flow-line line-c"></i>
-            <b class="flow-pulse pulse-a"></b>
-            <b class="flow-pulse pulse-b"></b>
-            <b class="flow-pulse pulse-c"></b>
+          <div class="service-control-intro">
+            <small>Servicios coordinados</small>
+            <p>Seleccionamos y conectamos cada componente seg&uacute;n tu carga, ruta y prioridad.</p>
           </div>
-          <div class="service-command-steps">
-            <div><small>Origen</small><strong>Proveedor confirmado</strong></div>
-            <div><small>Modalidad</small><strong>Mar&iacute;timo / A&eacute;reo / Terrestre</strong></div>
-            <div><small>Aduana</small><strong>Documentos en control</strong></div>
+          <div class="service-control-grid">
+            <a href="#maritimo"><i></i><span><strong>Mar&iacute;timo</strong><small>FCL y LCL global</small></span></a>
+            <a href="#aereo"><i></i><span><strong>A&eacute;reo</strong><small>Carga prioritaria</small></span></a>
+            <a href="#servicios-grid"><i></i><span><strong>Terrestre</strong><small>Distribuci&oacute;n regional</small></span></a>
+            <a href="#aduanas"><i></i><span><strong>Aduanas</strong><small>Permisos y liberaci&oacute;n</small></span></a>
+            <a href="#tracking"><i></i><span><strong>Seguimiento</strong><small>Hitos y visibilidad</small></span></a>
+            <a href="#servicios-grid"><i></i><span><strong>Asesor&iacute;a</strong><small>Decisi&oacute;n y prevenci&oacute;n</small></span></a>
+          </div>
+          <div class="service-control-route" aria-label="Cobertura del servicio">
+            <span><small>01</small><strong>Origen</strong></span>
+            <i aria-hidden="true"></i>
+            <span><small>02</small><strong>Coordinaci&oacute;n</strong></span>
+            <i aria-hidden="true"></i>
+            <span><small>03</small><strong>Entrega final</strong></span>
           </div>
         </aside>
       </div>
@@ -118,9 +118,13 @@
         </div>
 
         <div class="service-page-grid">
-          <article class="service-page-card is-featured" id="maritimo" data-service-page-card>
-            <div class="page-service-icon sea-icon" aria-hidden="true"><span></span><span></span><span></span></div>
-            <span class="service-page-status">Ocean Freight</span>
+          <article class="service-page-card" id="maritimo" data-service-page-card>
+            <div class="service-card-head">
+              <div class="page-service-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M4 16h16l-2 4H6l-2-4Z"/><path d="M6 16V9h12v7M9 9V5h6v4"/><path class="icon-accent" d="M3 22c1.5-1 3-.9 4.5 0s3 .9 4.5 0 3-.9 4.5 0 3 .9 4.5 0"/></svg>
+              </div>
+              <span class="service-page-status">Ocean Freight</span>
+            </div>
             <h3>Transporte mar&iacute;timo</h3>
             <p>Coordinaci&oacute;n FCL y LCL desde puertos internacionales con control documental, seguimiento operativo y visibilidad de trayecto.</p>
             <ul>
@@ -128,13 +132,18 @@
               <li>Coordinaci&oacute;n con puertos y agentes internacionales</li>
               <li>Gestiones previas para reducir fricci&oacute;n aduanera</li>
             </ul>
-            <div class="service-card-meta"><span>Ideal para volumen</span><span>Asia / Europa / Am&eacute;rica</span></div>
-            <a href="../contacto/index.html?servicio=transporte-maritimo#solicitud" data-integration-action="service-lead">Ver m&aacute;s</a>
+            <div class="service-operation-line" aria-label="Flujo operativo"><span>Origen</span><span>Puerto</span><span>Destino</span></div>
+            <div class="service-card-meta"><span>Volumen internacional</span></div>
+            <a class="service-page-cta" href="https://wa.me/50374209546?text=Hola%2C%20quiero%20cotizar%20transporte%20mar%C3%ADtimo" target="_blank" rel="noopener noreferrer" data-integration-action="service-lead"><span>Cotizar este servicio</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </article>
 
           <article class="service-page-card" id="aereo" data-service-page-card>
-            <div class="page-service-icon air-icon" aria-hidden="true"><span></span><span></span><span></span></div>
-            <span class="service-page-status">Air Cargo</span>
+            <div class="service-card-head">
+              <div class="page-service-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="m3 15 8.5-3.5L16 4h2l-2 7 5 2v2l-5-.5-3 5.5h-2l.5-6L3 17v-2Z"/><path class="icon-accent" d="M5 20h5"/></svg>
+              </div>
+              <span class="service-page-status">Air Cargo</span>
+            </div>
             <h3>Transporte a&eacute;reo</h3>
             <p>Carga urgente, consolidada o prioritaria con rutas a&eacute;reas eficientes y monitoreo de cada hito.</p>
             <ul>
@@ -142,13 +151,18 @@
               <li>Carga sensible</li>
               <li>Coordinaci&oacute;n express</li>
             </ul>
+            <div class="service-operation-line" aria-label="Flujo operativo"><span>Reserva</span><span>Vuelo</span><span>Entrega</span></div>
             <div class="service-card-meta"><span>Alta prioridad</span></div>
-            <a href="../contacto/index.html?servicio=transporte-aereo#solicitud" data-integration-action="service-lead">Ver m&aacute;s</a>
+            <a class="service-page-cta" href="https://wa.me/50374209546?text=Hola%2C%20quiero%20cotizar%20transporte%20a%C3%A9reo" target="_blank" rel="noopener noreferrer" data-integration-action="service-lead"><span>Cotizar este servicio</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </article>
 
-          <article class="service-page-card" data-service-page-card>
-            <div class="page-service-icon truck-icon" aria-hidden="true"><span></span><span></span><span></span></div>
-            <span class="service-page-status">Ground Network</span>
+          <article class="service-page-card" id="terrestre" data-service-page-card>
+            <div class="service-card-head">
+              <div class="page-service-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M3 6h11v11H3V6ZM14 10h4l3 3v4h-7v-7Z"/><circle class="icon-accent" cx="7" cy="18" r="2"/><circle class="icon-accent" cx="18" cy="18" r="2"/></svg>
+              </div>
+              <span class="service-page-status">Ground Network</span>
+            </div>
             <h3>Transporte terrestre</h3>
             <p>Traslado regional y entrega final con coordinaci&oacute;n entre puerto, bodega, aduana y destino.</p>
             <ul>
@@ -156,13 +170,18 @@
               <li>Entrega final</li>
               <li>Control de tramo</li>
             </ul>
+            <div class="service-operation-line" aria-label="Flujo operativo"><span>Retiro</span><span>Ruta</span><span>Entrega</span></div>
             <div class="service-card-meta"><span>&Uacute;ltima milla</span></div>
-            <a href="../contacto/index.html?servicio=transporte-terrestre#solicitud" data-integration-action="service-lead">Ver m&aacute;s</a>
+            <a class="service-page-cta" href="https://wa.me/50374209546?text=Hola%2C%20quiero%20cotizar%20transporte%20terrestre" target="_blank" rel="noopener noreferrer" data-integration-action="service-lead"><span>Cotizar este servicio</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </article>
 
           <article class="service-page-card" id="aduanas" data-service-page-card>
-            <div class="page-service-icon customs-icon" aria-hidden="true"><span></span><span></span><span></span></div>
-            <span class="service-page-status">Customs</span>
+            <div class="service-card-head">
+              <div class="page-service-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M6 3h9l4 4v14H6V3Z"/><path d="M15 3v5h4M9 12h6M9 16h3"/><path class="icon-accent" d="m14 16 1.5 1.5L19 14"/></svg>
+              </div>
+              <span class="service-page-status">Customs</span>
+            </div>
             <h3>Tr&aacute;mites aduanales</h3>
             <p>Gesti&oacute;n de documentaci&oacute;n, clasificaci&oacute;n, permisos y coordinaci&oacute;n con autoridades.</p>
             <ul>
@@ -170,13 +189,18 @@
               <li>Permisos y documentos</li>
               <li>Liberaci&oacute;n aduanera</li>
             </ul>
+            <div class="service-operation-line" aria-label="Flujo operativo"><span>Documentos</span><span>Aduana</span><span>Liberaci&oacute;n</span></div>
             <div class="service-card-meta"><span>Control documental</span></div>
-            <a href="../contacto/index.html?servicio=tramites-aduanales#solicitud" data-integration-action="service-lead">Ver m&aacute;s</a>
+            <a class="service-page-cta" href="https://wa.me/50374209546?text=Hola%2C%20quiero%20cotizar%20tr%C3%A1mites%20aduanales" target="_blank" rel="noopener noreferrer" data-integration-action="service-lead"><span>Cotizar este servicio</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </article>
 
           <article class="service-page-card" id="tracking" data-service-page-card>
-            <div class="page-service-icon tracking-icon" aria-hidden="true"><span></span><span></span><span></span></div>
-            <span class="service-page-status">Tracking</span>
+            <div class="service-card-head">
+              <div class="page-service-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><path d="M12 2v3M22 12h-3M12 22v-3M2 12h3"/><path class="icon-accent" d="m12 12 5-5"/><circle class="icon-accent" cx="12" cy="12" r="1"/></svg>
+              </div>
+              <span class="service-page-status">Tracking</span>
+            </div>
             <h3>Seguimiento de carga</h3>
             <p>Monitoreo constante del estado documental, tr&aacute;nsito, liberaci&oacute;n y entrega de la operaci&oacute;n.</p>
             <ul>
@@ -184,13 +208,18 @@
               <li>Estado documental</li>
               <li>Hitos en tiempo real</li>
             </ul>
+            <div class="service-operation-line" aria-label="Flujo operativo"><span>Hitos</span><span>Alertas</span><span>Visibilidad</span></div>
             <div class="service-card-meta"><span>Visibilidad total</span></div>
-            <a href="../contacto/index.html?servicio=seguimiento-de-carga#solicitud" data-integration-action="service-lead">Ver m&aacute;s</a>
+            <a class="service-page-cta" href="https://wa.me/50374209546?text=Hola%2C%20quiero%20consultar%20el%20servicio%20de%20seguimiento%20de%20carga" target="_blank" rel="noopener noreferrer" data-integration-action="service-lead"><span>Cotizar este servicio</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </article>
 
-          <article class="service-page-card" data-service-page-card>
-            <div class="page-service-icon advisory-icon" aria-hidden="true"><span></span><span></span><span></span></div>
-            <span class="service-page-status">Advisory</span>
+          <article class="service-page-card" id="asesoria" data-service-page-card>
+            <div class="service-card-head">
+              <div class="page-service-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M4 20V5M4 20h16"/><path d="m7 16 4-5 3 2 5-7"/><circle class="icon-accent" cx="7" cy="16" r="1"/><circle class="icon-accent" cx="11" cy="11" r="1"/><circle class="icon-accent" cx="14" cy="13" r="1"/><circle class="icon-accent" cx="19" cy="6" r="1"/></svg>
+              </div>
+              <span class="service-page-status">Advisory</span>
+            </div>
             <h3>Asesor&iacute;a log&iacute;stica</h3>
             <p>Dise&ntilde;o de rutas, revisi&oacute;n de costos, planeaci&oacute;n documental y estrategia de importaci&oacute;n.</p>
             <ul>
@@ -198,8 +227,9 @@
               <li>Evaluaci&oacute;n de rutas</li>
               <li>Acompa&ntilde;amiento experto</li>
             </ul>
+            <div class="service-operation-line" aria-label="Flujo operativo"><span>Diagn&oacute;stico</span><span>Ruta</span><span>Plan</span></div>
             <div class="service-card-meta"><span>Estrategia previa</span></div>
-            <a href="../contacto/index.html?servicio=asesoria-logistica#solicitud" data-integration-action="service-lead">Ver m&aacute;s</a>
+            <a class="service-page-cta" href="https://wa.me/50374209546?text=Hola%2C%20quiero%20cotizar%20asesor%C3%ADa%20log%C3%ADstica" target="_blank" rel="noopener noreferrer" data-integration-action="service-lead"><span>Cotizar este servicio</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </article>
         </div>
       </div>
@@ -276,10 +306,6 @@
               <h3>Navegacion</h3>
               <a href="../servicios/index.html">Servicios</a>
               <a href="../nosotros/index.html">Nosotros</a>
-              <a href="../recursos/index.html">Recursos</a>
-              <a href="../academia/index.html">Academia</a>
-              <a href="../herramientas/index.html">Herramientas</a>
-              <a href="../casos/index.html">Casos</a>
               <a href="https://logicstrack-app.web.app" target="_blank" rel="noopener noreferrer">Portal LogicTrack</a>
               <a href="../contacto/index.html">Contacto</a>
             </nav>

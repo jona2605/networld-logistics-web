@@ -117,18 +117,6 @@ function normalizeNavbarLinks() {
     nav.innerHTML = `
       ${pageLink(`${prefix}servicios/index.html`, "Servicios", "servicios")}
       ${pageLink(`${prefix}nosotros/index.html`, "Nosotros", "nosotros")}
-      <div class="nav-dropdown" data-nav-dropdown>
-        <button class="nav-dropdown__trigger" type="button" aria-expanded="false" aria-haspopup="true">
-          Recursos
-          <span aria-hidden="true"></span>
-        </button>
-        <div class="nav-dropdown__menu" role="menu">
-          ${pageLink(`${prefix}recursos/index.html`, "Recursos", "recursos")}
-          ${pageLink(`${prefix}academia/index.html`, "Academia", "academia")}
-          ${pageLink(`${prefix}herramientas/index.html`, "Herramientas", "herramientas")}
-          ${pageLink(`${prefix}casos/index.html`, "Casos", "casos")}
-        </div>
-      </div>
       ${pageLink(`${prefix}contacto/index.html`, "Contacto", "contacto")}
       <a class="nav-mobile-only" href="${NETWORLD.logicTrackUrl}" target="_blank" rel="noopener noreferrer">Portal LogicTrack</a>
     `;
@@ -199,10 +187,6 @@ function footerTemplate() {
               <h3>Navegacion</h3>
               <a href="${prefix}servicios/index.html">Servicios</a>
               <a href="${prefix}nosotros/index.html">Nosotros</a>
-              <a href="${prefix}recursos/index.html">Recursos</a>
-              <a href="${prefix}academia/index.html">Academia</a>
-              <a href="${prefix}herramientas/index.html">Herramientas</a>
-              <a href="${prefix}casos/index.html">Casos</a>
               <a href="${NETWORLD.logicTrackUrl}" target="_blank" rel="noopener noreferrer">Portal LogicTrack</a>
               <a href="${prefix}contacto/index.html">Contacto</a>
             </nav>

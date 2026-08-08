@@ -2,10 +2,6 @@ const SEARCH_ITEMS = [
   { title: "Inicio", category: "Páginas", description: "Volver a la landing principal de Networld Logistics.", url: "/", keywords: "home landing networld" },
   { title: "Servicios", category: "Páginas", description: "Portafolio de servicios logísticos internacionales.", url: "/servicios/index.html", keywords: "transporte aduanas tracking asesoria" },
   { title: "Nosotros", category: "Páginas", description: "Historia, filosofía, equipo y cobertura de Networld.", url: "/nosotros/index.html", keywords: "empresa historia valores equipo" },
-  { title: "Recursos", category: "Páginas", description: "Centro de inteligencia logística con guías y artículos.", url: "/recursos/index.html", keywords: "blog guias articulos incoterms aduanas" },
-  { title: "Academia", category: "Páginas", description: "Centro de formación e inteligencia logística.", url: "/academia/index.html", keywords: "cursos aprender formacion guias" },
-  { title: "Herramientas", category: "Páginas", description: "Toolbox para importadores y exportadores.", url: "/herramientas/index.html", keywords: "calculadoras utilidades conversiones cbm" },
-  { title: "Casos", category: "Páginas", description: "Misiones logísticas completadas por Networld.", url: "/casos/index.html", keywords: "exito operaciones misiones clientes" },
   { title: "Contacto", category: "Páginas", description: "Inicia una operación con el equipo de Networld.", url: "/contacto/index.html", keywords: "cotizar whatsapp correo operacion" },
   { title: "Portal LogicTrack", category: "Páginas", description: "Portal privado para clientes activos.", url: "https://logicstrack-app.web.app", external: true, keywords: "portal cliente tracking documentos" },
   { title: "Transporte marítimo", category: "Servicios", description: "FCL, LCL, puertos y rutas internacionales.", url: "/servicios/index.html#maritimo", keywords: "ocean freight barco contenedor fcl lcl" },
@@ -13,20 +9,13 @@ const SEARCH_ITEMS = [
   { title: "Transporte terrestre", category: "Servicios", description: "Distribución regional y entrega final.", url: "/servicios/index.html#servicios-grid", keywords: "camion regional ultima milla" },
   { title: "Trámites aduanales", category: "Servicios", description: "Documentación, permisos y liberación aduanera.", url: "/servicios/index.html#aduanas", keywords: "aduana permisos clasificacion partidas" },
   { title: "Seguimiento de carga", category: "Servicios", description: "Tracking operativo de documentos, tránsito y entrega.", url: "/servicios/index.html#tracking", keywords: "tracking rastreo seguimiento logictrack" },
-  { title: "Calculadora CBM", category: "Herramientas", description: "Interfaz preparada para estimar volumen de carga.", url: "/herramientas/index.html#herramientas", keywords: "cbm volumen cubic meter calculadora" },
-  { title: "Peso volumétrico", category: "Herramientas", description: "Referencia para comparar peso real y dimensional.", url: "/herramientas/index.html#herramientas", keywords: "peso dimensional volumetrico calculadora" },
-  { title: "Incoterms", category: "Recursos", description: "Contenido y utilidades sobre responsabilidades y costos.", url: "/recursos/index.html#articulos", keywords: "fob cif exw comercio exterior" },
-  { title: "Importaciones", category: "Academia", description: "Cursos, guías y recursos para importar mejor.", url: "/academia/index.html#cursos", keywords: "importar china proveedor documentos" },
-  { title: "Exportaciones", category: "Academia", description: "Preparación y coordinación para vender fuera.", url: "/academia/index.html#biblioteca", keywords: "exportar comercio exterior documentos" },
-  { title: "Aduanas", category: "Recursos", description: "Guías de documentación, permisos y liberación.", url: "/recursos/index.html#articulos", keywords: "aduanero duca permisos partidas" }
+  { title: "Aduanas", category: "Servicios", description: "Coordinación documental, permisos y liberación.", url: "/servicios/index.html#aduanas", keywords: "aduanero duca permisos partidas" }
 ];
 
 const QUICK_ACTIONS = [
   { title: "Cotizar operación", category: "Acciones rápidas", description: "Abrir WhatsApp con solicitud de cotización.", url: "https://wa.me/50374209546?text=Hola%2C%20quiero%20cotizar%20una%20operaci%C3%B3n%20log%C3%ADstica", external: true, keywords: "cotizar precio operacion" },
   { title: "Hablar por WhatsApp", category: "Acciones rápidas", description: "Contactar a un especialista de Networld.", url: "https://wa.me/50374209546?text=Hola%2C%20quiero%20hablar%20con%20un%20especialista%20de%20Networld", external: true, keywords: "whatsapp asesor especialista" },
-  { title: "Acceder a LogicTrack", category: "Acciones rápidas", description: "Ir al portal privado para clientes activos.", url: "https://logicstrack-app.web.app", external: true, keywords: "portal logictrack clientes" },
-  { title: "Ver herramientas", category: "Acciones rápidas", description: "Abrir el toolbox logístico.", url: "/herramientas/index.html", keywords: "herramientas calculadoras toolbox" },
-  { title: "Explorar Academia", category: "Acciones rápidas", description: "Abrir el centro de formación logística.", url: "/academia/index.html", keywords: "academia cursos aprender" }
+  { title: "Acceder a LogicTrack", category: "Acciones rápidas", description: "Ir al portal privado para clientes activos.", url: "https://logicstrack-app.web.app", external: true, keywords: "portal logictrack clientes" }
 ];
 
 const ALL_ITEMS = [...QUICK_ACTIONS, ...SEARCH_ITEMS];
@@ -158,7 +147,7 @@ function createPalette() {
       <div class="command-palette__header">
         <label>
           <span>Buscar</span>
-          <input class="command-palette__input" type="search" role="combobox" aria-controls="command-results" aria-expanded="true" aria-autocomplete="list" placeholder="Servicios, herramientas, recursos..." autocomplete="off" data-command-input>
+          <input class="command-palette__input" type="search" role="combobox" aria-controls="command-results" aria-expanded="true" aria-autocomplete="list" placeholder="Servicios, contacto, LogicTrack..." autocomplete="off" data-command-input>
         </label>
         <button class="command-palette__close" type="button" aria-label="Cerrar búsqueda" data-command-close>×</button>
       </div>
