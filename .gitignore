@@ -11,3 +11,11 @@ visual-captures/
 *audit*.png
 *ops-sync*.png
 *top-audit*.png
+
+# Local design-review artifacts and temporary workflow records
+design-review/
+**/design-review/
+**/visual-captures/
+PHASE1_HUMAN_APPROVAL.md
+design-qa.md
+assets/social/

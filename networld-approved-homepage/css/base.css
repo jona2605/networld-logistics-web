@@ -1,0 +1,14 @@
+:root{--bg:oklch(10% .035 250);--surface:oklch(15% .052 250);--fg:oklch(100% 0 0);--muted:oklch(76% .028 245);--border:oklch(31% .055 245);--accent:oklch(72% .22 145);--blue:#013693;--sky:#4CAFF4;--green:#22C93C;--black:#03070b;--white:#fff;--display:"Poppins","Avenir Next",sans-serif;--body:"Poppins","Segoe UI",sans-serif;--mono:"IBM Plex Mono",Consolas,monospace;--pad:clamp(20px,4.4vw,72px);--max:1480px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{margin:0;background:var(--black);color:var(--fg);font-family:var(--body);overflow-x:hidden}
+body.menu-open{overflow:hidden}
+h1,h2,h3,p{margin-top:0}
+h1,h2,h3{font-family:var(--display);letter-spacing:-.045em}
+h1{font-size:clamp(3.2rem,6.7vw,7.4rem);line-height:.91;max-width:9ch;margin:24px 0 26px}
+h2{font-size:clamp(2.5rem,5vw,5.3rem);line-height:.98;margin:16px 0 22px}
+h3{line-height:1.1}
+.green{color:var(--green)}
+h1{font-size:clamp(3.05rem,5.35vw,6rem);line-height:.96;max-width:11ch;letter-spacing:-.038em}
+h2{font-size:clamp(2.35rem,4.25vw,4.45rem);line-height:1.02;letter-spacing:-.035em}
+.green{color:var(--sky)}

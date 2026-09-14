@@ -18,16 +18,12 @@ Networld Logistics es una empresa de logistica internacional con operaciones y a
 
 - Correo: aduana@networldslogistics.com
 - WhatsApp: +503 7420-9546
-- Web: https://www.networldslogistics.com/
+- Web: https://networldslogistics.com/
 - LogicTrack: https://logicstrack-app.web.app
 
 ## Paginas principales
 
-- Inicio: https://www.networldslogistics.com/
-- Servicios: https://www.networldslogistics.com/servicios/
-- Nosotros: https://www.networldslogistics.com/nosotros/
-- Recursos: https://www.networldslogistics.com/recursos/
-- Academia: https://www.networldslogistics.com/academia/
-- Herramientas: https://www.networldslogistics.com/herramientas/
-- Casos: https://www.networldslogistics.com/casos/
-- Contacto: https://www.networldslogistics.com/contacto/
+- Inicio: https://networldslogistics.com/
+- Servicios: https://networldslogistics.com/servicios/
+- Nosotros: https://networldslogistics.com/nosotros/
+- Contacto: https://networldslogistics.com/contacto/

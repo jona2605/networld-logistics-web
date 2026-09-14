@@ -278,7 +278,7 @@ function createHubLabel(title, subtitle, color) {
   context.strokeStyle = "rgba(159, 238, 255, 0.5)";
   context.lineWidth = 2;
   context.beginPath();
-  context.roundRect(18, 8, 476, 92, 18);
+  context.roundRect(18, 8, 476, 92, 2);
   context.fill();
   context.stroke();
   context.shadowBlur = 0;
@@ -287,7 +287,7 @@ function createHubLabel(title, subtitle, color) {
   accentLine.addColorStop(1, "rgba(76, 175, 244, 0.12)");
   context.fillStyle = accentLine;
   context.beginPath();
-  context.roundRect(18, 22, 4, 62, 2);
+  context.fillRect(18, 22, 4, 62);
   context.fill();
   context.fillStyle = accent;
   context.shadowColor = accent;
@@ -317,7 +317,7 @@ function createHubLabel(title, subtitle, color) {
     depthWrite: false
   });
   const sprite = new THREE.Sprite(material);
-  sprite.scale.set(0.78, 0.1705, 1);
+  sprite.scale.set(0.56, 0.1225, 1);
   sprite.renderOrder = 9;
   return sprite;
 }
@@ -453,8 +453,8 @@ export function createRoutes(earthGroup, camera) {
 
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const mobile = window.matchMedia("(max-width: 720px)").matches;
-  const maxActive = reducedMotion ? (mobile ? 4 : 8) : mobile ? 6 : 12;
-  const maxLabels = mobile ? 2 : 5;
+  const maxActive = mobile ? 3 : 5;
+  const maxLabels = mobile ? 1 : 2;
   return function animateRoutes(delta = 0.016, elapsed = performance.now() * 0.001) {
     hubs.forEach(({ marker }) => {
       const { coreMaterial, haloMaterial, ringMaterial, ring, phase } = marker.userData;

@@ -1,0 +1,7 @@
+{
+  "name": "networld-approved-homepage",
+  "private": true,
+  "scripts": {
+    "dev": "node ../node_modules/vite/bin/vite.js"
+  }
+}

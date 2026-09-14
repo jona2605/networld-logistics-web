@@ -9,9 +9,6 @@ export const NETWORLD = {
   company: "Networld Logistics"
 };
 
-// Replace only when the production GA4 property exists. No Analytics script is loaded here.
-export const GA4_MEASUREMENT_ID = "G-XXXXXXXXXX";
-
 export function trackEvent(eventName, parameters = {}) {
   if (typeof window.gtag !== "function") return false;
 
@@ -27,18 +24,9 @@ export function whatsappUrl(message) {
   return `https://wa.me/${NETWORLD.phoneCompact}?text=${encodeURIComponent(message)}`;
 }
 
-function isInternalLanding() {
-  const path = window.location.pathname.replace(/\/index\.html$/, "/");
-  return path === "/" || path.endsWith("/networld-v3/");
-}
-
-function pathPrefix() {
-  return isInternalLanding() ? "" : "../";
-}
-
 function route(path) {
   if (path.startsWith("http") || path.startsWith("mailto:")) return path;
-  return `${pathPrefix()}${path}`;
+  return path.startsWith("/") ? path : `/${path.replace(/^\.\//, "")}`;
 }
 
 function ensureSkipLink() {
@@ -106,18 +94,18 @@ function setLogicTrackLinks() {
 
 function normalizeNavbarLinks() {
   document.querySelectorAll(".brand[href='#']").forEach(link => {
-    link.setAttribute("href", route("index.html"));
+    link.setAttribute("href", "/");
   });
 
   document.querySelectorAll(".nav-links").forEach(nav => {
+    if (nav.closest("[data-preserve-nav]")) return;
     const current = Array.from(nav.querySelectorAll("a")).find(link => link.getAttribute("aria-current") === "page")?.textContent.trim().toLowerCase();
-    const prefix = pathPrefix();
     const pageLink = (href, label, key) => `<a href="${href}"${current === key ? ' aria-current="page"' : ""}>${label}</a>`;
 
     nav.innerHTML = `
-      ${pageLink(`${prefix}servicios/index.html`, "Servicios", "servicios")}
-      ${pageLink(`${prefix}nosotros/index.html`, "Nosotros", "nosotros")}
-      ${pageLink(`${prefix}contacto/index.html`, "Contacto", "contacto")}
+      ${pageLink("/servicios/", "Servicios", "servicios")}
+      ${pageLink("/nosotros/", "Nosotros", "nosotros")}
+      ${pageLink("/contacto/", "Contacto", "contacto")}
       <a class="nav-mobile-only" href="${NETWORLD.logicTrackUrl}" target="_blank" rel="noopener noreferrer">Portal LogicTrack</a>
     `;
   });
@@ -164,7 +152,7 @@ function initResourceDropdowns() {
 }
 
 function footerTemplate() {
-  const prefix = pathPrefix();
+  const prefix = "/";
   return `
     <footer class="site-footer" aria-label="Informacion corporativa de Networld Logistics">
       <div class="footer-particles" aria-hidden="true">
@@ -173,7 +161,7 @@ function footerTemplate() {
       <div class="footer-shell">
         <div class="footer-command" data-footer-reveal>
           <div class="footer-brand">
-            <a href="${prefix}index.html" aria-label="Networld Logistics">
+            <a href="/" aria-label="Networld Logistics">
               <img src="${prefix}img/logotipo1.png" alt="Networld Logistics">
             </a>
             <p>Centro de inteligencia logistica para operaciones internacionales con seguimiento, gestion aduanera y acompanamiento experto.</p>
@@ -185,18 +173,18 @@ function footerTemplate() {
           <div class="footer-grid">
             <nav class="footer-column" aria-label="Navegacion">
               <h3>Navegacion</h3>
-              <a href="${prefix}servicios/index.html">Servicios</a>
-              <a href="${prefix}nosotros/index.html">Nosotros</a>
+              <a href="/servicios/">Servicios</a>
+              <a href="/nosotros/">Nosotros</a>
               <a href="${NETWORLD.logicTrackUrl}" target="_blank" rel="noopener noreferrer">Portal LogicTrack</a>
-              <a href="${prefix}contacto/index.html">Contacto</a>
+              <a href="/contacto/">Contacto</a>
             </nav>
             <nav class="footer-column" aria-label="Servicios">
               <h3>Servicios</h3>
-              <a href="${prefix}servicios/index.html#maritimo">Transporte maritimo</a>
-              <a href="${prefix}servicios/index.html#aereo">Transporte aereo</a>
-              <a href="${prefix}servicios/index.html#servicios-grid">Transporte terrestre</a>
-              <a href="${prefix}servicios/index.html#aduanas">Tramites aduanales</a>
-              <a href="${prefix}servicios/index.html#tracking">Seguimiento de carga</a>
+              <a href="/servicios/#maritimo">Transporte maritimo</a>
+              <a href="/servicios/#aereo">Transporte aereo</a>
+              <a href="/servicios/#terrestre">Transporte terrestre</a>
+              <a href="/servicios/#aduanas">Tramites aduanales</a>
+              <a href="/servicios/#tracking">Seguimiento de carga</a>
             </nav>
             <div class="footer-column">
               <h3>Cobertura</h3>
@@ -221,7 +209,7 @@ function footerTemplate() {
           <div class="footer-social" aria-label="Canales de contacto">
             <a href="mailto:${NETWORLD.email}" aria-label="Correo">mail</a>
             <a href="${whatsappUrl("Hola, quiero contactar a Networld Logistics")}" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">wa</a>
-            <a href="${prefix}contacto/index.html" aria-label="Contacto">ct</a>
+            <a href="/contacto/" aria-label="Contacto">ct</a>
           </div>
         </div>
       </div>

@@ -1,15 +1,22 @@
 const SEARCH_ITEMS = [
   { title: "Inicio", category: "Páginas", description: "Volver a la landing principal de Networld Logistics.", url: "/", keywords: "home landing networld" },
-  { title: "Servicios", category: "Páginas", description: "Portafolio de servicios logísticos internacionales.", url: "/servicios/index.html", keywords: "transporte aduanas tracking asesoria" },
-  { title: "Nosotros", category: "Páginas", description: "Historia, filosofía, equipo y cobertura de Networld.", url: "/nosotros/index.html", keywords: "empresa historia valores equipo" },
-  { title: "Contacto", category: "Páginas", description: "Inicia una operación con el equipo de Networld.", url: "/contacto/index.html", keywords: "cotizar whatsapp correo operacion" },
+  { title: "Servicios", category: "Páginas", description: "Portafolio de servicios logísticos internacionales.", url: "/servicios/", keywords: "transporte aduanas tracking asesoria" },
+  { title: "Nosotros", category: "Páginas", description: "Criterio operativo y atención personalizada.", url: "/nosotros/", keywords: "empresa enfoque valores equipo" },
+  { title: "Contacto", category: "Páginas", description: "Inicia una operación con el equipo de Networld.", url: "/contacto/", keywords: "cotizar whatsapp correo operacion" },
+  { title: "Trámites aduanales en El Salvador", category: "Servicios", description: "Gestión documental, requisitos, DUCA y acompañamiento para liberación de carga.", url: "/tramites-aduanales-el-salvador/", keywords: "aduana aduanales duca permisos importacion liberacion el salvador" },
+  { title: "Transporte marítimo en El Salvador", category: "Servicios", description: "Coordinación de carga FCL y LCL desde origen hasta entrega.", url: "/transporte-maritimo-el-salvador/", keywords: "maritimo fcl lcl contenedor acajutla flete el salvador" },
+  { title: "Carga desde China a El Salvador", category: "Servicios", description: "Coordinación marítima o aérea, documentos y preparación aduanal desde China.", url: "/carga-desde-china-a-el-salvador/", keywords: "china shenzhen shanghai importaciones carga el salvador" },
+  { title: "Carga desde Estados Unidos a El Salvador", category: "Servicios", description: "Coordinación de origen, transporte, documentos y gestión aduanal desde Estados Unidos.", url: "/carga-desde-estados-unidos-a-el-salvador/", keywords: "estados unidos usa miami importacion compras flete el salvador" },
+  { title: "Transporte aéreo en El Salvador", category: "Servicios", description: "Carga aérea, documentos, seguimiento y coordinación de arribo.", url: "/transporte-aereo-el-salvador/", keywords: "aereo carga urgente aeropuerto flete importacion el salvador" },
+  { title: "Transporte terrestre en Centroamérica", category: "Servicios", description: "Coordinación regional, fronteras y entrega terrestre.", url: "/transporte-terrestre-centroamerica/", keywords: "terrestre regional guatemala honduras duca centroamerica" },
+  { title: "Logística para pymes en El Salvador", category: "Servicios", description: "Coordinación de importaciones, documentos y rutas para pymes.", url: "/logistica-para-pymes-el-salvador/", keywords: "pymes emprendedores importacion asesoria logistica el salvador" },
   { title: "Portal LogicTrack", category: "Páginas", description: "Portal privado para clientes activos.", url: "https://logicstrack-app.web.app", external: true, keywords: "portal cliente tracking documentos" },
-  { title: "Transporte marítimo", category: "Servicios", description: "FCL, LCL, puertos y rutas internacionales.", url: "/servicios/index.html#maritimo", keywords: "ocean freight barco contenedor fcl lcl" },
-  { title: "Transporte aéreo", category: "Servicios", description: "Carga urgente, prioritaria y consolidada.", url: "/servicios/index.html#aereo", keywords: "air cargo avion urgente" },
-  { title: "Transporte terrestre", category: "Servicios", description: "Distribución regional y entrega final.", url: "/servicios/index.html#servicios-grid", keywords: "camion regional ultima milla" },
-  { title: "Trámites aduanales", category: "Servicios", description: "Documentación, permisos y liberación aduanera.", url: "/servicios/index.html#aduanas", keywords: "aduana permisos clasificacion partidas" },
-  { title: "Seguimiento de carga", category: "Servicios", description: "Tracking operativo de documentos, tránsito y entrega.", url: "/servicios/index.html#tracking", keywords: "tracking rastreo seguimiento logictrack" },
-  { title: "Aduanas", category: "Servicios", description: "Coordinación documental, permisos y liberación.", url: "/servicios/index.html#aduanas", keywords: "aduanero duca permisos partidas" }
+  { title: "Transporte marítimo", category: "Servicios", description: "FCL, LCL, puertos y rutas internacionales.", url: "/servicios/#maritimo", keywords: "ocean freight barco contenedor fcl lcl" },
+  { title: "Transporte aéreo", category: "Servicios", description: "Carga urgente, prioritaria y consolidada.", url: "/servicios/#aereo", keywords: "air cargo avion urgente" },
+  { title: "Transporte terrestre", category: "Servicios", description: "Distribución regional y entrega final.", url: "/servicios/#terrestre", keywords: "camion regional ultima milla" },
+  { title: "Trámites aduanales", category: "Servicios", description: "Documentación, permisos y liberación aduanera.", url: "/servicios/#aduanas", keywords: "aduana permisos clasificacion partidas" },
+  { title: "Seguimiento de carga", category: "Servicios", description: "Tracking operativo de documentos, tránsito y entrega.", url: "/servicios/#tracking", keywords: "tracking rastreo seguimiento logictrack" },
+  { title: "Aduanas", category: "Servicios", description: "Coordinación documental, permisos y liberación.", url: "/servicios/#aduanas", keywords: "aduanero duca permisos partidas" }
 ];
 
 const QUICK_ACTIONS = [

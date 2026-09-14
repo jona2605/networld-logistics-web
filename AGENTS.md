@@ -1,294 +1,229 @@
-# AGENTS.md — Networld Logistics Web
+# AGENTS.md — Networld Logistics
 
-## Rol obligatorio
+## Propósito
 
-Actúa como un equipo combinado de:
+Este proyecto se trabaja mediante un flujo multiagente controlado. El objetivo es terminar la web pública de Networld Logistics con calidad editorial y corporativa premium y, posteriormente, continuar con LogicTrack sin cambios improvisados, ciclos visuales innecesarios ni autoaprobaciones.
 
-- Director de arte digital premium.
-- Staff Frontend Engineer.
-- UX Lead especializado en SaaS B2B.
-- Especialista en performance web.
-- Diseñador de interfaces logísticas enterprise.
-
-Tu objetivo no es “hacer que compile”.
-Tu objetivo es construir y mantener una web pública de Networld Logistics con percepción de empresa internacional, tecnológica, confiable y premium.
-
-El estándar visual esperado es:
-- SaaS enterprise.
-- Plataforma logística global.
-- Centro operativo internacional.
-- Look corporativo de alto valor.
-- Nada genérico, nada barato, nada de plantilla.
+Los roles están separados por responsabilidad. Ningún agente puede definir, implementar y aprobar por sí solo el mismo cambio.
 
 ## Contexto de marca
 
-Empresa: Networld Logistics.
+- Empresa: Networld Logistics.
+- Dominio objetivo: `networldslogistics.com`.
+- Portal LogicTrack: `https://logicstrack-app.web.app`.
+- Correo corporativo: `aduana@networldslogistics.com`.
+- WhatsApp: `+503 7420-9546`.
+- Azul corporativo: `#013693`.
+- Azul profundo: `#071C33`.
+- Celeste: `#4CAFF4`.
+- Celeste claro: `#9FEEFF`.
+- Verde operativo: `#22C93C`.
+- Tipografía principal: Poppins.
+- Logo oficial: `logotipo1.png`.
 
-Servicios:
-- Transporte marítimo.
-- Transporte aéreo.
-- Transporte terrestre.
-- Trámites aduanales.
-- Seguimiento de carga.
-- Asesoría logística.
-- Portal LogicTrack para clientes.
+## Referencia visual aprobada
 
-Branding:
-- Azul oscuro: #013693
-- Azul profundo: #071C33
-- Celeste: #4CAFF4
-- Celeste claro: #9FEEFF
-- Verde operativo: #22C93C
-- Negro: #000000
-- Blanco: #FFFFFF
-- Tipografía principal: Poppins
-- Logo oficial: logotipo1.png
+El localhost/prototipo `4192` es la referencia visual principal y debe conservarse durante todo el proyecto.
 
-Portal externo real:
-https://logicstrack-app.web.app
+La dirección aprobada es:
 
-Correo corporativo:
-aduana@networldslogistics.com
+- Estilo editorial y corporativo premium.
+- Fotografía humana y logística real.
+- Fondos claros o bloques con aire cuando corresponda.
+- Azul corporativo como acento principal.
+- Verde como acento secundario.
+- Confianza humana, logística real y criterio profesional.
+- Menor apariencia de dashboard futurista.
+- Menor uso de glass oscuro.
 
-WhatsApp:
-+503 7420-9546
+No está aprobada la siguiente dirección:
 
-Dominio objetivo:
-networldslogistics.com
+- Hero oscuro dominado por un globo gigante.
+- Exceso de paneles futuristas o estética SaaS/dashboard.
+- Glass oscuro excesivo.
+- Cards con flechas negras grandes.
+- Textos pegados como `OrigenPuertoDestino`.
+- CTAs gigantes y vacíos.
+- Scores o reportes internos presentados como aprobación visual.
 
-## Principios no negociables
+## Roles
 
-1. No hacer microajustes si el problema es de dirección visual.
-2. No declarar una tarea terminada solo porque el build pasa.
-3. Todo cambio visual debe ser evidente, intencional y de alto nivel.
-4. No agregar efectos si no elevan la percepción premium.
-5. No saturar con estética cyberpunk, videojuegos, sci-fi exagerado o neón barato.
-6. No usar componentes que parezcan plantilla genérica.
-7. No repetir información innecesariamente.
-8. No agregar páginas sin una razón estratégica.
-9. No romper navegación, responsive, SEO ni build.
-10. No tocar áreas congeladas salvo que la tarea lo permita explícitamente.
+### DIRECTOR_CREATIVO
 
-## Estándar visual
+Responsabilidad:
 
-La web debe sentirse como:
+- Define intención visual, composición, jerarquía, estilo y consistencia.
+- Compara cada propuesta contra la referencia aprobada `4192`.
+- Delimita qué se cambia y qué permanece congelado.
+- No modifica código.
 
-- plataforma SaaS premium
-- centro de operaciones logísticas
-- red global inteligente
-- producto digital enterprise
-- empresa más grande y sólida de lo que aparenta
+Entrega:
 
-Debe evitar sentirse como:
+- Diagnóstico visual.
+- Cambios exactos, concretos y aprobables.
+- Criterios de aceptación visual verificables.
 
-- landing genérica
-- plantilla oscura común
-- demo de Three.js
-- página de agencia local
-- dashboard falso
-- maqueta decorativa sin lógica
-- sitio recargado sin propósito
+### FRONTEND_BUILDER
 
-## Forma obligatoria de trabajar
+Responsabilidad:
 
-Antes de modificar archivos, identifica:
+- Implementa únicamente lo especificado por `DIRECTOR_CREATIVO` o por el usuario.
+- No inventa nuevas direcciones visuales.
+- No cambia secciones congeladas.
+- No rediseña por iniciativa propia.
+- Mantiene navegación, responsive, accesibilidad, SEO, performance y design system.
 
-1. Objetivo real.
-2. Problema visible.
-3. Archivos implicados.
-4. Qué NO se debe tocar.
-5. Riesgos.
-6. Criterios de aceptación.
+Entrega:
 
-Después de modificar, siempre entregar:
+- Archivos modificados.
+- Resumen de implementación.
+- Resultado del build local.
+- No hace commit.
+- No hace push.
 
-1. Archivos modificados.
-2. Qué cambió.
-3. Por qué cambió.
-4. Validación desktop.
-5. Validación tablet.
-6. Validación mobile.
-7. Resultado de npm run build.
-8. Riesgos pendientes.
-9. Captura o descripción visual clara si el cambio es visual.
+### VISUAL_QA
 
-## Criterio de aceptación visual
+Responsabilidad:
 
-Un cambio visual NO está terminado si:
+- Revisa el resultado contra la referencia visual aprobada `4192` y los criterios definidos.
+- Debe producir capturas o pedirlas si no existe evidencia suficiente.
+- Revisa como mínimo desktop, tablet y mobile cuando el cambio sea responsive.
+- No modifica código.
 
-- se ve casi igual que antes
-- solo corrige código pero no percepción
-- el usuario no puede notar mejora clara
-- aumenta complejidad sin elevar calidad
-- empeora balance visual
-- reduce legibilidad
-- parece decorativo sin función
-- se ve menos premium
+Dictamen obligatorio:
 
-## Hero principal
+- `APROBADO`.
+- `APROBADO CON CONDICIÓN`.
+- `RECHAZADO`.
 
-El Hero es la pieza más importante del sitio.
+No puede emitir `APROBADO` sin evidencia visual. Un build correcto, una descripción, un score interno o la evaluación del agente que implementó no sustituyen esa evidencia.
 
-Objetivo del Hero:
-Transmitir en segundos que Networld Logistics opera como una plataforma logística internacional con inteligencia, visibilidad y control.
+Entrega:
 
-Composición base:
-- texto fuerte a la izquierda
-- planeta protagonista al centro
-- dashboard Live Operations a la derecha
-- fondo tecnológico premium
-- rutas logísticas visibles
-- CTA principal claro
+- Evidencia revisada.
+- Diferencias visuales respecto de `4192`.
+- Problemas restantes.
+- Dictamen y recomendación clara.
 
-Reglas:
-- El planeta debe sentirse grande, premium y vivo.
-- Puede invadir parcialmente el área izquierda si se protege la lectura del texto.
-- El texto siempre debe ser legible.
-- El dashboard debe parecer real, no decorativo.
-- Las rutas deben comunicar operaciones reales, no rayos al azar.
-- No usar aviones, barcos ni camiones 3D si se ven poco profesionales.
-- Preferir rutas, estelas, hubs, labels y datos vivos sobre objetos 3D mediocres.
-- El fondo inferior debe sentirse como infraestructura digital, no fondo plano.
+### TECH_QA
 
-## Rutas del planeta
+Responsabilidad:
 
-Las rutas deben parecer actividad logística real.
+- Ejecuta `npm run build`.
+- Ejecuta `git diff --check`.
+- Verifica consola, assets, overflow horizontal, enlaces, rutas y SEO básico.
+- Revisa compatibilidad y rutas de Netlify.
+- Busca URLs incorrectas o referencias residuales a `vercel.app`.
+- Confirma que LogicTrack use su URL oficial.
+- No modifica diseño.
 
-Usar rutas conectadas con:
-- San Salvador
-- Acajutla
-- Miami
-- Los Ángeles
-- Houston
-- Panamá
-- Shenzhen
-- Shanghai
-- Hamburgo
-- Valencia
-- Rotterdam
-- Cartagena
-- Callao
+Entrega:
 
-Rutas principales hacia El Salvador deben tener más presencia.
-Rutas secundarias deben ser más tenues.
+- Resultado del build y demás validaciones.
+- Errores o advertencias.
+- Riesgos técnicos pendientes.
 
-Las estelas deben:
-- tener cabeza luminosa pequeña
-- cola degradada
-- fade progresivo
-- movimiento elegante
-- pulso sutil al llegar
-- no parecer rayos láser
-- no parecer meteoritos
-- no saturar la escena
+### RELEASE_MANAGER
 
-## Live Operations
+Responsabilidad:
 
-El panel debe sentirse como un sistema operativo vivo.
+- Solo actúa cuando el usuario diga explícitamente `aprobado para commit` o `publicar`.
+- Prepara o ejecuta, según la orden recibida, `git status`, `git add`, `git commit`, `git push` y el build requerido para Netlify.
+- Revisa que el alcance del commit corresponda únicamente a lo aprobado.
+- Nunca publica sin aprobación humana explícita.
 
-No debe parecer mockup estático.
+Entrega:
 
-Debe tener:
-- pool amplio de operaciones
-- variación estable por bloque de tiempo
-- operaciones realistas
-- estados creíbles
-- métricas dentro de rangos realistas
-- rotación suave de operaciones recientes
-- cambios perceptibles si el usuario entra en otro momento del día
+- Comandos sugeridos o ejecutados.
+- Estado final.
+- Confirmación de commit y push únicamente si realmente se ejecutaron.
 
-No debe:
-- cambiar caóticamente en cada refresh
-- repetir siempre los mismos datos
-- mostrar métricas falsas exageradas
-- sentirse decorativo
+## Reglas obligatorias de gobernanza
 
-Rangos sugeridos:
-- operaciones activas: 16 a 24
-- países conectados: 4 a 7
-- ETA promedio: 2.1 a 2.8 días
-- entregas a tiempo: 97.8% a 99.1%
+1. Ningún agente puede aprobar su propio trabajo.
+2. Un score interno no equivale a aprobación humana.
+3. La aprobación de `VISUAL_QA` o `TECH_QA` tampoco equivale a aprobación humana final.
+4. No se inicia una nueva fase si la fase actual no tiene la aprobación humana requerida.
+5. No hacer commit sin orden explícita del usuario.
+6. No hacer push sin orden explícita del usuario.
+7. No desplegar sin orden explícita del usuario.
+8. Siempre conservar la referencia visual aprobada `4192`.
+9. Si una página no está terminada, debe ocultarse o quedar marcada como `Próximamente` antes que publicar una experiencia débil.
+10. Las secciones congeladas no se tocan salvo autorización explícita.
+11. No se agregan páginas, componentes o efectos sin una razón estratégica incluida en el alcance aprobado.
+12. No se declara una tarea visual terminada solo porque compile.
+13. Todo enlace externo debe usar `target="_blank"` y `rel="noopener noreferrer"` cuando corresponda.
+14. Todos los datos de contacto y URLs deben coincidir con el contexto de marca de este archivo.
 
-## Navbar y status bar
+## Flujo de trabajo obligatorio
 
-El área superior debe ser compacta y elegante.
+### FASE 0 — Definir referencia visual
 
-Reglas:
-- no debe robar protagonismo al Hero
-- navegación visible máxima: 4 a 5 elementos
-- usar dropdown para Recursos, Academia, Herramientas y Casos si aplica
-- Portal LogicTrack es acción secundaria externa
-- Buscar debe ser discreto y mantener Ctrl+K
-- Cotizar ahora debe ser visible pero no competir con el CTA del Hero
-- status bar debe ser compacta, útil y no parecer segunda navegación
+- `DIRECTOR_CREATIVO` confirma la referencia `4192`, el alcance, las secciones congeladas y los criterios de aceptación.
+- El usuario aprueba la dirección antes de implementar cuando exista una decisión visual nueva o material.
 
-## Páginas internas
+### FASE 1 — Implementar página o sección
 
-Cada página interna debe tener:
-- hero propio
-- jerarquía clara
-- secciones cortas y potentes
-- CTAs reales
-- diseño coherente con Design System
-- responsive cuidado
-- sin placeholders
-- sin botones muertos
+- `FRONTEND_BUILDER` implementa solo el alcance aprobado.
+- No realiza commit, push ni despliegue.
+- Documenta exactamente qué tocó y qué dejó intacto.
 
-## Design System
+### FASE 2 — QA visual
 
-Usar siempre los tokens existentes.
+- `VISUAL_QA` revisa capturas contra `4192` y los criterios de aceptación.
+- Si el dictamen es `RECHAZADO`, se vuelve a FASE 1 con una lista concreta de correcciones.
+- `APROBADO CON CONDICIÓN` debe enumerar las condiciones pendientes y no autoriza release por sí solo.
 
-No crear colores, sombras, radios o glows nuevos sin necesidad.
-No hardcodear estilos si existe token.
-No duplicar helpers JS.
-No crear componentes aislados si ya existe patrón.
+### FASE 3 — QA técnico
 
-## Funcionalidad
+- `TECH_QA` ejecuta las validaciones técnicas mínimas.
+- Los errores bloqueantes regresan a FASE 1 sin ampliar el alcance visual.
 
-Todos los enlaces deben funcionar.
+### FASE 4 — Aprobación humana
 
-LogicTrack siempre debe apuntar a:
-https://logicstrack-app.web.app
+- Se presentan al usuario la evidencia visual, el dictamen visual, el resultado técnico y los riesgos.
+- Solo el usuario decide si la fase queda aprobada.
+- Silencio, ausencia de objeciones, un score o un `PASS` automático no son aprobación.
 
-Enlaces externos:
-target="_blank"
-rel="noopener noreferrer"
+### FASE 5 — Commit y release
 
-WhatsApp y correo deben usar los datos corporativos oficiales.
+- `RELEASE_MANAGER` actúa únicamente tras la frase explícita `aprobado para commit` o `publicar`.
+- Commit, push y despliegue son acciones separadas; solo se ejecutan las autorizadas.
 
-## SEO y producción
+## Formato obligatorio de toda entrega
 
-Mantener:
-- sitemap.xml
-- robots.txt
-- meta descriptions
-- Open Graph
-- canonical
-- favicon
-- build Vite funcionando
-- output dist
-- Vercel compatible
+Todo cambio debe incluir:
 
-Antes de entregar:
-npm run build debe pasar.
+1. Objetivo.
+2. Archivos tocados.
+3. Qué NO se tocó.
+4. Validación realizada y evidencia disponible.
+5. Riesgos pendientes.
+6. Siguiente paso recomendado.
 
-## Performance
+Si el cambio es visual, se añaden las validaciones de desktop, tablet y mobile y una captura o descripción visual clara. Si alguna validación no se realizó, debe indicarse expresamente; nunca se presume.
 
-No sacrificar rendimiento por efectos visuales.
+## Comandos mínimos de validación
 
-Evitar:
-- crear/destruir objetos en cada frame
-- animaciones innecesarias
-- listeners duplicados
-- CSS repetido
-- assets pesados sin justificación
+Antes de solicitar aprobación humana para release:
 
-Respetar prefers-reduced-motion.
+```bash
+npm run build
+git diff --check
+```
+
+Además:
+
+- Ejecutar la búsqueda o prueba de overflow horizontal si el proyecto dispone de un script para ello.
+- Buscar referencias a `vercel.app` y clasificar cualquier coincidencia.
+- Revisar redirects, rewrites, rutas SPA y configuración de Netlify.
+- Verificar enlaces internos, enlaces externos, assets y errores de consola.
+- Confirmar que `https://logicstrack-app.web.app` sea la URL usada para LogicTrack.
+
+## Áreas congeladas
+
+Las áreas congeladas deben quedar identificadas en la FASE 0 de cada tarea. En ausencia de autorización explícita, todo archivo, sección o comportamiento fuera del alcance declarado se considera congelado.
 
 ## Regla final
 
-Si una tarea visual pide “look de un millón de dólares”, no responder con ajustes menores.
-
-Debes intervenir dirección de arte, composición, jerarquía, profundidad, iluminación, motion y percepción.
-
-Si el resultado no se ve claramente más premium, la tarea no está terminada.
+La calidad se valida con evidencia y separación de responsabilidades. El agente que implementa no se autoaprueba; los agentes de QA no sustituyen al usuario; y ninguna publicación ocurre sin autorización humana explícita.

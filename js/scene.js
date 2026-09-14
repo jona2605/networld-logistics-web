@@ -76,12 +76,12 @@ export function initScene() {
     elapsedTime += delta;
 
     // Continuous 360-degree rotation around the Y axis.
-    earthGroup.rotation.y += delta * (prefersReducedMotion ? 0.045 : 0.105);
+    earthGroup.rotation.y += delta * (prefersReducedMotion ? 0 : 0.012);
     pointerCurrent.lerp(pointerTarget, 0.035);
     earthGroup.rotation.x = 0.03 + pointerCurrent.y * 0.035;
     earthGroup.rotation.z = -0.08 + pointerCurrent.x * 0.025;
     if (earthGroup.userData.cloudLayer) {
-      earthGroup.userData.cloudLayer.rotation.y += delta * (prefersReducedMotion ? 0.025 : 0.085);
+      earthGroup.userData.cloudLayer.rotation.y += delta * (prefersReducedMotion ? 0 : 0.01);
     }
     animateRoutes(delta, elapsedTime);
     earthGroup.userData.animateSurfaceLights?.(elapsedTime);
