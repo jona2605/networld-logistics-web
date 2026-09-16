@@ -10,6 +10,8 @@ const cleanRouteEntries = [
   ["/nosotros/", "/nosotros/index.html"],
   ["/contacto", "/contacto/index.html"],
   ["/contacto/", "/contacto/index.html"],
+  ["/academia", "/academia/index.html"],
+  ["/academia/", "/academia/index.html"],
   ["/tramites-aduanales-el-salvador", "/tramites-aduanales-el-salvador/index.html"],
   ["/tramites-aduanales-el-salvador/", "/tramites-aduanales-el-salvador/index.html"],
   ["/transporte-maritimo-el-salvador", "/transporte-maritimo-el-salvador/index.html"],
@@ -26,7 +28,7 @@ const cleanRouteEntries = [
   ["/logistica-para-pymes-el-salvador/", "/logistica-para-pymes-el-salvador/index.html"],
 ];
 
-const protectedRoutes = new Set(["/recursos", "/recursos/", "/academia", "/academia/", "/herramientas", "/herramientas/", "/casos", "/casos/"]);
+const protectedRoutes = new Set(["/recursos", "/recursos/", "/herramientas", "/herramientas/", "/casos", "/casos/"]);
 
 function rewriteCleanRoutes(req, res, next) {
   const [pathname, query = ""] = req.url.split("?");
@@ -62,6 +64,7 @@ export default {
         servicios: resolve(projectRoot, "servicios/index.html"),
         nosotros: resolve(projectRoot, "nosotros/index.html"),
         contacto: resolve(projectRoot, "contacto/index.html"),
+        academia: resolve(projectRoot, "academia/index.html"),
         tramitesAduanales: resolve(projectRoot, "tramites-aduanales-el-salvador/index.html"),
         transporteMaritimo: resolve(projectRoot, "transporte-maritimo-el-salvador/index.html"),
         cargaDesdeChina: resolve(projectRoot, "carga-desde-china-a-el-salvador/index.html"),

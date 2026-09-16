@@ -13,8 +13,6 @@ https://www.networldslogistics.com/* https://networldslogistics.com/:splat 301!
 /portal/*                 https://logicstrack-app.web.app         302!
 /recursos                 /contacto/                              302!
 /recursos/*               /contacto/                              302!
-/academia                 /contacto/                              302!
-/academia/*               /contacto/                              302!
 /herramientas             /contacto/                              302!
 /herramientas/*           /contacto/                              302!
 /casos                    /contacto/                              302!
