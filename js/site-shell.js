@@ -1,4 +1,5 @@
 import { bindPointerGlow, observeReveal } from "./reveal.js";
+import { initCommercialAssistant } from "./commercial-assistant.js";
 
 export const NETWORLD = {
   siteUrl: "https://www.networldslogistics.com",
@@ -287,6 +288,7 @@ export function initSiteShell() {
   setLogicTrackLinks();
   normalizeFooter();
   initExternalActionEvents();
+  initCommercialAssistant();
 }
 
 window.networldTrackEvent = trackEvent;
