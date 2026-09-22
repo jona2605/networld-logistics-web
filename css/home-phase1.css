@@ -167,19 +167,91 @@
   .hero-map canvas,.hero-dashboard .op-item,.nav-links a::after{animation:none!important;transition:none!important}
 }
 
+/* Final readability pass: preserve the approved home composition while giving the
+   institutional mark and globe their own clear visual space. */
+.nav .wrap{gap:28px}
+.nav .home-brand{width:230px;height:70px;display:flex;align-items:center;gap:13px;flex:0 0 230px;padding:0;text-decoration:none}
+.nav .home-brand .logo{width:70px;height:70px;max-width:none;max-height:none;object-fit:contain;transform:none;filter:brightness(1.1) saturate(1.02) drop-shadow(0 4px 12px rgba(76,175,244,.18))}
+.nav .home-brand span{max-width:132px;color:#b9cede;font:600 7.5px/1.45 "IBM Plex Mono",Consolas,monospace;letter-spacing:.045em;text-transform:uppercase}
+.hero{background:#04101d}
+.hero-photo{background:linear-gradient(90deg,rgba(2,8,15,.97) 0%,rgba(2,9,17,.78) 38%,rgba(5,25,45,.24) 70%,rgba(2,9,17,.58) 100%),linear-gradient(0deg,#02070d 0%,rgba(2,7,13,.08) 46%,transparent 76%),url('../img/hero-port-blue-hour.jpg') center/cover}
+.network-stage::before{background:radial-gradient(circle at 48% 45%,rgba(76,175,244,.22),rgba(1,54,147,.12) 35%,transparent 69%)}
+.globe{filter:saturate(.82) contrast(1.08) brightness(1.08);border-color:rgba(159,238,255,.42);box-shadow:inset -74px -54px 110px rgba(1,6,12,.92),inset 24px 16px 48px rgba(76,175,244,.22),0 28px 88px rgba(0,0,0,.34),0 0 56px rgba(76,175,244,.14)}
+.ops-panel{border-color:rgba(112,188,233,.42);background:rgba(4,20,35,.88)}
+
+/* The active decision stays visible; evidence, validation and risk are available
+   on demand rather than competing with the six milestones. */
+.process-control-grid{display:block}
+.process-primary{padding:21px 18px}
+.process-detail{border-top:1px solid rgba(118,173,208,.14)}
+.process-detail summary{min-height:48px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 18px;color:#9fdbff;cursor:pointer;list-style:none;font:600 .62rem/1.25 "IBM Plex Mono",Consolas,monospace;letter-spacing:.08em;text-transform:uppercase}
+.process-detail summary::-webkit-details-marker{display:none}
+.process-detail summary i{width:20px;height:20px;display:grid;place-items:center;border:1px solid rgba(76,175,244,.42);color:#22c93c;font:500 18px/1 Arial,sans-serif;font-style:normal;transition:transform .18s ease,background-color .18s ease}
+.process-detail[open] summary i{transform:rotate(45deg);background:rgba(34,201,60,.1)}
+.process-detail-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(118,173,208,.14);animation:process-detail-in .2s ease both}
+.process-detail-grid>div{padding:18px;border-right:1px solid rgba(118,173,208,.14)}
+.process-detail-grid>div:last-child{border-right:0}
+@keyframes process-detail-in{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+
+@media(max-width:780px){
+  .nav .home-brand{width:150px;height:62px;flex-basis:150px;gap:8px}.nav .home-brand .logo{width:60px;height:60px}.nav .home-brand span{max-width:80px;font-size:6.5px;line-height:1.35}
+  .process-primary{padding:16px}.process-detail summary{min-height:46px;padding:0 16px;font-size:.58rem}.process-detail-grid{grid-template-columns:1fr}.process-detail-grid>div{padding:16px;border-right:0;border-bottom:1px solid rgba(118,173,208,.14)}.process-detail-grid>div:last-child{border-bottom:0}
+}
+@media(max-width:430px){.nav .home-brand{width:128px;flex-basis:128px}.nav .home-brand .logo{width:54px;height:54px}.nav .home-brand span{display:none}}
+@media(prefers-reduced-motion:reduce){.process-detail-grid,.process-detail summary i{animation:none;transition:none}}
+
+/* Home clarity iteration: a stronger brand anchor and lighter institutional depth. */
+.nav{height:94px;background:linear-gradient(180deg,rgba(3,17,31,.96),rgba(4,19,34,.82) 72%,rgba(4,19,34,.34))}
+.nav .wrap{gap:24px}.nav .home-brand{width:344px;height:90px;flex-basis:344px;gap:17px}.nav .home-brand .logo{width:88px;height:88px}.nav .home-brand span{max-width:none;white-space:nowrap;color:#d2e7f4;font:650 13px/1.1 Poppins,Arial,sans-serif;letter-spacing:0;text-transform:none}
+.hero{background:#092239}.hero-photo{background:linear-gradient(90deg,rgba(3,15,27,.9) 0%,rgba(5,24,42,.67) 40%,rgba(13,48,77,.16) 72%,rgba(5,20,35,.48) 100%),linear-gradient(0deg,#061725 0%,rgba(5,25,43,.06) 48%,transparent 78%),url('../img/hero-port-blue-hour.jpg') center/cover;filter:brightness(1.1) saturate(.86) contrast(.92)}
+.hero-gridlines{opacity:.105}.network-stage::before{color:rgba(203,234,251,.78);text-shadow:0 1px 12px rgba(1,11,22,.84)}.network-stage::after{content:"";position:absolute;inset:4% -4% 1% 11%;z-index:0;border-radius:50%;background:radial-gradient(circle at 48% 48%,rgba(132,213,255,.2),rgba(38,112,165,.12) 34%,rgba(2,24,43,.04) 60%,transparent 73%);pointer-events:none}.globe,.route-svg,.route-label,.ops-panel{z-index:1}.globe{filter:saturate(.86) contrast(1.13) brightness(1.16);border-color:rgba(183,231,255,.62);box-shadow:inset -74px -54px 110px rgba(1,8,15,.84),inset 24px 16px 48px rgba(116,204,244,.27),0 28px 88px rgba(0,0,0,.28),0 0 72px rgba(85,186,239,.23)}
+.ops-panel{width:316px;right:2px;bottom:3%;background:rgba(7,30,49,.9);border-color:rgba(137,205,239,.38);box-shadow:16px 20px 54px rgba(0,0,0,.4)}.ops-head{padding:13px 15px}.ops-list{padding:4px 14px 10px}.op{padding:10px 0}.product-note{padding:0 14px 11px}
+.process{background:#071827}.process-frame{background:linear-gradient(145deg,#0b2a42,#061827 72%);border-color:rgba(111,194,236,.28)}.process-visual{background:linear-gradient(90deg,rgba(4,23,37,.18),rgba(4,24,39,.62)),url('../networld-approved-homepage/assets/road-freight-documentary.png') center 52%/cover}.process-control{background:rgba(8,31,49,.72);border-color:rgba(133,205,241,.25)}.process-primary{background:rgba(18,66,99,.16)}.process-detail{border-top-color:rgba(133,205,241,.2)}.process-detail summary{color:#b9e4fb}.process-detail-grid{border-top-color:rgba(133,205,241,.2)}.process-detail-grid>div{border-right-color:rgba(133,205,241,.17)}.step{background:rgba(8,35,55,.14);opacity:.64}.step.is-active{background:linear-gradient(180deg,rgba(18,88,135,.4),rgba(9,47,75,.18));box-shadow:inset 0 3px 0 #4caff4,inset 3px 0 0 rgba(34,201,60,.76)}
+@media(max-width:780px){.nav{height:78px}.nav .home-brand{width:228px;height:76px;flex-basis:228px;gap:10px}.nav .home-brand .logo{width:70px;height:70px}.nav .home-brand span{font-size:9px}.hero .wrap{padding-top:160px}.ops-panel{width:300px;right:0}.process-visual{background-position:center}.process-detail summary{font-size:.61rem}}
+@media(max-width:430px){.nav .home-brand{width:210px;flex-basis:210px;gap:8px}.nav .home-brand .logo{width:64px;height:64px}.nav .home-brand span{display:block;font-size:8px}.nav .wrap{gap:0}.ops-panel{left:20px;right:20px;width:auto}}
+
+/* Final process pass: scan the sequence first; reveal the operational context by
+   selecting a milestone, rather than showing six paragraphs at once. */
+.process .steps{background:rgba(3,18,30,.3)}
+.process .process-control{display:none}
+.process .step{min-height:128px;padding:20px 18px;display:flex;flex-direction:column;justify-content:center;gap:0;transition:background-color .18s ease,opacity .18s ease,translate .18s ease,min-height .2s ease}
+.process .step .state{max-height:0;margin:0;overflow:hidden;opacity:0;transition:max-height .18s ease,margin .18s ease,opacity .18s ease}
+.process .step p{max-height:0;margin:0;overflow:hidden;opacity:0;transition:max-height .2s ease,margin .2s ease,opacity .2s ease}
+.process .step::after{content:"+  Ver detalle";margin-top:10px;color:#84cbed;font:600 .56rem/1.2 "IBM Plex Mono",Consolas,monospace;letter-spacing:.07em;text-transform:uppercase;opacity:.72}
+.process .step.is-active{min-height:190px;justify-content:flex-start;padding-top:24px}
+.process .step.is-active .state{max-height:2em;margin:10px 0 7px;opacity:1}
+.process .step.is-active p{max-height:7em;margin-top:8px;opacity:1}
+.process .step.is-active::after{content:"−  Detalle activo";color:#22c93c;opacity:1}
+.process .step:hover::after,.process .step:focus-visible::after{color:#d7f1ff;opacity:1}
+.process .process-control{margin-top:0}.process .process-control-head{padding-block:20px}.process .process-primary{padding-block:17px}
+.process .customs-intelligence{display:none}.process .customs-intelligence.is-active{display:grid;animation:process-detail-in .2s ease both}
+.process-active-detail{display:grid;grid-template-columns:.5fr 1.5fr;border:1px solid rgba(133,205,241,.28);border-top:0;background:linear-gradient(110deg,rgba(13,53,80,.96),rgba(7,31,49,.94));animation:process-detail-in .2s ease both}
+.process-active-detail__heading{display:flex;flex-direction:column;justify-content:center;gap:10px;padding:26px 24px;border-right:1px solid rgba(133,205,241,.19)}
+.process-active-detail__heading span{color:#22c93c;font:700 .62rem/1.25 "IBM Plex Mono",Consolas,monospace;letter-spacing:.09em;text-transform:uppercase}.process-active-detail__heading h3{margin:0;color:#fff;font-size:1.25rem;letter-spacing:-.025em}
+.process-active-detail__facts{display:grid;grid-template-columns:repeat(3,1fr)}.process-active-detail__facts>div{padding:23px 20px;border-right:1px solid rgba(133,205,241,.17)}.process-active-detail__facts>div:last-child{border-right:0}.process-active-detail__facts b{display:block;margin-bottom:9px;color:#9fdbff;font:700 .57rem/1.2 "IBM Plex Mono",Consolas,monospace;letter-spacing:.08em;text-transform:uppercase}.process-active-detail__facts p{margin:0;color:#e1eef5;font-size:.72rem;line-height:1.55}
+
+/* Home footer uses the approved homepage stylesheet rather than the shared page shell. */
+footer .footer-grid>div:first-child .logo{width:168px;height:auto;max-height:168px;object-fit:contain;margin-top:-4px;filter:brightness(1.12) saturate(1.03) drop-shadow(0 5px 14px rgba(76,175,244,.16))}
+footer .footer-grid>div:first-child p{max-width:370px;margin-top:12px!important}
+@media(max-width:780px){.process .step{min-height:104px;padding:17px 15px}.process .step.is-active{min-height:174px;padding-top:20px}.process .step::after{margin-top:8px;font-size:.54rem}.process .step.is-active p{max-height:7.5em}.process .steps{grid-template-columns:1fr 1fr}.process-active-detail{grid-template-columns:1fr}.process-active-detail__heading{padding:20px 18px;border-right:0;border-bottom:1px solid rgba(133,205,241,.19)}.process-active-detail__facts>div{padding:18px 15px}footer .footer-grid>div:first-child .logo{width:154px;max-height:154px}}
+@media(max-width:430px){.process .steps{grid-template-columns:1fr}.process .step,.process .step:nth-child(odd){min-height:86px;padding:16px;border-right:0}.process .step.is-active{min-height:164px}.process-active-detail__facts{grid-template-columns:1fr}.process-active-detail__facts>div{border-right:0;border-bottom:1px solid rgba(133,205,241,.17)}.process-active-detail__facts>div:last-child{border-bottom:0}footer .footer-grid>div:first-child .logo{width:148px;max-height:148px}}
+@media(prefers-reduced-motion:reduce){.process .step,.process .step .state,.process .step p{transition:none}}
+
 /* Leadership bridge: human accountability after the approved expertise section. */
 .leadership{background:#edf3f7;color:#071523;padding-block:clamp(82px,9vw,132px)}
 .leadership .leadership-grid{display:grid;grid-template-columns:.72fr 1.28fr;gap:clamp(42px,7vw,118px);align-items:start}
 .leadership-intro{padding-top:8px}.leadership .kicker{color:#013693}.leadership h2{max-width:9ch;margin:14px 0 20px;font-size:clamp(2.5rem,4.1vw,4.7rem);line-height:.98;letter-spacing:-.055em}.leadership-intro p{max-width:38ch;color:#456078;font-size:1rem;line-height:1.78}
-.leadership-profiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;max-width:620px;justify-self:end}.leadership-profile{border-top:1px solid rgba(1,54,147,.25);padding-top:14px}.leadership-photo{position:relative;overflow:hidden;aspect-ratio:4/4.28;background:#cad8e2}.leadership-photo::after{content:"";position:absolute;inset:38% 0 0;background:linear-gradient(180deg,transparent,rgba(2,20,37,.22));pointer-events:none}.leadership-photo img{width:100%;height:100%;object-fit:cover;object-position:center 26%;filter:saturate(.68) contrast(.98)}.leadership-profile>div:last-child{padding:20px 2px 0}.leadership-profile span{display:block;margin-bottom:7px;color:#013693;font:700 .61rem/1.35 "IBM Plex Mono",Consolas,monospace;letter-spacing:.09em;text-transform:uppercase}.leadership-profile h3{margin:0 0 10px;font-size:clamp(1.2rem,1.7vw,1.65rem);line-height:1.08;letter-spacing:-.035em}.leadership-profile p{margin:0;color:#526d80;font-size:.78rem;line-height:1.7}
+.leadership-profiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;max-width:620px;justify-self:end}.leadership-profile{border-top:1px solid rgba(1,54,147,.25);padding-top:14px}.leadership-photo{position:relative;overflow:hidden;aspect-ratio:4/4.28;background:#cad8e2}.leadership-photo::after{content:none}.leadership-photo img{width:100%;height:100%;object-fit:cover;object-position:center 26%;filter:none}.leadership-profile>div:last-child{padding:20px 2px 0}.leadership-profile span{display:block;margin-bottom:7px;color:#013693;font:700 .61rem/1.35 "IBM Plex Mono",Consolas,monospace;letter-spacing:.09em;text-transform:uppercase}.leadership-profile h3{margin:0 0 10px;font-size:clamp(1.2rem,1.7vw,1.65rem);line-height:1.08;letter-spacing:-.035em}.leadership-profile p{margin:0;color:#526d80;font-size:.78rem;line-height:1.7}
 @media(max-width:900px){.leadership .leadership-grid{grid-template-columns:1fr;gap:38px}.leadership h2{max-width:12ch}.leadership-intro p{max-width:55ch}}
 @media(max-width:560px){.leadership{padding-block:72px}.leadership .leadership-grid{gap:32px}.leadership-profiles{gap:18px}.leadership-photo{aspect-ratio:4/5.3}.leadership-profile>div:last-child{padding-top:16px}.leadership-profile h3{font-size:1.12rem}.leadership-profile p{font-size:.72rem;line-height:1.6}}
 
 /* Keep generated in-photo marks outside the editorial crop; names and roles remain real HTML. */
-.leadership-profile:nth-child(1) .leadership-photo img{transform:scale(2.18);transform-origin:65% 35%}
-.leadership-profile:nth-child(2) .leadership-photo img{transform:scale(2.18);transform-origin:61% 34%}
-.leadership-photo::before{content:"";position:absolute;z-index:2;inset:0 0 auto;height:12%;background:linear-gradient(180deg,#edf3f7,rgba(237,243,247,.88) 62%,rgba(237,243,247,0));pointer-events:none}
+.leadership-profile:nth-child(1) .leadership-photo img{transform:scale(2.05);transform-origin:0 0}
+.leadership-profile:nth-child(2) .leadership-photo img{transform:scale(1.25);transform-origin:50% 30%}
+.leadership-photo::before{content:none}
 
 /* Academy bridge: a quiet editorial connection, not a second product hero. */
-.academy-bridge{padding-block:clamp(70px,8vw,112px);background:#fff;color:#071523}.academy-bridge-grid{display:grid;grid-template-columns:.75fr 1.25fr;gap:clamp(36px,7vw,108px);align-items:end;padding-top:18px;border-top:1px solid rgba(1,54,147,.24)}.academy-bridge .kicker{color:#013693}.academy-bridge h2{margin:13px 0 0;font-size:clamp(2.25rem,3.55vw,4.1rem);line-height:.98;letter-spacing:-.055em}.academy-bridge-copy{max-width:590px}.academy-bridge p{margin:0 0 25px;color:#385369;font-size:clamp(.94rem,1.2vw,1.05rem);line-height:1.75}.academy-bridge-link{display:inline-flex;align-items:center;gap:13px;color:#013693;font-size:.83rem;font-weight:800;letter-spacing:.02em;text-decoration:none}.academy-bridge-link::after{content:"↗";display:grid;place-items:center;width:28px;height:28px;border:1px solid rgba(1,54,147,.34);border-radius:50%;color:#22c93c;font-size:1rem;transition:background-color .2s ease,color .2s ease}.academy-bridge-link:hover::after,.academy-bridge-link:focus-visible::after{background:#013693;color:#fff}.academy-bridge-link:focus-visible{outline:2px solid #22c93c;outline-offset:5px}
+.academy-bridge{padding-block:clamp(76px,8vw,118px);background:#071c33;color:#fff;scroll-margin-top:92px}.academy-bridge-grid{display:grid;grid-template-columns:.75fr 1.25fr;gap:clamp(36px,7vw,108px);align-items:end;padding-top:18px;border-top:1px solid rgba(159,238,255,.42)}.academy-bridge .kicker{color:#9feeff}.academy-bridge h2{margin:13px 0 0;font-size:clamp(2.25rem,3.55vw,4.1rem);line-height:.98;letter-spacing:-.055em}.academy-bridge-copy{max-width:590px}.academy-bridge p{margin:0 0 25px;color:#d5e6f4;font-size:clamp(.94rem,1.2vw,1.05rem);line-height:1.75}.academy-bridge-link{display:inline-flex;align-items:center;gap:13px;color:#fff;font-size:.83rem;font-weight:800;letter-spacing:.02em;text-decoration:none}.academy-bridge-link::after{content:"↗";display:grid;place-items:center;width:28px;height:28px;border:1px solid rgba(159,238,255,.55);border-radius:50%;color:#22c93c;font-size:1rem;transition:background-color .2s ease,color .2s ease}.academy-bridge-link:hover::after,.academy-bridge-link:focus-visible::after{background:#4caff4;color:#071c33}.academy-bridge-link:focus-visible{outline:2px solid #22c93c;outline-offset:5px}
+html:has(#academy:target){scroll-behavior:auto}.academy-bridge{padding-block:clamp(76px,8vw,118px);background:#071c33;color:#fff;scroll-margin-top:92px}.academy-bridge-grid{display:grid;grid-template-columns:.75fr 1.25fr;gap:clamp(36px,7vw,108px);align-items:end;padding-top:18px;border-top:1px solid rgba(159,238,255,.42)}.academy-bridge .kicker{color:#9feeff}.academy-bridge h2{margin:13px 0 0;font-size:clamp(2.25rem,3.55vw,4.1rem);line-height:.98;letter-spacing:-.055em}.academy-bridge-copy{max-width:590px}.academy-bridge p{margin:0 0 25px;color:#d5e6f4;font-size:clamp(.94rem,1.2vw,1.05rem);line-height:1.75}.academy-bridge-link{display:inline-flex;align-items:center;gap:13px;color:#fff;font-size:.83rem;font-weight:800;letter-spacing:.02em;text-decoration:none}.academy-bridge-link::after{content:"↗";display:grid;place-items:center;width:28px;height:28px;border:1px solid rgba(159,238,255,.55);border-radius:50%;color:#22c93c;font-size:1rem;transition:background-color .2s ease,color .2s ease}.academy-bridge-link:hover::after,.academy-bridge-link:focus-visible::after{background:#4caff4;color:#071c33}.academy-bridge-link:focus-visible{outline:2px solid #22c93c;outline-offset:5px}
 @media(max-width:900px){.academy-bridge-grid{grid-template-columns:1fr;gap:24px}.academy-bridge h2{max-width:12ch}.academy-bridge-copy{max-width:620px}}
+.academy-bridge-topics{display:flex;flex-wrap:wrap;gap:8px 18px;margin:0 0 26px!important;padding:0!important;list-style:none!important;color:#9feeff;font:600 .66rem/1.4 "IBM Plex Mono",Consolas,monospace;letter-spacing:.06em;text-transform:uppercase}.academy-bridge-topics li{margin:0!important;padding:0!important;list-style:none!important}.academy-bridge-topics li:not(:last-child)::after{content:"·";margin-left:18px;color:#22c93c}

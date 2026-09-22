@@ -2,7 +2,7 @@ import { bindPointerGlow, observeReveal } from "./reveal.js";
 import { initCommercialAssistant } from "./commercial-assistant.js";
 
 export const NETWORLD = {
-  siteUrl: "https://www.networldslogistics.com",
+  siteUrl: "https://networldslogistics.com",
   logicTrackUrl: "https://logicstrack-app.web.app",
   email: "aduana@networldslogistics.com",
   phoneDisplay: "+503 7420 9546",

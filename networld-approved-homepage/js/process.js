@@ -3,6 +3,7 @@
   const steps = [...document.querySelectorAll('.process .step')];
   const control = document.querySelector('.process-control');
   const customsDetail = document.querySelector('.customs-intelligence');
+  const stepsContainer = document.querySelector('.process .steps');
   const fields = {
     label: document.querySelector('#process-active-label'),
     title: document.querySelector('#process-active-title'),
@@ -13,6 +14,27 @@
   };
   let transitionTimer;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const detailPanel = document.createElement('section');
+  detailPanel.className = 'process-active-detail';
+  detailPanel.setAttribute('aria-live', 'polite');
+  detailPanel.setAttribute('aria-label', 'Detalle del hito operativo activo');
+  stepsContainer?.insertAdjacentElement('afterend', detailPanel);
+
+  const renderDetail = (step, index) => {
+    if (!detailPanel) return;
+    const title = step.querySelector('h3')?.textContent || '';
+    detailPanel.innerHTML = `
+      <div class="process-active-detail__heading">
+        <span>Hito ${String(index + 1).padStart(2, '0')} · ${step.dataset.state}</span>
+        <h3>${title}</h3>
+      </div>
+      <div class="process-active-detail__facts">
+        <div><b>Decisión</b><p>${step.dataset.decision}</p></div>
+        <div><b>Evidencia visible</b><p>${step.dataset.evidence}</p></div>
+        <div><b>Riesgo reducido</b><p>${step.dataset.risk}</p></div>
+      </div>`;
+  };
 
   const activateStep = (step, moveFocus = false) => {
     const index = steps.indexOf(step);
@@ -36,6 +58,7 @@
       fields.validation.textContent = step.dataset.validation;
       fields.evidence.textContent = step.dataset.evidence;
       fields.risk.textContent = step.dataset.risk;
+      renderDetail(step, index);
       control.classList.remove('is-switching');
     }, reducedMotion ? 0 : 110);
 
@@ -58,4 +81,6 @@
       activateStep(steps[target], true);
     });
   });
+
+  if (steps[0]) renderDetail(steps[0], 0);
 })();
