@@ -364,7 +364,7 @@ export function createEarth() {
 
   earthGroup.userData.textureReady = new Promise(resolve => {
     new THREE.TextureLoader().load(
-      "./assets/textures/earth-blue-marble.jpg",
+      "./assets/textures/earth-blue-marble.webp",
       loadedTexture => {
         loadedTexture.colorSpace = THREE.SRGBColorSpace;
         loadedTexture.anisotropy = 8;

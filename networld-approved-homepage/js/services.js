@@ -9,17 +9,24 @@
   const risk = document.querySelector('#service-risk');
   let transitionTimer;
 
-  const asset = (name) => new URL(`../assets/${name}`, import.meta.url).href;
+  const assets = {
+    port: new URL('../assets/port-blue-hour.webp', import.meta.url).href,
+    air: new URL('../assets/air-freight-ramp.webp', import.meta.url).href,
+    road: new URL('../assets/road-freight-documentary.webp', import.meta.url).href,
+    customs: new URL('../assets/customs-team-documentary.webp', import.meta.url).href,
+    dispatch: new URL('../assets/logistics-dispatch-documentary.webp', import.meta.url).href,
+    specialists: new URL('../assets/operations-specialists.webp', import.meta.url).href
+  };
 
-  tabs[0].dataset.image = asset('port-blue-hour.png');
-  tabs[1].dataset.image = asset('air-freight-ramp.png');
-  tabs[2].dataset.image = asset('road-freight-documentary.png');
+  tabs[0].dataset.image = assets.port;
+  tabs[1].dataset.image = assets.air;
+  tabs[2].dataset.image = assets.road;
   tabs[2].dataset.alt = 'Camiones de carga en corredor regional al amanecer';
-  tabs[3].dataset.image = asset('customs-team-documentary.png');
+  tabs[3].dataset.image = assets.customs;
   tabs[3].dataset.alt = 'Especialistas aduanales revisando documentación logística';
-  tabs[4].dataset.image = asset('logistics-dispatch-documentary.png');
+  tabs[4].dataset.image = assets.dispatch;
   tabs[4].dataset.alt = 'Especialista monitoreando operaciones logísticas';
-  tabs[5].dataset.image = asset('operations-specialists.png');
+  tabs[5].dataset.image = assets.specialists;
 
   const selectService = (tab, moveFocus = false) => {
     if (tab.getAttribute('aria-selected') === 'true') return;
