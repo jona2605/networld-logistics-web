@@ -1,5 +1,6 @@
 import { bindPointerGlow, observeReveal } from "./reveal.js";
 import { initCommercialAssistant } from "./commercial-assistant.js";
+import { trackEvent } from "./tracking.js";
 
 export const NETWORLD = {
   siteUrl: "https://networldslogistics.com",
@@ -9,17 +10,6 @@ export const NETWORLD = {
   phoneCompact: "50374209546",
   company: "Networld Logistics"
 };
-
-export function trackEvent(eventName, parameters = {}) {
-  if (typeof window.gtag !== "function") return false;
-
-  window.gtag("event", eventName, {
-    page_location: window.location.href,
-    page_path: window.location.pathname,
-    ...parameters
-  });
-  return true;
-}
 
 export function whatsappUrl(message) {
   return `https://wa.me/${NETWORLD.phoneCompact}?text=${encodeURIComponent(message)}`;
@@ -239,31 +229,6 @@ function normalizeFooter() {
 
 function initExternalActionEvents() {
   document.addEventListener("click", event => {
-    const link = event.target.closest("a[href]");
-    if (link) {
-      const href = link.href;
-      const label = link.textContent.trim();
-      const normalizedLabel = label.toLowerCase();
-      const quoteIntent = /cotizar|cotizaci|planificar|coordinar|evaluar|especialista|estrategia|documentos|visibilidad/.test(normalizedLabel);
-      let eventName = null;
-
-      if (href.startsWith("mailto:")) {
-        eventName = "click_email";
-      } else if (href.includes("logicstrack-app.web.app")) {
-        eventName = normalizedLabel.includes("portal") ? "click_portal" : "click_logictrack";
-      } else if (href.includes("wa.me/")) {
-        eventName = quoteIntent ? "click_quote" : "click_whatsapp";
-      }
-
-      if (eventName) {
-        trackEvent(eventName, {
-          link_text: label,
-          link_url: href,
-          source: window.location.pathname
-        });
-      }
-    }
-
     const action = event.target.closest("[data-integration-action], [data-tool-action]");
     if (!action) return;
     document.dispatchEvent(new CustomEvent("networld:integration-action", {

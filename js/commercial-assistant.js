@@ -40,10 +40,29 @@ export function initCommercialAssistant() {
     else trigger.focus({ preventScroll: true });
   };
 
-  trigger.addEventListener('click', () => setOpen(panel.hidden));
-  close.addEventListener('click', () => setOpen(false));
-  document.addEventListener('keydown', event => { if (event.key === 'Escape' && !panel.hidden) setOpen(false); });
-  document.addEventListener('pointerdown', event => { if (!panel.hidden && !assistant.contains(event.target)) setOpen(false); });
+  trigger.addEventListener('click', () => {
+    const opening = panel.hidden;
+    setOpen(opening);
+    window.trackEvent?.(opening ? 'assistant_open' : 'assistant_close', { location: window.location.pathname });
+  });
+  close.addEventListener('click', () => {
+    setOpen(false);
+    window.trackEvent?.('assistant_close', { location: window.location.pathname });
+  });
+  const assistantEvents = ['assistant_select_quote', 'assistant_select_customs', 'assistant_select_academy', 'assistant_select_general'];
+  assistant.querySelectorAll('.commercial-assistant__choices a').forEach((choice, index) => {
+    choice.addEventListener('click', () => window.trackEvent?.(assistantEvents[index], { location: window.location.pathname }));
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape' || panel.hidden) return;
+    setOpen(false);
+    window.trackEvent?.('assistant_close', { location: window.location.pathname });
+  });
+  document.addEventListener('pointerdown', event => {
+    if (panel.hidden || assistant.contains(event.target)) return;
+    setOpen(false);
+    window.trackEvent?.('assistant_close', { location: window.location.pathname });
+  });
 }
 
 initCommercialAssistant();

@@ -14,6 +14,12 @@ if (form) {
     quote: { kicker: 'Cotización logística', title: 'Información para revisar su operación.', guidance: 'Comparta datos aproximados si aún no cuenta con el expediente completo.' },
     academy: { kicker: 'Networld Academy', title: 'Información para orientar la capacitación.', guidance: 'Las áreas y modalidades se coordinan bajo consulta según el contexto del participante o equipo.' },
   };
+  let started = false;
+  const recordStart = () => {
+    if (started) return;
+    started = true;
+    window.trackEvent?.('form_start_contact', { location: 'contacto', form_type: form.querySelector('input[name="lead_type"]:checked')?.value || 'quote' });
+  };
 
   const setDisabled = (fieldset, disabled) => {
     fieldset.hidden = disabled;
@@ -33,6 +39,8 @@ if (form) {
 
   form.querySelectorAll('.lead-quote-fields [required], .lead-academy-fields select, .lead-academy-fields input').forEach(field => { field.dataset.required = 'true'; });
   intentControls.forEach(control => control.addEventListener('change', () => setIntent(control.value)));
+  form.addEventListener('focusin', recordStart, { once: true });
+  form.addEventListener('input', recordStart, { once: true });
   const initial = new URLSearchParams(window.location.search).get('tipo') === 'academy' ? 'academy' : 'quote';
   form.querySelector(`input[value="${initial}"]`).checked = true;
   setIntent(initial);
@@ -47,9 +55,14 @@ if (form) {
 
   form.addEventListener('submit', event => {
     event.preventDefault();
-    if (!form.checkValidity()) { form.reportValidity(); return; }
+    if (!form.checkValidity()) {
+      window.trackEvent?.('form_error_contact', { location: 'contacto', form_type: form.querySelector('input[name="lead_type"]:checked')?.value || 'quote' });
+      form.reportValidity();
+      return;
+    }
     const data = new FormData(form);
     const intent = data.get('lead_type');
+    window.trackEvent?.(intent === 'academy' ? 'form_submit_academy' : 'form_submit_contact', { location: 'contacto', form_type: intent });
     const label = intent === 'academy' ? 'Solicitud de capacitación — Networld Academy' : 'Solicitud de cotización logística';
     const labels = { nombre: 'Nombre', empresa: 'Empresa', whatsapp: 'WhatsApp', correo: 'Correo', tipo_servicio: 'Tipo de servicio', origen: 'Origen', destino: 'Destino', tipo_carga: 'Tipo de carga', peso_volumen: 'Peso o volumen', fecha_estimada: 'Fecha estimada', documentos: 'Factura o documentos', tema_capacitacion: 'Tema de capacitación', tipo_participante: 'Solicita como', participantes: 'Participantes', modalidad: 'Modalidad preferida', mensaje: 'Mensaje adicional' };
     const lines = [...data.entries()].filter(([key, value]) => key !== 'lead_type' && String(value).trim()).map(([key, value]) => `• ${labels[key] || key}: ${value}`);
