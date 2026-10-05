@@ -1,13 +1,13 @@
 const TRACKING_CONFIG = Object.freeze({
-  gaMeasurementId: 'G-XXXXXXXXXX',
+  gaMeasurementId: 'G-0G8CCC8MKX',
   clarityProjectId: 'XXXXXXXXXX',
   searchConsoleVerification: 'GOOGLE_SEARCH_CONSOLE_CODE_HERE'
 });
 
 const placeholders = new Set([
-  TRACKING_CONFIG.gaMeasurementId,
-  TRACKING_CONFIG.clarityProjectId,
-  TRACKING_CONFIG.searchConsoleVerification
+  'G-XXXXXXXXXX',
+  'XXXXXXXXXX',
+  'GOOGLE_SEARCH_CONSOLE_CODE_HERE'
 ]);
 
 const configured = value => Boolean(value && !placeholders.has(value));
