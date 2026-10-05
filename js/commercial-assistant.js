@@ -25,6 +25,7 @@ export function initCommercialAssistant() {
         <a href="${whatsappUrl(messages.general)}" target="_blank" rel="noopener noreferrer"><b>04</b><span>Hablar por WhatsApp</span><i>↗</i></a>
       </div>
       <small>La orientación inicial no sustituye la revisión de una operación específica.</small>
+      <small>Al contactarnos por WhatsApp, aceptas que usemos la información enviada para responder tu solicitud.</small>
     </section>
     <button class="commercial-assistant__trigger" type="button" aria-expanded="false" aria-controls="commercial-assistant-panel"><span class="commercial-assistant__signal" aria-hidden="true"></span><span>¿Necesitas ayuda?</span><i aria-hidden="true">+</i></button>`;
   document.body.append(assistant);

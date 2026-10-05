@@ -1,0 +1,12 @@
+.privacy-page .privacy-hero { padding: clamp(8.5rem, 14vw, 12rem) 0 clamp(3.5rem, 7vw, 6rem); background: linear-gradient(135deg, #071c33, #013693); color: #fff; }
+.privacy-page .privacy-hero h1 { max-width: 14ch; margin: .65rem 0 1rem; font-size: clamp(2.3rem, 5vw, 4.7rem); line-height: .98; letter-spacing: -.055em; }
+.privacy-page .privacy-hero p { max-width: 44rem; color: #d8ecff; }
+.privacy-page .privacy-content { padding: clamp(3.5rem, 7vw, 7rem) 0; background: #f5f8fc; }
+.privacy-page .privacy-content .ep-wrap { max-width: 920px; }
+.privacy-page .privacy-section { padding: clamp(1.45rem, 3vw, 2.35rem) 0; border-top: 1px solid #cbd8e6; }
+.privacy-page .privacy-section:first-child { border-top: 0; }
+.privacy-page .privacy-section h2 { max-width: 30rem; color: #071c33; font-size: clamp(1.45rem, 2.4vw, 2.25rem); line-height: 1.08; }
+.privacy-page .privacy-section p, .privacy-page .privacy-section li { max-width: 48rem; color: #304760; line-height: 1.75; }
+.privacy-page .privacy-section ul { margin: 1rem 0 0; padding-left: 1.2rem; }
+.privacy-page .privacy-section a { color: #013693; font-weight: 700; }
+.privacy-page .privacy-date { display: block; margin-top: 2rem; color: #62809d; font-size: .82rem; }
