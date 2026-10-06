@@ -90,12 +90,14 @@ function normalizeNavbarLinks() {
 
   document.querySelectorAll(".nav-links").forEach(nav => {
     if (nav.closest("[data-preserve-nav]")) return;
-    const current = Array.from(nav.querySelectorAll("a")).find(link => link.getAttribute("aria-current") === "page")?.textContent.trim().toLowerCase();
+    const current = Array.from(nav.querySelectorAll("a")).find(link => link.getAttribute("aria-current") === "page")?.textContent.trim().toLowerCase()
+      || ({ "/servicios/": "servicios", "/nosotros/": "nosotros", "/academia/": "academy", "/contacto/": "contacto" }[location.pathname] || "");
     const pageLink = (href, label, key) => `<a href="${href}"${current === key ? ' aria-current="page"' : ""}>${label}</a>`;
 
     nav.innerHTML = `
       ${pageLink("/servicios/", "Servicios", "servicios")}
       ${pageLink("/nosotros/", "Nosotros", "nosotros")}
+      ${pageLink("/academia/", "Academy", "academy")}
       ${pageLink("/contacto/", "Contacto", "contacto")}
       <a class="nav-mobile-only" href="${NETWORLD.logicTrackUrl}" target="_blank" rel="noopener noreferrer">Portal LogicTrack</a>
     `;
