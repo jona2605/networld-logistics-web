@@ -1,6 +1,6 @@
 const TRACKING_CONFIG = Object.freeze({
   gaMeasurementId: 'G-0G8CCC8MKX',
-  clarityProjectId: 'XXXXXXXXXX',
+  clarityProjectId: 'yvnbjt2dro',
   searchConsoleVerification: 'GOOGLE_SEARCH_CONSOLE_CODE_HERE'
 });
 
