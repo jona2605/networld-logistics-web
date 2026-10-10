@@ -213,12 +213,32 @@ function footerTemplate() {
 
 function normalizeFooter() {
   document.querySelectorAll("footer").forEach(footer => {
+    if (footer.className.includes("page-footer") && !footer.querySelector(".footer-shell")) {
+      footer.outerHTML = footerTemplate();
+      return;
+    }
     if (footer.classList.contains("site-footer")) {
       return;
     }
     if (footer.className.includes("page-footer")) {
       footer.outerHTML = footerTemplate();
     }
+  });
+
+  document.querySelectorAll("footer .footer-column[aria-label='Navegacion'], footer .footer-column[aria-label='Navegación']").forEach(nav => {
+    if (nav.querySelector("a[href='/recursos/']")) return;
+    const link = document.createElement("a");
+    link.href = "/recursos/";
+    link.textContent = "Recursos";
+    nav.append(link);
+  });
+
+  document.querySelectorAll("footer[data-od-id='institutional-footer'] .footer-grid > div:nth-child(2)").forEach(nav => {
+    if (nav.querySelector("a[href='/recursos/']")) return;
+    const link = document.createElement("a");
+    link.href = "/recursos/";
+    link.textContent = "Recursos";
+    nav.append(link);
   });
 
   observeReveal(document.querySelectorAll(".site-footer [data-footer-reveal]"), {

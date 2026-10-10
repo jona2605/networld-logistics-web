@@ -14,6 +14,14 @@ const cleanRouteEntries = [
   ["/academia/", "/academia/index.html"],
   ["/courier", "/courier/index.html"],
   ["/courier/", "/courier/index.html"],
+  ["/recursos", "/recursos/index.html"],
+  ["/recursos/", "/recursos/index.html"],
+  ["/recursos/importar-desde-china-a-el-salvador", "/recursos/importar-desde-china-a-el-salvador/index.html"],
+  ["/recursos/importar-desde-china-a-el-salvador/", "/recursos/importar-desde-china-a-el-salvador/index.html"],
+  ["/recursos/courier-carga-aerea-o-maritima", "/recursos/courier-carga-aerea-o-maritima/index.html"],
+  ["/recursos/courier-carga-aerea-o-maritima/", "/recursos/courier-carga-aerea-o-maritima/index.html"],
+  ["/recursos/documentos-basicos-importacion-el-salvador", "/recursos/documentos-basicos-importacion-el-salvador/index.html"],
+  ["/recursos/documentos-basicos-importacion-el-salvador/", "/recursos/documentos-basicos-importacion-el-salvador/index.html"],
   ["/politica-de-privacidad", "/politica-de-privacidad/index.html"],
   ["/politica-de-privacidad/", "/politica-de-privacidad/index.html"],
   ["/tramites-aduanales-el-salvador", "/tramites-aduanales-el-salvador/index.html"],
@@ -32,7 +40,7 @@ const cleanRouteEntries = [
   ["/logistica-para-pymes-el-salvador/", "/logistica-para-pymes-el-salvador/index.html"],
 ];
 
-const protectedRoutes = new Set(["/recursos", "/recursos/", "/herramientas", "/herramientas/", "/casos", "/casos/"]);
+const protectedRoutes = new Set(["/herramientas", "/herramientas/", "/casos", "/casos/"]);
 
 function rewriteCleanRoutes(req, res, next) {
   const [pathname, query = ""] = req.url.split("?");
@@ -70,6 +78,10 @@ export default {
         contacto: resolve(projectRoot, "contacto/index.html"),
         academia: resolve(projectRoot, "academia/index.html"),
         courier: resolve(projectRoot, "courier/index.html"),
+        recursos: resolve(projectRoot, "recursos/index.html"),
+        recursoChina: resolve(projectRoot, "recursos/importar-desde-china-a-el-salvador/index.html"),
+        recursoModalidades: resolve(projectRoot, "recursos/courier-carga-aerea-o-maritima/index.html"),
+        recursoDocumentos: resolve(projectRoot, "recursos/documentos-basicos-importacion-el-salvador/index.html"),
         politicaDePrivacidad: resolve(projectRoot, "politica-de-privacidad/index.html"),
         tramitesAduanales: resolve(projectRoot, "tramites-aduanales-el-salvador/index.html"),
         transporteMaritimo: resolve(projectRoot, "transporte-maritimo-el-salvador/index.html"),
